@@ -27,7 +27,8 @@ This gives a zero additional training baseline and is easy to validate.
 ## Project layout
 - `requirements.txt` Python dependencies
 - `context_detector.py` main pipeline
-- `demo_context.json` sample input format
+- `demo_context.json` sample input format aligned with the bundled sample data
+- `data/data/context_fixed.json` validated sample context used for the included toy/object dataset
 - `run_demo.py` CLI entrypoint
 - `evaluate.py` simple evaluator for prediction JSON against GT JSON
 
@@ -36,16 +37,23 @@ This gives a zero additional training baseline and is easy to validate.
 {
   "context": [
     {
-      "class": "Tesla Model X",
-      "refer_image": ["00001/front-view.jpg", "00001/rear-view.jpg"]
+      "class": 1,
+      "class_name": "Stuffed Bear Blue SB-1-B",
+      "refer_image": ["refer_images/1-01.jpg"]
     },
     {
-      "class": "Tesla Model Y",
-      "refer_image": ["00002/front-view.jpg", "00002/rear-view.jpg"]
+      "class": 2,
+      "class_name": "Pocket Tomika P060",
+      "refer_image": ["refer_images/2-01.jpg"]
     }
   ]
 }
 ```
+
+Notes:
+- `refer_image` paths are resolved relative to the context JSON file location.
+- `class_name` is optional in schema terms, but recommended because it improves text matching and makes outputs readable.
+- The bundled sample dataset lives under `data/data/`, so `data/data/context_fixed.json` references `refer_images/...` relative to that directory.
 
 ## Output format
 ```json
@@ -71,15 +79,19 @@ pip install -r requirements.txt
 ```
 
 ## Run
+Using the bundled sample dataset:
 ```bash
 python run_demo.py \
-  --context demo_context.json \
-  --query path/to/cars-on-road.jpg \
+  --context data/data/context_fixed.json \
+  --query data/data/query_images/019e588b-a94a-4d91-a6e2-17d9fdd17c45.jpg \
   --output outputs/predictions.json \
   --vis outputs/vis.jpg
 ```
 
+If you want to use `demo_context.json`, place it beside a matching `refer_images/` directory or update the paths to fit your dataset layout.
+
 ## Notes
 - GroundingDINO still needs a prompt to propose objects. This prototype uses a generic prompt like `object . vehicle . product . item .` to maximize recall.
 - For some domains, proposal recall may be the limiting factor.
+- On newer `transformers` versions, CLIP feature helpers may return model output objects rather than raw tensors; the current implementation handles that.
 - If you want a stronger system later, likely upgrades are OWLv2 / GroundingDINO 1.5 / SAM2-assisted regioning / SigLIP2 embeddings.
