@@ -24,7 +24,7 @@ def main():
 
     # warmup
     _ = detector.detect_from_files(
-        context_json_path='data/data/context_fixed.json',
+        context_json_path='data/toy-91/context.json',
         query_image_path=sample_list[0],
         vis_path=None,
     )
@@ -36,7 +36,7 @@ def main():
     for idx, q in enumerate(sample_list, 1):
         t0 = time.perf_counter()
         pred = detector.detect_from_files(
-            context_json_path='data/data/context_fixed.json',
+            context_json_path='data/toy-91/context.json',
             query_image_path=q,
             vis_path=None,
         )
