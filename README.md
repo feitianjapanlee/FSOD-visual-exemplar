@@ -90,6 +90,30 @@ python run_demo.py \
 
 If you want to use `demo_context.json`, place it beside a matching `refer_images/` directory or update the paths to fit your dataset layout.
 
+## Evaluation
+`evaluate.py` compares prediction JSON against a GT JSON file using class-aware IoU matching.
+
+Minimal GT format:
+```json
+{
+  "image": "data/data/query_images/019e588b-a94a-4d91-a6e2-17d9fdd17c45.jpg",
+  "detections": [
+    {
+      "bbox": [100, 258, 261, 399],
+      "class": "Stuffed Bear Blue SB-1-B"
+    }
+  ]
+}
+```
+
+Example:
+```bash
+python evaluate.py \
+  --pred outputs/smoke/pred.json \
+  --gt sample_gt.json \
+  --iou 0.5
+```
+
 ## Notes
 - GroundingDINO still needs a prompt to propose objects. This prototype uses a generic prompt like `object . vehicle . product . item .` to maximize recall.
 - For some domains, proposal recall may be the limiting factor.

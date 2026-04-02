@@ -1,0 +1,13 @@
+{
+  "image": "data/data/query_images/019e588b-a94a-4d91-a6e2-17d9fdd17c45.jpg",
+  "detections": [
+    {
+      "bbox": [100, 258, 261, 399],
+      "class": "Stuffed Bear Blue SB-1-B"
+    },
+    {
+      "bbox": [64, 376, 205, 479],
+      "class": "Halloween Pumpkin Plastic 7-P"
+    }
+  ]
+}
