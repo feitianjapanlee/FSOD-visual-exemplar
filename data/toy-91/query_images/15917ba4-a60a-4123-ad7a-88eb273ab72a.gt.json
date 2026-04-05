@@ -1,0 +1,23 @@
+{
+  "image": "data/toy-91/query_images/15917ba4-a60a-4123-ad7a-88eb273ab72a.jpg",
+  "detections": [
+    {
+      "bbox": [
+        450.0,
+        241.0,
+        533.0,
+        376.0
+      ],
+      "class": "Pocket Tomika P060"
+    },
+    {
+      "bbox": [
+        33.0,
+        284.0,
+        157.0,
+        394.0
+      ],
+      "class": "Halloween Pumpkin Plastic 7-P"
+    }
+  ]
+}

@@ -1,0 +1,14 @@
+{
+  "image": "data/toy-91/query_images/668e5653-1be0-415c-924c-9dc8e7bae1ac.jpg",
+  "detections": [
+    {
+      "bbox": [
+        272.0,
+        131.0,
+        349.0,
+        212.0
+      ],
+      "class": "Halloween Pumpkin Plastic 7-P"
+    }
+  ]
+}

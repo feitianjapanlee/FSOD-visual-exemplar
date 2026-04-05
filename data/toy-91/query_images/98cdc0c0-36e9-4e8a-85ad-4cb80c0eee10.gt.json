@@ -1,0 +1,29 @@
+{
+  "image": "data/toy-91/query_images/98cdc0c0-36e9-4e8a-85ad-4cb80c0eee10.jpg",
+  "detections": [
+    {
+      "bbox": [
+        327.0,
+        218.0,
+        529.0,
+        433.0
+      ],
+      "class": "Halloween Pumpkin Plastic 7-P",
+      "score": 0.5889,
+      "similarity": 0.6903,
+      "proposal_score": 0.3523
+    },
+    {
+      "bbox": [
+        236.0,
+        54.0,
+        418.0,
+        248.0
+      ],
+      "class": "Halloween Pumpkin Plastic 7-P",
+      "score": 0.5772,
+      "similarity": 0.67,
+      "proposal_score": 0.3607
+    }
+  ]
+}

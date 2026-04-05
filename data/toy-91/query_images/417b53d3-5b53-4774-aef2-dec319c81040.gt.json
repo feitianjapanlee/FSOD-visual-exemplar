@@ -1,0 +1,32 @@
+{
+  "image": "data/toy-91/query_images/417b53d3-5b53-4774-aef2-dec319c81040.jpg",
+  "detections": [
+    {
+      "bbox": [
+        203.0,
+        241.0,
+        365.0,
+        372.0
+      ],
+      "class": "Stuffed Bear Blue SB-1-B"
+    },
+    {
+      "bbox": [
+        292.0,
+        103.0,
+        397.0,
+        213.0
+      ],
+      "class": "Halloween Pumpkin Plastic 7-P"
+    },
+    {
+      "bbox": [
+        462.0,
+        293.0,
+        573.0,
+        439.0
+      ],
+      "class": "Pocket Tomika P060"
+    }
+  ]
+}

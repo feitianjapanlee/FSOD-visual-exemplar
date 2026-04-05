@@ -1,0 +1,14 @@
+{
+  "image": "data/toy-91/query_images/4869b0c7-c1c8-4ce5-8d3e-f2db50c0cf5c.jpg",
+  "detections": [
+    {
+      "bbox": [
+        357.0,
+        92.0,
+        486.0,
+        195.0
+      ],
+      "class": "Stuffed Bear Blue SB-1-B"
+    }
+  ]
+}

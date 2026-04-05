@@ -1,0 +1,41 @@
+{
+  "image": "data/toy-91/query_images/63ce0cda-4a55-4a29-b24a-68c1bad47026.jpg",
+  "detections": [
+    {
+      "bbox": [
+        208.0,
+        259.0,
+        331.0,
+        392.0
+      ],
+      "class": "Halloween Pumpkin Plastic 7-P"
+    },
+    {
+      "bbox": [
+        367.0,
+        297.0,
+        538.0,
+        428.0
+      ],
+      "class": "Halloween Pumpkin Plastic 7-P"
+    },
+    {
+      "bbox": [
+        293.0,
+        157.0,
+        417.0,
+        270.0
+      ],
+      "class": "Halloween Pumpkin Plastic 7-P"
+    },
+    {
+      "bbox": [
+        152.0,
+        374.0,
+        302.0,
+        478.0
+      ],
+      "class": "Stuffed Bear Blue SB-1-B"
+    }
+  ]
+}

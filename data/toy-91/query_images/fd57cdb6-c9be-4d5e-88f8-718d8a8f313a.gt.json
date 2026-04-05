@@ -1,0 +1,23 @@
+{
+  "image": "data/toy-91/query_images/fd57cdb6-c9be-4d5e-88f8-718d8a8f313a.jpg",
+  "detections": [
+    {
+      "bbox": [
+        148.0,
+        204.0,
+        306.0,
+        354.0
+      ],
+      "class": "Stuffed Bear Blue SB-1-B"
+    },
+    {
+      "bbox": [
+        480.0,
+        257.0,
+        548.0,
+        403.0
+      ],
+      "class": "Pocket Tomika P060"
+    }
+  ]
+}
