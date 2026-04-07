@@ -1,0 +1,25 @@
+{
+  "precision": 0.501466275659824,
+  "recall": 0.8104265402843602,
+  "f1": 0.6195652173913043,
+  "total_tp": 171,
+  "total_fp": 170,
+  "total_fn": 40,
+  "per_class": {
+    "Stuffed Bear Blue SB-1-B": {
+      "precision": 0.3645833333333333,
+      "recall": 0.9722222222222222,
+      "f1": 0.5303030303030303
+    },
+    "Halloween Pumpkin Plastic 7-P": {
+      "precision": 0.6220472440944882,
+      "recall": 0.8586956521739131,
+      "f1": 0.7214611872146118
+    },
+    "Pocket Tomika P060": {
+      "precision": 1.0,
+      "recall": 0.46808510638297873,
+      "f1": 0.6376811594202899
+    }
+  }
+}

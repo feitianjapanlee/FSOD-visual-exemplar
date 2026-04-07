@@ -196,7 +196,7 @@ def main():
     detector = FSODVFMDetector(
         max_proposals=500,
         proposal_threshold=0.01,
-        match_threshold=0.05,
+        match_threshold=0.08,
         nms_threshold=0.45,
         graph_diffusion_steps=30,
     )

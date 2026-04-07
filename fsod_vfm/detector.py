@@ -56,6 +56,8 @@ class FSODVFMDetector:
             AutoImageProcessor,
             AutoModelForZeroShotObjectDetection,
             AutoProcessor,
+            CLIPModel,
+            CLIPProcessor,
         )
         from pathlib import Path
 
@@ -73,6 +75,20 @@ class FSODVFMDetector:
             self.vision_processor = None
 
         self.vit_intermediate_size = 1024
+
+        try:
+            self.clip_model = CLIPModel.from_pretrained(
+                "openai/clip-vit-base-patch32"
+            ).to(self.device)
+            self.clip_processor = CLIPProcessor.from_pretrained(
+                "openai/clip-vit-base-patch32"
+            )
+            self.clip_model.eval()
+            print("CLIP loaded successfully")
+        except Exception as e:
+            print(f"CLIP not available ({e})")
+            self.clip_model = None
+            self.clip_processor = None
 
         self.sam2_model = None
         self.mask_generator = None
@@ -135,6 +151,18 @@ class FSODVFMDetector:
         if not proposals:
             return {"image": str(query_path), "detections": []}
 
+        img_area = query_image.width * query_image.height
+        for prop in proposals:
+            prop["image_area"] = img_area
+            prop["image_width"] = query_image.width
+            prop["image_height"] = query_image.height
+            x1, y1, x2, y2 = [int(v) for v in prop["bbox"]]
+            x1 = max(0, x1)
+            y1 = max(0, y1)
+            x2 = min(query_image.width, x2)
+            y2 = min(query_image.height, y2)
+            prop["crop"] = query_image.crop((x1, y1, x2, y2))
+
         masks = self._extract_masks(query_image, proposals)
 
         query_features = self._extract_global_features(query_image)
@@ -180,9 +208,14 @@ class FSODVFMDetector:
 
             support_masks = []
             support_features = []
+            color_histograms = []
+            clip_image_embeds = []
 
             for img in images:
                 img_np = np.array(img)
+                hist = self._compute_color_histogram(img)
+                color_histograms.append(hist)
+
                 if self.use_sam2 and self.mask_generator is not None:
                     try:
                         sam_masks = self.mask_generator.generate(img_np)
@@ -196,9 +229,20 @@ class FSODVFMDetector:
                 feat = self._extract_global_features(img)
                 support_features.append(feat.squeeze(0))
 
+                if self.clip_model is not None:
+                    clip_emb = self._encode_clip_image(img)
+                    clip_image_embeds.append(clip_emb)
+
             if support_features:
                 mean_feat = torch.stack(support_features).mean(dim=0)
                 mean_feat = F.normalize(mean_feat, dim=-1)
+
+                avg_color_hist = np.mean(color_histograms, axis=0)
+                avg_color_hist = avg_color_hist / (avg_color_hist.sum() + 1e-8)
+
+                clip_embeds = (
+                    torch.stack(clip_image_embeds) if clip_image_embeds else None
+                )
 
                 if support_masks:
                     first_shape = support_masks[0].shape
@@ -224,6 +268,9 @@ class FSODVFMDetector:
                     "prototype": mean_feat,
                     "support_masks": support_masks,
                     "avg_mask": avg_mask,
+                    "color_histograms": color_histograms,
+                    "avg_color_hist": avg_color_hist,
+                    "clip_image_embeds": clip_embeds,
                 }
             else:
                 db[class_name] = {
@@ -231,9 +278,38 @@ class FSODVFMDetector:
                     "prototype": None,
                     "support_masks": [],
                     "avg_mask": None,
+                    "color_histograms": [],
+                    "avg_color_hist": None,
+                    "clip_image_embeds": None,
                 }
 
         return db
+
+    def _compute_color_histogram(
+        self, image: Image.Image, bins: int = 16
+    ) -> np.ndarray:
+        img_np = np.array(image)
+        hsv = cv2.cvtColor(img_np, cv2.COLOR_RGB2HSV)
+        hist = cv2.calcHist(
+            [hsv], [0, 1, 2], None, [bins, bins, bins], [0, 180, 0, 256, 0, 256]
+        )
+        hist = cv2.normalize(hist, hist).flatten().astype(np.float32)
+        return hist
+
+    def _histogram_intersection(self, h1: np.ndarray, h2: np.ndarray) -> float:
+        return float(np.minimum(h1, h2).sum())
+
+    @torch.no_grad()
+    def _encode_clip_image(self, image: Image.Image) -> torch.Tensor:
+        if self.clip_model is None or self.clip_processor is None:
+            return torch.zeros(512, device=self.device)
+        inputs = self.clip_processor(images=[image], return_tensors="pt").to(
+            self.device
+        )
+        feats = self.clip_model.get_image_features(**inputs)
+        if hasattr(feats, "last_hidden_state"):
+            feats = feats.last_hidden_state[:, 0]
+        return F.normalize(feats, dim=-1).squeeze(0)
 
     def _generate_proposals(self, image: Image.Image) -> List[Dict]:
         img_np = np.array(image)
@@ -590,37 +666,110 @@ class FSODVFMDetector:
         class_db: Dict,
     ) -> List[Detection]:
         detections = []
+        img_areas = []
+        proposal_crops = []
+        proposal_clip_embeds = []
 
         for i, prop in enumerate(proposals):
+            bbox = prop["bbox"]
+            x1, y1, x2, y2 = [int(v) for v in bbox]
+            x1 = max(0, x1)
+            y1 = max(0, y1)
+            x2 = min(prop.get("image_width", 640), x2)
+            y2 = min(prop.get("image_height", 480), y2)
+            box_area = (x2 - x1) * (y2 - y1)
+            img_area = prop.get("image_area", 640 * 480)
+            area_ratio = box_area / img_area
+            img_areas.append(area_ratio)
+
+            crop = prop.get("crop")
+            if crop is not None:
+                crop_hist = self._compute_color_histogram(crop)
+                clip_embed = self._encode_clip_image(crop) if self.clip_model else None
+            else:
+                crop_hist = None
+                clip_embed = None
+            proposal_crops.append(crop_hist)
+            proposal_clip_embeds.append(clip_embed)
+
+        for i, prop in enumerate(proposals):
+            bbox = prop["bbox"]
+            x1, y1, x2, y2 = [int(v) for v in bbox]
+            box_area = (x2 - x1) * (y2 - y1)
+            area_ratio = img_areas[i]
+            crop_hist = proposal_crops[i]
+            crop_clip_embed = proposal_clip_embeds[i]
+
+            max_area_ratio = 0.25
+            min_area_ratio = 0.005
+            if area_ratio > max_area_ratio or area_ratio < min_area_ratio:
+                continue
+
             best_class = None
             best_score = -1
             best_sim = 0
+            best_color_sim = 0
+            best_max_pair_sim = 0
 
-            for class_name in class_db.keys():
+            for class_name, class_data in class_db.items():
                 ref_score = refined_scores.get(class_name)
                 raw_score = class_scores.get(class_name)
+                class_color_hist = class_data.get("avg_color_hist")
+                clip_image_embeds = class_data.get("clip_image_embeds")
 
                 if ref_score is None or raw_score is None:
                     continue
                 if i >= len(ref_score) or i >= len(raw_score):
                     continue
 
-                combined_score = 0.7 * float(ref_score[i]) + 0.3 * float(raw_score[i])
+                raw_sim = float(raw_score[i])
+                ref_sim = float(ref_score[i])
+
+                color_sim = 0.5
+                if crop_hist is not None and class_color_hist is not None:
+                    color_sim = self._histogram_intersection(
+                        crop_hist, class_color_hist
+                    )
+
+                max_pair_sim = 0.0
+                if clip_image_embeds is not None and crop_clip_embed is not None:
+                    similarities = torch.matmul(
+                        clip_image_embeds.to(crop_clip_embed.device),
+                        crop_clip_embed.unsqueeze(1),
+                    ).squeeze()
+                    max_pair_sim = float(similarities.max().detach().cpu())
+
+                proto_sim = raw_sim
+                text_sim = ref_sim
+                combined_similarity = (
+                    0.45 * max_pair_sim
+                    + 0.20 * proto_sim
+                    + 0.10 * text_sim
+                    + 0.25 * color_sim
+                )
+
+                size_penalty = 1.0 - (area_ratio / max_area_ratio) * 0.3
+                combined_score = (
+                    combined_similarity * size_penalty + 0.30 * prop["score"]
+                )
 
                 if combined_score > best_score:
                     best_score = combined_score
                     best_class = class_name
-                    best_sim = float(raw_score[i])
+                    best_sim = combined_similarity
+                    best_color_sim = color_sim
+                    best_max_pair_sim = max_pair_sim
 
             if best_class is not None and best_score > self.match_threshold:
-                detections.append(
-                    Detection(
-                        bbox=prop["bbox"],
-                        class_name=best_class,
-                        score=best_score,
-                        similarity=best_sim,
+                if best_max_pair_sim >= 0.35 and best_color_sim >= 0.20:
+                    detections.append(
+                        Detection(
+                            bbox=bbox,
+                            class_name=best_class,
+                            score=best_score,
+                            similarity=best_sim,
+                        )
                     )
-                )
 
         detections = self._per_class_nms(detections, self.nms_threshold)
 
