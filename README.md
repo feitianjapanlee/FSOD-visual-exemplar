@@ -33,9 +33,9 @@ The implementation uses:
 
 | Metric | Value |
 |--------|-------|
-| Precision | 0.9011 |
+| Precision | 0.982 |
 | Recall | 0.7773 |
-| F1 Score | 0.8346 |
+| F1 Score | 0.8677 |
 | Avg Inference Time | 0.52s/image |
 | GPU Memory | 3.08 GB |
 
