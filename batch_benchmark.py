@@ -9,7 +9,7 @@ import numpy as np
 import torch
 from PIL import Image
 
-from fsod_vfm.detector import FSODVFMDetector
+
 
 
 def compute_iou(box1, box2):
@@ -149,22 +149,29 @@ def draw_comparison(query_image_path, gt_detections, pred_detections, output_pat
 
 
 def main():
-    parser = argparse.ArgumentParser(description="FSOD-VFM Batch Benchmark")
-    parser.add_argument("--sample-list", required=True, help="Path to sample list file")
-    parser.add_argument("--output-dir", required=True, help="Output directory")
-    parser.add_argument("--context", required=True, help="Path to context JSON")
-    parser.add_argument(
-        "--data-root", default="data/toy-91", help="Data root directory"
-    )
-    parser.add_argument(
-        "--iou-threshold", type=float, default=0.5, help="IoU threshold"
-    )
+    parser = argparse.ArgumentParser(description="FSOD Batch Benchmark")
+    parser.add_argument("--approach", required=True, help="Approach name (GroundingDINO/FSODVFM)")
+    parser.add_argument("--sample-list", default='data/toy-91/sample_list.txt', help="Path to sample list file (default: data/toy-91/sample_list.txt)")
+    parser.add_argument("--output-dir", default='outputs/latest', help="Output directory (default: outputs/latest)")
+    parser.add_argument("--context", default='data/toy-91/context.json', help="Path to context JSON (default: data/toy-91/context.json)")
+    parser.add_argument("--data-root", default="data/toy-91", help="Data root directory (default: data/toy-91)")
     parser.add_argument("--visualize", action="store_true", help="Save visualizations")
-    parser.add_argument(
-        "--max-images", type=int, default=None, help="Max images to process"
-    )
-
+    parser.add_argument("--max-images", type=int, default=None, help="Max images to process")
+    parser.add_argument('--device', default='cuda', help="Device to run on (cuda/cpu/mps default: cuda)")
+    parser.add_argument('--text-threshold', type=float, default=0.15, help="Text threshold (default: 0.15)")
+    parser.add_argument('--match-threshold', type=float, default=0.22, help="Match threshold (default: 0.22)")
+    parser.add_argument('--nms-threshold', type=float, default=0.45, help="NMS threshold (default: 0.45)")
+    parser.add_argument("--iou-threshold", type=float, default=0.5, help="IoU threshold (GroundingDINO only) (default: 0.5)")
+    parser.add_argument('--box-threshold', type=float, default=0.20, help="Box threshold (GroundingDINO only) (default: 0.20)")
+    parser.add_argument('--max-box-area-ratio', type=float, default=0.25, help="Max box area ratio (GroundingDINO only) (default: 0.25)")
+    parser.add_argument('--tiny-box-area-ratio', type=float, default=0.015, help="Tiny box area ratio (GroundingDINO only) (default: 0.015)")
+    parser.add_argument('--tiny-box-min-proposal-score', type=float, default=0.30, help="Tiny box min proposal score (GroundingDINO only) (default: 0.30)")
+    parser.add_argument("--max-proposals", type=int, default=500, help="Max proposals (FSODVFM only) (default: 500)")
+    parser.add_argument("--proposal-threshold", type=float, default=0.01, help="Proposal threshold (FSODVFM only) (default: 0.01)")
+    parser.add_argument("--graph-steps", type=int, default=30, help="Graph diffusion steps (FSODVFM only) (default: 30)")
     args = parser.parse_args()
+
+    approach = args.approach.lower()
 
     sample_list_path = Path(args.sample_list)
     sample_list = sample_list_path.read_text().strip().split("\n")
@@ -193,13 +200,24 @@ def main():
 
     print(f"Using context: {context_json}")
 
-    detector = FSODVFMDetector(
-        max_proposals=500,
-        proposal_threshold=0.01,
-        match_threshold=0.08,
-        nms_threshold=0.45,
-        graph_diffusion_steps=30,
-    )
+    if approach == "fsodvfm":    
+        from approach_FSODVFM.fsod_vfm.detector import FSODVFMDetector
+
+        detector = FSODVFMDetector(
+            device=args.device,
+            max_proposals=args.max_proposals,
+            proposal_threshold=args.proposal_threshold,
+            graph_diffusion_steps=args.graph_steps,
+            match_threshold=args.match_threshold,
+            nms_threshold=args.nms_threshold,
+        )
+    elif approach == "groundingdino":
+        from approach_GroundingDINO.context_detector import ContextConditionedDetector
+
+        detector = ContextConditionedDetector(device=args.device)
+    else:
+        print(f"Unsupported approach: {approach}")
+        return
 
     predictions = []
     ground_truths = []
@@ -238,13 +256,25 @@ def main():
 
         start_time = time.time()
         try:
-            result = detector.detect_from_files(
-                context_json_path=str(context_json),
-                query_image_path=str(query_path),
-                vis_path=str(output_dir / f"{query_path.stem}_vis.jpg")
-                if args.visualize
-                else None,
-            )
+            if approach == "fsodvfm":
+                 result = detector.detect_from_files(
+                    context_json_path=str(context_json),
+                    query_image_path=str(query_path),
+                    vis_path=str(output_dir / f"{query_path.stem}_vis.jpg") if args.visualize else None,
+                )
+            else: # approach == "groundingdino":
+                result = detector.detect_from_files(
+                    context_json_path=str(context_json),
+                    query_image_path=str(query_path),
+                    vis_path=str(output_dir / f"{query_path.stem}_vis.jpg") if args.visualize else None,
+                    box_threshold=args.box_threshold,
+                    text_threshold=args.text_threshold,
+                    match_threshold=args.match_threshold,
+                    nms_threshold=args.nms_threshold,
+                    max_box_area_ratio=args.max_box_area_ratio,
+                    tiny_box_area_ratio=args.tiny_box_area_ratio,
+                    tiny_box_min_proposal_score=args.tiny_box_min_proposal_score,
+                )
             elapsed = time.time() - start_time
             all_times.append(elapsed)
             predictions.append(result)
@@ -270,14 +300,36 @@ def main():
         allocated = torch.cuda.max_memory_allocated() / 1024**3
         print(f"GPU Memory peak: {allocated:.2f} GB")
 
+    avg_time = sum(all_times) / len(all_times) if all_times else 0
+
+    gpu_memory_peak = None
+    if torch.cuda.is_available():
+        gpu_memory_peak = torch.cuda.max_memory_allocated() / 1024**3
+
     if ground_truths:
         metrics = evaluate_predictions(predictions, ground_truths, args.iou_threshold)
+        metrics["approach"] = args.approach
+        metrics["thresholds"] = {
+            "text_threshold": args.text_threshold,
+            "match_threshold": args.match_threshold,
+            "nms_threshold": args.nms_threshold,
+            "iou_threshold": args.iou_threshold,
+            "box_threshold": args.box_threshold,
+            "max_box_area_ratio": args.max_box_area_ratio,
+            "tiny_box_area_ratio": args.tiny_box_area_ratio,
+            "tiny_box_min_proposal_score": args.tiny_box_min_proposal_score,
+            "max_proposals": args.max_proposals,
+            "proposal_threshold": args.proposal_threshold,
+            "graph_steps": args.graph_steps,
+        }
+        metrics["gpu_memory_peak_gb"] = gpu_memory_peak
+        metrics["avg_inference_time_seconds"] = avg_time
         print("\n" + "=" * 50)
         print("BENCHMARK RESULTS")
         print("=" * 50)
         print(f"Precision: {metrics['precision']:.4f}")
         print(f"Recall:    {metrics['recall']:.4f}")
-        print(f"F1 Score:  {metrics['f1']:.4f}")
+        print(f"F1 Score: {metrics['f1']:.4f}")
         print(
             f"TP: {metrics['total_tp']}, FP: {metrics['total_fp']}, FN: {metrics['total_fn']}"
         )
@@ -291,8 +343,12 @@ def main():
         metrics_file.write_text(json.dumps(metrics, indent=2))
     else:
         print("\nNo ground truth files found, skipping evaluation")
+        metrics = {"approach": args.approach, "avg_inference_time_seconds": avg_time}
+        if gpu_memory_peak is not None:
+            metrics["gpu_memory_peak_gb"] = gpu_memory_peak
+        metrics_file = output_dir / "metrics.json"
+        metrics_file.write_text(json.dumps(metrics, indent=2))
 
-    avg_time = sum(all_times) / len(all_times) if all_times else 0
     print(f"\nAverage inference time: {avg_time:.3f}s/image")
     print(f"Total images processed: {len(predictions)}")
     print(f"Output directory: {output_dir}")

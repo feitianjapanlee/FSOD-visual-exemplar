@@ -36,8 +36,8 @@ The implementation uses:
 | Precision | 0.982 |
 | Recall | 0.7773 |
 | F1 Score | 0.8677 |
-| Avg Inference Time | 0.52s/image |
-| GPU Memory | 3.08 GB |
+| Avg Inference Time | 0.524s/image |
+| GPU Memory | 2.32 GB |
 
 ### Note
 
@@ -62,10 +62,10 @@ Some changes added.
 
 | Metric | Value |
 |--------|-------|
-| Precision | 0.5515 |
-| Recall | 0.7867 |
-| F1 Score | 0.6484 |
-| Avg Inference Time | 3.29s/image |
+| Precision | 0.9669 |
+| Recall | 0.5545 |
+| F1 Score | 0.7048 |
+| Avg Inference Time | 2.28s/image |
 | GPU Memory | 3.41 GB |
 
 ### Note
