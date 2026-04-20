@@ -1,0 +1,41 @@
+[
+  {
+    "image": "data/toy-91/query_images/007af052-d3e6-4a6f-81dd-11f14d5966cd.jpg",
+    "detections": []
+  },
+  {
+    "image": "data/toy-91/query_images/0098cbf6-e60c-4757-985e-38bbb2090414.jpg",
+    "detections": []
+  },
+  {
+    "image": "data/toy-91/query_images/019e588b-a94a-4d91-a6e2-17d9fdd17c45.jpg",
+    "detections": [
+      {
+        "bbox": [
+          353.0,
+          83.0,
+          456.0,
+          187.0
+        ],
+        "class": "Halloween Pumpkin Plastic 7-P",
+        "score": 0.6866,
+        "similarity": 0.7573,
+        "proposal_score": 0.3248,
+        "consensus_views": 6
+      },
+      {
+        "bbox": [
+          65.0,
+          377.0,
+          204.0,
+          479.0
+        ],
+        "class": "Halloween Pumpkin Plastic 7-P",
+        "score": 0.6382,
+        "similarity": 0.6758,
+        "proposal_score": 0.3755,
+        "consensus_views": 6
+      }
+    ]
+  }
+]

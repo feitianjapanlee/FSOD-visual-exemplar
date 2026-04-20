@@ -1,0 +1,196 @@
+[
+  {
+    "image": "data/toy-91/query_images/007af052-d3e6-4a6f-81dd-11f14d5966cd.jpg",
+    "detections": [
+      {
+        "bbox": [
+          314.0,
+          196.0,
+          435.0,
+          331.0
+        ],
+        "class": "Stuffed Bear Blue SB-1-B",
+        "score": 0.5457,
+        "similarity": 0.4886,
+        "proposal_score": 0.5671,
+        "consensus_views": 3
+      }
+    ]
+  },
+  {
+    "image": "data/toy-91/query_images/0098cbf6-e60c-4757-985e-38bbb2090414.jpg",
+    "detections": [
+      {
+        "bbox": [
+          300.0,
+          136.0,
+          467.0,
+          322.0
+        ],
+        "class": "Stuffed Bear Blue SB-1-B",
+        "score": 0.3784,
+        "similarity": 0.3577,
+        "proposal_score": 0.4403,
+        "consensus_views": 0
+      },
+      {
+        "bbox": [
+          341.0,
+          99.0,
+          449.0,
+          201.0
+        ],
+        "class": "Stuffed Bear Blue SB-1-B",
+        "score": 0.369,
+        "similarity": 0.3712,
+        "proposal_score": 0.3625,
+        "consensus_views": 0
+      },
+      {
+        "bbox": [
+          202.0,
+          349.0,
+          401.0,
+          479.0
+        ],
+        "class": "Stuffed Bear Blue SB-1-B",
+        "score": 0.3608,
+        "similarity": 0.355,
+        "proposal_score": 0.3782,
+        "consensus_views": 0
+      }
+    ]
+  },
+  {
+    "image": "data/toy-91/query_images/019e588b-a94a-4d91-a6e2-17d9fdd17c45.jpg",
+    "detections": [
+      {
+        "bbox": [
+          353.0,
+          83.0,
+          456.0,
+          187.0
+        ],
+        "class": "Halloween Pumpkin Plastic 7-P",
+        "score": 0.6866,
+        "similarity": 0.7573,
+        "proposal_score": 0.3248,
+        "consensus_views": 6
+      },
+      {
+        "bbox": [
+          65.0,
+          377.0,
+          204.0,
+          479.0
+        ],
+        "class": "Halloween Pumpkin Plastic 7-P",
+        "score": 0.6382,
+        "similarity": 0.6758,
+        "proposal_score": 0.3755,
+        "consensus_views": 6
+      },
+      {
+        "bbox": [
+          288.0,
+          385.0,
+          459.0,
+          479.0
+        ],
+        "class": "Stuffed Bear Blue SB-1-B",
+        "score": 0.6324,
+        "similarity": 0.696,
+        "proposal_score": 0.2915,
+        "consensus_views": 3
+      }
+    ]
+  },
+  {
+    "image": "data/toy-91/query_images/02f2259b-662a-49fe-87a7-e195613a0a94.jpg",
+    "detections": [
+      {
+        "bbox": [
+          440.0,
+          0.0,
+          587.0,
+          163.0
+        ],
+        "class": "Stuffed Bear Blue SB-1-B",
+        "score": 0.5756,
+        "similarity": 0.5908,
+        "proposal_score": 0.3799,
+        "consensus_views": 3
+      },
+      {
+        "bbox": [
+          150.0,
+          150.0,
+          329.0,
+          282.0
+        ],
+        "class": "Stuffed Bear Blue SB-1-B",
+        "score": 0.5428,
+        "similarity": 0.5402,
+        "proposal_score": 0.4006,
+        "consensus_views": 3
+      },
+      {
+        "bbox": [
+          426.0,
+          192.0,
+          536.0,
+          334.0
+        ],
+        "class": "Pocket Tomika P060",
+        "score": 0.4321,
+        "similarity": 0.4373,
+        "proposal_score": 0.2665,
+        "consensus_views": 3
+      }
+    ]
+  },
+  {
+    "image": "data/toy-91/query_images/0caea226-a484-4c6b-bd12-c8ea2b7b86d7.jpg",
+    "detections": [
+      {
+        "bbox": [
+          484.0,
+          93.0,
+          612.0,
+          265.0
+        ],
+        "class": "Stuffed Bear Blue SB-1-B",
+        "score": 0.6283,
+        "similarity": 0.6974,
+        "proposal_score": 0.2708,
+        "consensus_views": 3
+      },
+      {
+        "bbox": [
+          314.0,
+          88.0,
+          430.0,
+          202.0
+        ],
+        "class": "Halloween Pumpkin Plastic 7-P",
+        "score": 0.6071,
+        "similarity": 0.6343,
+        "proposal_score": 0.3754,
+        "consensus_views": 5
+      },
+      {
+        "bbox": [
+          166.0,
+          236.0,
+          329.0,
+          377.0
+        ],
+        "class": "Stuffed Bear Blue SB-1-B",
+        "score": 0.5013,
+        "similarity": 0.4647,
+        "proposal_score": 0.4613,
+        "consensus_views": 3
+      }
+    ]
+  }
+]

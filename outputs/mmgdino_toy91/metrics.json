@@ -1,0 +1,41 @@
+{
+  "precision": 0.6299212598425197,
+  "recall": 0.7582938388625592,
+  "f1": 0.6881720430107526,
+  "total_tp": 160,
+  "total_fp": 94,
+  "total_fn": 51,
+  "per_class": {
+    "Stuffed Bear Blue SB-1-B": {
+      "precision": 0.3776223776223776,
+      "recall": 0.75,
+      "f1": 0.5023255813953489
+    },
+    "Halloween Pumpkin Plastic 7-P": {
+      "precision": 0.9523809523809523,
+      "recall": 0.8695652173913043,
+      "f1": 0.909090909090909
+    },
+    "Pocket Tomika P060": {
+      "precision": 0.9629629629629629,
+      "recall": 0.5531914893617021,
+      "f1": 0.7027027027027027
+    }
+  },
+  "approach": "mmgroundingdino",
+  "thresholds": {
+    "text_threshold": 0.15,
+    "match_threshold": 0.22,
+    "nms_threshold": 0.45,
+    "iou_threshold": 0.5,
+    "box_threshold": 0.2,
+    "max_box_area_ratio": 0.25,
+    "tiny_box_area_ratio": 0.015,
+    "tiny_box_min_proposal_score": 0.3,
+    "max_proposals": 500,
+    "proposal_threshold": 0.01,
+    "graph_steps": 30
+  },
+  "gpu_memory_peak_gb": 2.281698703765869,
+  "avg_inference_time_seconds": 0.6254703605568016
+}

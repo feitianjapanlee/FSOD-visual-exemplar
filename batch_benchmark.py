@@ -150,10 +150,11 @@ def draw_comparison(query_image_path, gt_detections, pred_detections, output_pat
 
 def main():
     parser = argparse.ArgumentParser(description="FSOD Batch Benchmark")
-    parser.add_argument("--approach", required=True, help="Approach name (GroundingDINO/FSODVFM)")
+    parser.add_argument("--approach", required=True, help="Approach name (GroundingDINO/FSODVFM/MMGroundingDINO)")
     parser.add_argument("--sample-list", default='data/toy-91/sample_list.txt', help="Path to sample list file (default: data/toy-91/sample_list.txt)")
     parser.add_argument("--output-dir", default='outputs/latest', help="Output directory (default: outputs/latest)")
     parser.add_argument("--exemplar", default='data/toy-91/exemplar.json', help="Path to exemplar JSON (default: data/toy-91/exemplar.json)")
+    parser.add_argument("--target-class", default=None, help='Path to target class JSON (format: {"target": ["class_name", ...]}). Restricts detection to these classes.')
     parser.add_argument("--data-root", default="data/toy-91", help="Data root directory (default: data/toy-91)")
     parser.add_argument("--visualize", action="store_true", help="Save visualizations")
     parser.add_argument("--max-images", type=int, default=None, help="Max images to process")
@@ -200,7 +201,17 @@ def main():
 
     print(f"Using exemplar: {exemplar_json}")
 
-    if approach == "fsodvfm":    
+    target_classes = None
+    if args.target_class:
+        target_path = Path(args.target_class)
+        target_payload = json.loads(target_path.read_text(encoding="utf-8"))
+        target_classes = target_payload.get("target") if isinstance(target_payload, dict) else target_payload
+        if not isinstance(target_classes, list) or not target_classes:
+            print(f"Invalid --target-class file (expected {{'target': [...]}}): {target_path}")
+            return
+        print(f"Target classes: {target_classes}")
+
+    if approach == "fsodvfm":
         from approach_FSODVFM.fsod_vfm.detector import FSODVFMDetector
 
         detector = FSODVFMDetector(
@@ -215,6 +226,10 @@ def main():
         from approach_GroundingDINO.exemplar_detector import ExemplarConditionedDetector
 
         detector = ExemplarConditionedDetector(device=args.device)
+    elif approach == "mmgroundingdino":
+        from approach_MMGroundingDINO import MMGroundingDINODetector
+
+        detector = MMGroundingDINODetector(device=args.device)
     else:
         print(f"Unsupported approach: {approach}")
         return
@@ -257,12 +272,19 @@ def main():
         start_time = time.time()
         try:
             if approach == "fsodvfm":
-                 result = detector.detect_from_files(
+                result = detector.detect_from_files(
                     exemplar_json_path=str(exemplar_json),
                     query_image_path=str(query_path),
                     vis_path=str(output_dir / f"{query_path.stem}_vis.jpg") if args.visualize else None,
                 )
-            else: # approach == "groundingdino":
+            elif approach == "mmgroundingdino":
+                result = detector.detect_from_files(
+                    exemplar_json_path=str(exemplar_json),
+                    query_image_path=str(query_path),
+                    vis_path=str(output_dir / f"{query_path.stem}_vis.jpg") if args.visualize else None,
+                    target_classes=target_classes,
+                )
+            else:  # approach == "groundingdino":
                 result = detector.detect_from_files(
                     exemplar_json_path=str(exemplar_json),
                     query_image_path=str(query_path),
@@ -285,6 +307,13 @@ def main():
         if gt_path.exists():
             try:
                 gt_data = json.loads(gt_path.read_text(encoding="utf-8"))
+                if target_classes is not None:
+                    gt_data = {
+                        **gt_data,
+                        "detections": [
+                            d for d in gt_data.get("detections", []) if d.get("class") in target_classes
+                        ],
+                    }
                 ground_truths.append(gt_data)
             except Exception as e:
                 print(f"Error loading GT {gt_path}: {e}")

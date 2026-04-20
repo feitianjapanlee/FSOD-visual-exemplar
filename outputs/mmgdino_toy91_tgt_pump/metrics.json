@@ -1,0 +1,31 @@
+{
+  "precision": 1.0,
+  "recall": 1.0,
+  "f1": 1.0,
+  "total_tp": 2,
+  "total_fp": 0,
+  "total_fn": 0,
+  "per_class": {
+    "Halloween Pumpkin Plastic 7-P": {
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0
+    }
+  },
+  "approach": "mmgroundingdino",
+  "thresholds": {
+    "text_threshold": 0.15,
+    "match_threshold": 0.22,
+    "nms_threshold": 0.45,
+    "iou_threshold": 0.5,
+    "box_threshold": 0.2,
+    "max_box_area_ratio": 0.25,
+    "tiny_box_area_ratio": 0.015,
+    "tiny_box_min_proposal_score": 0.3,
+    "max_proposals": 500,
+    "proposal_threshold": 0.01,
+    "graph_steps": 30
+  },
+  "gpu_memory_peak_gb": 2.280351161956787,
+  "avg_inference_time_seconds": 0.7480035622914633
+}
