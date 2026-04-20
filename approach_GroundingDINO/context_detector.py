@@ -21,7 +21,7 @@ class Detection:
     proposal_score: float
 
 
-class ContextConditionedDetector:
+class ExemplarConditionedDetector:
     def __init__(self, device: Optional[str] = None):
         if device is None:
             if torch.cuda.is_available():
@@ -44,7 +44,7 @@ class ContextConditionedDetector:
 
     def detect_from_files(
         self,
-        context_json_path: str,
+        exemplar_json_path: str,
         query_image_path: str,
         box_threshold: float = 0.2,
         text_threshold: float = 0.15,
@@ -55,14 +55,14 @@ class ContextConditionedDetector:
         tiny_box_min_proposal_score: float = 0.30,
         vis_path: Optional[str] = None,
     ) -> Dict:
-        context_path = Path(context_json_path)
-        context = json.loads(context_path.read_text(encoding='utf-8'))
+        exemplar_path = Path(exemplar_json_path)
+        exemplar = json.loads(exemplar_path.read_text(encoding='utf-8'))
         query_path = Path(query_image_path)
 
-        class_db = self._build_class_database(context['context'], context_path.parent)
+        class_db = self._build_class_database(exemplar['exemplar'], exemplar_path.parent)
         query_image = Image.open(query_path).convert('RGB')
 
-        proposal_prompt = self._build_generic_prompt(context['context'])
+        proposal_prompt = self._build_generic_prompt(exemplar['exemplar'])
         proposals = self._propose_boxes(
             query_image,
             proposal_prompt,
@@ -99,9 +99,9 @@ class ContextConditionedDetector:
             self._draw(query_image, detections, vis_path)
         return result
 
-    def _build_class_database(self, context_items: List[Dict], base_dir: Path):
+    def _build_class_database(self, exemplar_items: List[Dict], base_dir: Path):
         db = {}
-        for item in context_items:
+        for item in exemplar_items:
             class_name = item.get('class_name', item['class'])
             image_paths = [base_dir / p for p in item['refer_image']]
             images = [Image.open(p).convert('RGB') for p in image_paths]
@@ -118,8 +118,8 @@ class ContextConditionedDetector:
             }
         return db
 
-    def _build_generic_prompt(self, context_items: List[Dict]) -> str:
-        class_names = [str(item.get('class_name', item['class'])) for item in context_items]
+    def _build_generic_prompt(self, exemplar_items: List[Dict]) -> str:
+        class_names = [str(item.get('class_name', item['class'])) for item in exemplar_items]
         generic_terms = ['object', 'item', 'product', 'vehicle', 'car', 'toy', 'decoration', 'thing']
         prompt_terms = generic_terms + class_names
         return ' . '.join(prompt_terms) + ' .'

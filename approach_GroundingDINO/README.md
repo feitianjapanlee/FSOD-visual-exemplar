@@ -1,6 +1,6 @@
 # Few-shot Novel Object Detection Prototype
 
-Context-image-conditioned object detection prototype.
+Visual-exemplar-conditioned object detection prototype.
 
 ## What this is
 A validation pipeline for detecting object instances in a query image given:
@@ -26,16 +26,16 @@ This gives a zero additional training baseline and is easy to validate.
 
 ## Project layout
 - `requirements.txt` Python dependencies
-- `context_detector.py` main pipeline
-- `demo_context.json` sample input format aligned with the bundled sample data
-- `data/toy-91/context.json` validated sample context used for the included toy/object dataset
+- `exemplar_detector.py` main pipeline
+- `demo_exemplar.json` sample input format aligned with the bundled sample data
+- `data/toy-91/exemplar.json` validated sample exemplar used for the included toy/object dataset
 - `run_demo.py` CLI entrypoint
 - `evaluate.py` simple evaluator for prediction JSON against GT JSON
 
 ## Input format
 ```json
 {
-  "context": [
+  "exemplar": [
     {
       "class": 1,
       "class_name": "Stuffed Bear Blue SB-1-B",
@@ -51,9 +51,9 @@ This gives a zero additional training baseline and is easy to validate.
 ```
 
 Notes:
-- `refer_image` paths are resolved relative to the context JSON file location.
+- `refer_image` paths are resolved relative to the exemplar JSON file location.
 - `class_name` is optional in schema terms, but recommended because it improves text matching and makes outputs readable.
-- The bundled sample dataset lives under `data/toy-91/`, so `data/toy-91/context.json` references `refer_images/...` relative to that directory.
+- The bundled sample dataset lives under `data/toy-91/`, so `data/toy-91/exemplar.json` references `refer_images/...` relative to that directory.
 
 ## Output format
 ```json
@@ -82,13 +82,13 @@ pip install -r requirements.txt
 Using the bundled sample dataset:
 ```bash
 python run_demo.py \
-  --context data/toy-91/context.json \
+  --exemplar data/toy-91/exemplar.json \
   --query data/toy-91/query_images/019e588b-a94a-4d91-a6e2-17d9fdd17c45.jpg \
   --output outputs/predictions.json \
   --vis outputs/vis.jpg
 ```
 
-If you want to use `demo_context.json`, place it beside a matching `refer_images/` directory or update the paths to fit your dataset layout.
+If you want to use `demo_exemplar.json`, place it beside a matching `refer_images/` directory or update the paths to fit your dataset layout.
 
 ## Evaluation
 `evaluate.py` compares prediction JSON against a GT JSON file using class-aware IoU matching.

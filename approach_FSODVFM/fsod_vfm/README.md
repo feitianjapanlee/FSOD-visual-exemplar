@@ -98,7 +98,7 @@ combined_similarity = (
 python benchmark_fsod_vfm.py \
     --sample-list data/toy-91/sample_list.txt \
     --output-dir outputs/toy-91-vfm \
-    --context data/toy-91/context.json \
+    --exemplar data/toy-91/exemplar.json \
     --data-root data/toy-91
 ```
 

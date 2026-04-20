@@ -1,4 +1,4 @@
-# Training-free Few-shot Object Detector
+# Training-free Visual Exemplar Few-shot Object Detector
 
 クエリ画像から参照画像（サポートセット）に基づいて物体を検出します。
 

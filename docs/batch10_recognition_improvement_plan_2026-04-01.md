@@ -172,7 +172,7 @@ batch10 の 10 枚の確認結果は以下の通りです。
 
 #### 対策
 - 誤認識した画像を **hard example** として再学習に入れる
-- rare / occluded / crowded / unusual context の参照画像を増やす
+- rare / occluded / crowded / unusual exemplar の参照画像を増やす
 - retrieval ベースで近傍参照画像を使って再判定する
 - active learning で迷った例を優先アノテーションする
 
@@ -188,7 +188,7 @@ batch10 の 10 枚の確認結果は以下の通りです。
 | 施策 | 狙い | 対象パターン | 工数感 | 効果見込み |
 |---|---|---|---|---|
 | 誤認識 6 枚の hard example 化 | 失敗例を直接学習 | A/B/C/D/E | 低〜中 | 高 |
-| multi-scale + context crop 再判定 | 局所誤認識の補正 | A/B/C/E | 中 | 高 |
+| multi-scale + exemplar crop 再判定 | 局所誤認識の補正 | A/B/C/E | 中 | 高 |
 | boundary ベース後処理 | split / merge の補正 | A/B | 中 | 高 |
 | color jitter + grayscale 混在 | 色依存低減 | D | 低 | 高 |
 
@@ -287,7 +287,7 @@ batch10 の 10 枚の確認結果は以下の通りです。
   - `same-color-negative`
   - `rare-view`
   - `small-object`
-  - `unusual-context`
+  - `unusual-exemplar`
 - 失敗画像は必ず保存し、再学習候補として管理する
 - 参照画像追加時は、どの失敗タイプを補う画像かを明示する
 - 同じ条件の画像ばかり増やさない
@@ -409,7 +409,7 @@ batch10 の 10 枚の確認結果は以下の通りです。
 ### Phase 2: 低コスト改善
 - hard example 追加
 - color bias 抑制 augmentation
-- context crop 再判定
+- exemplar crop 再判定
 - boundary ベース後処理
 
 ### Phase 3: 参照画像整備
@@ -435,7 +435,7 @@ batch10 の 10 枚の確認結果は以下の通りです。
 本件では、単にモデルを重くするより、次の順で改善する方が効果的である。
 
 1. 失敗例を hard example として活用する
-2. multi-scale / context crop / boundary 後処理を導入する
+2. multi-scale / exemplar crop / boundary 後処理を導入する
 3. 参照画像を variation ベースで再整備する
 4. 色依存を下げる学習を行う
 5. DINOv2 / DINOv3 を比較評価する
@@ -464,6 +464,6 @@ batch10 の 10 枚の確認結果は以下の通りです。
 ### モデル改善時
 - [ ] color jitter を強化したか
 - [ ] grayscale 混在を試したか
-- [ ] context crop 再判定を入れたか
+- [ ] exemplar crop 再判定を入れたか
 - [ ] boundary ベース補正を入れたか
 - [ ] DINOv2 / DINOv3 を比較候補に入れたか

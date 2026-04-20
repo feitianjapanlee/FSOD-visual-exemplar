@@ -2,12 +2,12 @@ import argparse
 import json
 from pathlib import Path
 
-from context_detector import ContextConditionedDetector
+from exemplar_detector import ExemplarConditionedDetector
 
 
 def main():
     parser = argparse.ArgumentParser()
-    parser.add_argument('--context', required=True)
+    parser.add_argument('--exemplar', required=True)
     parser.add_argument('--query', required=True)
     parser.add_argument('--output', required=True)
     parser.add_argument('--vis', default=None)
@@ -18,9 +18,9 @@ def main():
     parser.add_argument('--nms-threshold', type=float, default=0.45)
     args = parser.parse_args()
 
-    detector = ContextConditionedDetector(device=args.device)
+    detector = ExemplarConditionedDetector(device=args.device)
     results = detector.detect_from_files(
-        context_json_path=args.context,
+        exemplar_json_path=args.exemplar,
         query_image_path=args.query,
         box_threshold=args.box_threshold,
         text_threshold=args.text_threshold,

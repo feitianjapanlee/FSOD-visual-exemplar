@@ -8,7 +8,7 @@ from fsod_vfm.detector import FSODVFMDetector
 
 def main():
     parser = argparse.ArgumentParser(description="FSOD-VFM Few-Shot Object Detection")
-    parser.add_argument("--context", required=True, help="Path to context JSON file")
+    parser.add_argument("--exemplar", required=True, help="Path to exemplar JSON file")
     parser.add_argument("--query", required=True, help="Path to query image")
     parser.add_argument(
         "--output", default="outputs/predictions.json", help="Output JSON path"
@@ -41,7 +41,7 @@ def main():
     )
 
     result = detector.detect_from_files(
-        context_json_path=args.context,
+        exemplar_json_path=args.exemplar,
         query_image_path=args.query,
         vis_path=args.vis,
     )

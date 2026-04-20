@@ -153,7 +153,7 @@ def main():
     parser.add_argument("--approach", required=True, help="Approach name (GroundingDINO/FSODVFM)")
     parser.add_argument("--sample-list", default='data/toy-91/sample_list.txt', help="Path to sample list file (default: data/toy-91/sample_list.txt)")
     parser.add_argument("--output-dir", default='outputs/latest', help="Output directory (default: outputs/latest)")
-    parser.add_argument("--context", default='data/toy-91/context.json', help="Path to context JSON (default: data/toy-91/context.json)")
+    parser.add_argument("--exemplar", default='data/toy-91/exemplar.json', help="Path to exemplar JSON (default: data/toy-91/exemplar.json)")
     parser.add_argument("--data-root", default="data/toy-91", help="Data root directory (default: data/toy-91)")
     parser.add_argument("--visualize", action="store_true", help="Save visualizations")
     parser.add_argument("--max-images", type=int, default=None, help="Max images to process")
@@ -183,22 +183,22 @@ def main():
     output_dir = Path(args.output_dir)
     output_dir.mkdir(parents=True, exist_ok=True)
 
-    context_json = (
-        data_root / args.context
-        if not Path(args.context).is_absolute()
-        else Path(args.context)
+    exemplar_json = (
+        data_root / args.exemplar
+        if not Path(args.exemplar).is_absolute()
+        else Path(args.exemplar)
     )
-    if not context_json.exists():
+    if not exemplar_json.exists():
         for candidate in [
-            Path(args.context),
-            data_root / "context.json",
-            Path("data/toy-91/context.json"),
+            Path(args.exemplar),
+            data_root / "exemplar.json",
+            Path("data/toy-91/exemplar.json"),
         ]:
             if candidate.exists():
-                context_json = candidate
+                exemplar_json = candidate
                 break
 
-    print(f"Using context: {context_json}")
+    print(f"Using exemplar: {exemplar_json}")
 
     if approach == "fsodvfm":    
         from approach_FSODVFM.fsod_vfm.detector import FSODVFMDetector
@@ -212,9 +212,9 @@ def main():
             nms_threshold=args.nms_threshold,
         )
     elif approach == "groundingdino":
-        from approach_GroundingDINO.context_detector import ContextConditionedDetector
+        from approach_GroundingDINO.exemplar_detector import ExemplarConditionedDetector
 
-        detector = ContextConditionedDetector(device=args.device)
+        detector = ExemplarConditionedDetector(device=args.device)
     else:
         print(f"Unsupported approach: {approach}")
         return
@@ -258,13 +258,13 @@ def main():
         try:
             if approach == "fsodvfm":
                  result = detector.detect_from_files(
-                    context_json_path=str(context_json),
+                    exemplar_json_path=str(exemplar_json),
                     query_image_path=str(query_path),
                     vis_path=str(output_dir / f"{query_path.stem}_vis.jpg") if args.visualize else None,
                 )
             else: # approach == "groundingdino":
                 result = detector.detect_from_files(
-                    context_json_path=str(context_json),
+                    exemplar_json_path=str(exemplar_json),
                     query_image_path=str(query_path),
                     vis_path=str(output_dir / f"{query_path.stem}_vis.jpg") if args.visualize else None,
                     box_threshold=args.box_threshold,

@@ -136,15 +136,15 @@ class FSODVFMDetector:
     @torch.no_grad()
     def detect_from_files(
         self,
-        context_json_path: str,
+        exemplar_json_path: str,
         query_image_path: str,
         vis_path: Optional[str] = None,
     ) -> Dict:
-        context_path = Path(context_json_path)
-        context = json.loads(context_path.read_text(encoding="utf-8"))
+        exemplar_path = Path(exemplar_json_path)
+        exemplar = json.loads(exemplar_path.read_text(encoding="utf-8"))
         query_path = Path(query_image_path)
 
-        class_db = self._build_class_database(context["context"], context_path.parent)
+        class_db = self._build_class_database(exemplar["exemplar"], exemplar_path.parent)
         query_image = Image.open(query_path).convert("RGB")
 
         proposals = self._generate_proposals(query_image)
@@ -199,9 +199,9 @@ class FSODVFMDetector:
 
         return result
 
-    def _build_class_database(self, context_items: List[Dict], base_dir: Path) -> Dict:
+    def _build_class_database(self, exemplar_items: List[Dict], base_dir: Path) -> Dict:
         db = {}
-        for item in context_items:
+        for item in exemplar_items:
             class_name = str(item.get("class_name", item["class"]))
             image_paths = [base_dir / p for p in item["refer_image"]]
             images = [Image.open(p).convert("RGB") for p in image_paths]
