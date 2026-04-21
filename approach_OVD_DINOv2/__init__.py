@@ -1,3 +1,3 @@
-from .detector import MMGroundingDINODetector
+from .detector import OVDDINOv2Detector
 
-__all__ = ["MMGroundingDINODetector"]
+__all__ = ["OVDDINOv2Detector"]

@@ -22,7 +22,7 @@
       "f1": 0.6944444444444444
     }
   },
-  "approach": "mmgroundingdino",
+  "approach": "ovd_dinov2",
   "thresholds": {
     "text_threshold": 0.15,
     "match_threshold": 0.22,

@@ -1,7 +1,7 @@
-"""MM-Grounding-DINO + DINOv2-L two-stage training-free detector.
+"""Text-prompted OVD + DINOv2-L two-stage training-free detector.
 
-Stage 1: MM-Grounding-DINO Tiny takes a category-level text prompt and returns
-         recall-oriented region proposals.
+Stage 1: An open-vocabulary detector (default: Grounding DINO Tiny) takes a
+         category-level text prompt and returns recall-oriented region proposals.
 Stage 2: Each proposal is cropped, embedded with DINOv2-L, and matched to the
          per-class exemplar embeddings (max-over-views cosine similarity with a
          small consensus bonus when multiple views agree).
@@ -53,7 +53,7 @@ class Detection:
     consensus_views: int
 
 
-class MMGroundingDINODetector:
+class OVDDINOv2Detector:
     def __init__(
         self,
         device: Optional[str] = None,
@@ -329,7 +329,7 @@ class MMGroundingDINODetector:
             return False
         if not self.sam3_checkpoint.exists() or not self.sam3_bpe_path.exists():
             print(
-                f"[MMGDINO] SAM3 checkpoint/bpe not found (ckpt={self.sam3_checkpoint}, "
+                f"[OVD_DINOv2] SAM3 checkpoint/bpe not found (ckpt={self.sam3_checkpoint}, "
                 f"bpe={self.sam3_bpe_path}); falling back to saturation crop."
             )
             self.enable_sam3 = False
@@ -340,7 +340,7 @@ class MMGroundingDINODetector:
             from sam3 import build_sam3_image_model
             from sam3.model.sam3_image_processor import Sam3Processor
         except Exception as exc:  # noqa: BLE001
-            print(f"[MMGDINO] SAM3 import failed ({exc}); falling back to saturation crop.")
+            print(f"[OVD_DINOv2] SAM3 import failed ({exc}); falling back to saturation crop.")
             self.enable_sam3 = False
             return False
         self._sam3_model = build_sam3_image_model(
@@ -367,7 +367,7 @@ class MMGroundingDINODetector:
             self._sam3_processor.reset_all_prompts(state)
             state = self._sam3_processor.set_text_prompt(prompt=prompt, state=state)
         except Exception as exc:  # noqa: BLE001
-            print(f"[MMGDINO] SAM3 inference failed for prompt='{prompt}': {exc}")
+            print(f"[OVD_DINOv2] SAM3 inference failed for prompt='{prompt}': {exc}")
             return None
 
         boxes = state.get("boxes")

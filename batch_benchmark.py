@@ -150,7 +150,7 @@ def draw_comparison(query_image_path, gt_detections, pred_detections, output_pat
 
 def main():
     parser = argparse.ArgumentParser(description="FSOD Batch Benchmark")
-    parser.add_argument("--approach", required=True, help="Approach name (GroundingDINO/FSODVFM/MMGroundingDINO)")
+    parser.add_argument("--approach", required=True, help="Approach name (GroundingDINO/FSODVFM/OVD_DINOv2)")
     parser.add_argument("--sample-list", default='data/toy-91/sample_list.txt', help="Path to sample list file (default: data/toy-91/sample_list.txt)")
     parser.add_argument("--output-dir", default='outputs/latest', help="Output directory (default: outputs/latest)")
     parser.add_argument("--exemplar", default='data/toy-91/exemplar.json', help="Path to exemplar JSON (default: data/toy-91/exemplar.json)")
@@ -226,10 +226,10 @@ def main():
         from approach_GroundingDINO.exemplar_detector import ExemplarConditionedDetector
 
         detector = ExemplarConditionedDetector(device=args.device)
-    elif approach == "mmgroundingdino":
-        from approach_MMGroundingDINO import MMGroundingDINODetector
+    elif approach == "ovd_dinov2":
+        from approach_OVD_DINOv2 import OVDDINOv2Detector
 
-        detector = MMGroundingDINODetector(device=args.device)
+        detector = OVDDINOv2Detector(device=args.device)
     else:
         print(f"Unsupported approach: {approach}")
         return
@@ -277,7 +277,7 @@ def main():
                     query_image_path=str(query_path),
                     vis_path=str(output_dir / f"{query_path.stem}_vis.jpg") if args.visualize else None,
                 )
-            elif approach == "mmgroundingdino":
+            elif approach == "ovd_dinov2":
                 result = detector.detect_from_files(
                     exemplar_json_path=str(exemplar_json),
                     query_image_path=str(query_path),

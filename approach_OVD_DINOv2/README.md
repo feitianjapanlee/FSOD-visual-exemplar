@@ -1,4 +1,4 @@
-# approach_MMGroundingDINO
+# approach_OVD_DINOv2
 
 `docs/FSOD_Design_by_Claude_Opus4.7.md` の「推奨パイプライン」を参考にした training-free の2段階検出実装。Stage 1 にテキスト駆動のopen-vocabulary検出器、Stage 2 に DINOv2-L を用いた個体照合を置き、参考画像 (exemplar) のみでクラスを定義する。
 
@@ -57,12 +57,12 @@ score = 0.75 · best.effective + 0.25 · proposal_score
 
 ## CLIパラメータ (batch_benchmark.py 経由)
 
-- `--approach mmgroundingdino`
+- `--approach ovd_dinov2`
 - `--exemplar <path>` (`category` フィールド推奨)
 - `--target-class <path>` `{"target": ["class_name", ...]}` で検出対象クラスを絞り込み
 - `--device cuda|cpu|mps`
 
-`MMGroundingDINODetector.detect_from_files` は追加で `box_threshold`, `text_threshold`, `match_threshold`, `margin_threshold`, `consensus_threshold`, `consensus_bonus`, `null_margin`, `nms_threshold`, `max_box_area_ratio`, `min_box_area_ratio` 等を直接渡せる (`detector.py:89` 以降)。
+`OVDDINOv2Detector.detect_from_files` は追加で `box_threshold`, `text_threshold`, `match_threshold`, `margin_threshold`, `consensus_threshold`, `consensus_bonus`, `null_margin`, `nms_threshold`, `max_box_area_ratio`, `min_box_area_ratio` 等を直接渡せる (`detector.py:89` 以降)。
 
 ## 推奨パイプラインとの差異
 
@@ -199,8 +199,8 @@ score = 0.75 · best.effective + 0.25 · proposal_score
 
 ## 関連ファイル
 
-- `detector.py` — `MMGroundingDINODetector` 本体
+- `detector.py` — `OVDDINOv2Detector` 本体
 - `__init__.py` — エクスポート
 - `model_checkpoints/` — `sam3.pt` と `bpe_simple_vocab_16e6.txt.gz` (user配置)
-- `../batch_benchmark.py` — ベンチマーク driver (`--approach mmgroundingdino`)
+- `../batch_benchmark.py` — ベンチマーク driver (`--approach ovd_dinov2`)
 - `../docs/FSOD_Design_by_Claude_Opus4.7.md` — 推奨パイプラインの原典
