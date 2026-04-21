@@ -9,6 +9,8 @@ Per-class NMS and an adaptive threshold produce the final detections.
 """
 
 import json
+import os
+import sys
 from dataclasses import dataclass
 from pathlib import Path
 from typing import Dict, List, Optional
@@ -20,6 +22,10 @@ import torch.nn.functional as F
 from PIL import Image
 from torchvision.ops import nms
 from transformers import AutoImageProcessor, AutoModel, AutoModelForZeroShotObjectDetection, AutoProcessor
+
+_DEFAULT_SAM3_REPO = "/home/lee/workspace/keihin-prototype-sam"
+_DEFAULT_SAM3_CHECKPOINT = Path(__file__).resolve().parent / "model_checkpoints" / "sam3.pt"
+_DEFAULT_SAM3_BPE = Path(__file__).resolve().parent / "model_checkpoints" / "bpe_simple_vocab_16e6.txt.gz"
 
 # The design doc recommends MM-Grounding-DINO Tiny; on this toy-91 benchmark the
 # public ``openmmlab-community/mm_grounding_dino_tiny_*`` checkpoints produce
@@ -55,6 +61,12 @@ class MMGroundingDINODetector:
         dinov2_id: str = DEFAULT_DINOV2_ID,
         detector_dtype: Optional[torch.dtype] = None,
         dinov2_dtype: Optional[torch.dtype] = None,
+        enable_sam3: bool = True,
+        sam3_repo_path: Optional[str] = None,
+        sam3_checkpoint: Optional[str] = None,
+        sam3_bpe_path: Optional[str] = None,
+        sam3_resolution: int = 1008,
+        sam3_confidence_threshold: float = 0.3,
     ):
         if device is None:
             if torch.cuda.is_available():
@@ -84,6 +96,15 @@ class MMGroundingDINODetector:
         )
 
         self._exemplar_cache: Dict[str, Dict] = {}
+
+        self.enable_sam3 = enable_sam3
+        self.sam3_repo_path = sam3_repo_path or os.environ.get("SAM3_REPO_PATH", _DEFAULT_SAM3_REPO)
+        self.sam3_checkpoint = Path(sam3_checkpoint) if sam3_checkpoint else _DEFAULT_SAM3_CHECKPOINT
+        self.sam3_bpe_path = Path(sam3_bpe_path) if sam3_bpe_path else _DEFAULT_SAM3_BPE
+        self.sam3_resolution = sam3_resolution
+        self.sam3_confidence_threshold = sam3_confidence_threshold
+        self._sam3_model = None
+        self._sam3_processor = None
 
     # ------------------------------------------------------------------ public
     def detect_from_files(
@@ -212,7 +233,10 @@ class MMGroundingDINODetector:
             class_name = str(item.get("class_name", item["class"]))
             ref_paths = [self._resolve_ref_path(base_dir, p) for p in item["refer_image"]]
             images = [Image.open(p).convert("RGB") for p in ref_paths]
-            foreground_images = [self._foreground_crop(img) for img in images]
+            category = item.get("category")
+            foreground_images = [
+                self._foreground_crop(img, category=category, class_name=class_name) for img in images
+            ]
             # Reference-side TTA: horizontal flip + light zoom crop per reference.
             # Design doc §問題1: "参考画像1枚しかないクラスへの対処は、TTAで参照側を擬似拡張する".
             tta_images: List[Image.Image] = []
@@ -254,12 +278,28 @@ class MMGroundingDINODetector:
             return alt
         return candidate  # let PIL surface the error
 
-    def _foreground_crop(self, image: Image.Image) -> Image.Image:
-        """Lightweight foreground isolation by bounding the largest non-background blob.
+    def _foreground_crop(
+        self,
+        image: Image.Image,
+        category: Optional[str] = None,
+        class_name: Optional[str] = None,
+    ) -> Image.Image:
+        """Isolate the foreground product in a reference image.
 
-        Reference images in this benchmark are already tightly cropped product shots,
-        so a simple saturation-thresholded bbox works as a stand-in for SAM2/BiRefNet.
+        Uses SAM3 text-conditioned segmentation when available (prompted with the
+        exemplar's ``category`` or ``class_name``), and falls back to a saturation-
+        thresholded bbox if SAM3 is disabled, unavailable, or returns no mask.
         """
+        if self.enable_sam3:
+            prompts = [p for p in (category, class_name) if p]
+            prompts.append("object")
+            for prompt in prompts:
+                crop = self._sam3_foreground_crop(image, prompt)
+                if crop is not None:
+                    return crop
+        return self._saturation_foreground_crop(image)
+
+    def _saturation_foreground_crop(self, image: Image.Image) -> Image.Image:
         arr = np.array(image)
         if arr.ndim != 3 or arr.shape[2] < 3:
             return image
@@ -280,6 +320,81 @@ class MMGroundingDINODetector:
         x2 = min(arr.shape[1], x2 + pad_x)
         if (x2 - x1) < 16 or (y2 - y1) < 16:
             return image
+        return image.crop((x1, y1, x2, y2))
+
+    def _ensure_sam3(self):
+        if self._sam3_model is not None:
+            return True
+        if not self.enable_sam3:
+            return False
+        if not self.sam3_checkpoint.exists() or not self.sam3_bpe_path.exists():
+            print(
+                f"[MMGDINO] SAM3 checkpoint/bpe not found (ckpt={self.sam3_checkpoint}, "
+                f"bpe={self.sam3_bpe_path}); falling back to saturation crop."
+            )
+            self.enable_sam3 = False
+            return False
+        if self.sam3_repo_path and self.sam3_repo_path not in sys.path:
+            sys.path.insert(0, self.sam3_repo_path)
+        try:
+            from sam3 import build_sam3_image_model
+            from sam3.model.sam3_image_processor import Sam3Processor
+        except Exception as exc:  # noqa: BLE001
+            print(f"[MMGDINO] SAM3 import failed ({exc}); falling back to saturation crop.")
+            self.enable_sam3 = False
+            return False
+        self._sam3_model = build_sam3_image_model(
+            bpe_path=str(self.sam3_bpe_path),
+            checkpoint_path=str(self.sam3_checkpoint),
+            load_from_HF=False,
+            enable_segmentation=True,
+            device=self.device,
+        )
+        self._sam3_processor = Sam3Processor(
+            model=self._sam3_model,
+            resolution=self.sam3_resolution,
+            device=self.device,
+            confidence_threshold=self.sam3_confidence_threshold,
+        )
+        return True
+
+    @torch.no_grad()
+    def _sam3_foreground_crop(self, image: Image.Image, prompt: str) -> Optional[Image.Image]:
+        if not self._ensure_sam3():
+            return None
+        try:
+            state = self._sam3_processor.set_image(image)
+            self._sam3_processor.reset_all_prompts(state)
+            state = self._sam3_processor.set_text_prompt(prompt=prompt, state=state)
+        except Exception as exc:  # noqa: BLE001
+            print(f"[MMGDINO] SAM3 inference failed for prompt='{prompt}': {exc}")
+            return None
+
+        boxes = state.get("boxes")
+        scores = state.get("scores")
+        if boxes is None or scores is None or len(scores) == 0:
+            return None
+
+        # Pick the *largest* confident mask rather than the highest-scoring one.
+        # Reference product shots are typically a single item filling the frame,
+        # and SAM3 sometimes returns a tighter high-confidence sub-part (e.g. the
+        # car body inside a toy-with-packaging shot), which drifts the DINOv2
+        # embedding away from query crops that include the whole product.
+        boxes_cpu = boxes.detach().float().cpu()
+        areas = (boxes_cpu[:, 2] - boxes_cpu[:, 0]).clamp(min=0) * (
+            boxes_cpu[:, 3] - boxes_cpu[:, 1]
+        ).clamp(min=0)
+        best_idx = int(torch.argmax(areas).item())
+        x1, y1, x2, y2 = boxes_cpu[best_idx].tolist()
+        w, h = image.size
+        pad_x = max(2, int((x2 - x1) * 0.04))
+        pad_y = max(2, int((y2 - y1) * 0.04))
+        x1 = max(0, int(round(x1 - pad_x)))
+        y1 = max(0, int(round(y1 - pad_y)))
+        x2 = min(w, int(round(x2 + pad_x)))
+        y2 = min(h, int(round(y2 + pad_y)))
+        if (x2 - x1) < 16 or (y2 - y1) < 16:
+            return None
         return image.crop((x1, y1, x2, y2))
 
     # ------------------------------------------------------------- stage 1
