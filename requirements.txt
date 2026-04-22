@@ -7,3 +7,10 @@ numpy
 scikit-learn
 supervision
 matplotlib
+iopath
+einops
+timm
+pycocotools
+psutil
+ftfy
+
