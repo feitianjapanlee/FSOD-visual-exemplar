@@ -5,7 +5,9 @@
       "class_name": "Stuffed Bear Blue SB-1-B",
       "category": "stuffed toy",
       "refer_image": [
-        "refer_images/1-01.jpg"
+        "refer_images/1-01.jpg",
+        "refer_images/1-02.jpg",
+        "refer_images/1-03.jpg"
       ]
     },
     {
@@ -13,7 +15,9 @@
       "class_name": "Pocket Tomika P060",
       "category": "boxed toy",
       "refer_image": [
-        "refer_images/2-01.jpg"
+        "refer_images/2-01.jpg",
+        "refer_images/2-02.jpg",
+        "refer_images/2-03.jpg"
       ]
     },
     {
@@ -22,7 +26,8 @@
       "category": "toy",
       "refer_image": [
         "refer_images/3-01.jpg",
-        "refer_images/3-02.jpg"
+        "refer_images/3-02.jpg",
+        "refer_images/3-03.jpg"
       ]
     }
   ]
