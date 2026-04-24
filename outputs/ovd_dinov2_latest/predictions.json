@@ -1,91 +1,11 @@
 [
   {
     "image": "data/toy-91/query_images/007af052-d3e6-4a6f-81dd-11f14d5966cd.jpg",
-    "detections": [
-      {
-        "bbox": [
-          314.0,
-          196.0,
-          436.0,
-          331.0
-        ],
-        "class": "Stuffed Bear Blue SB-1-B",
-        "score": 0.5499,
-        "similarity": 0.4999,
-        "proposal_score": 0.5498,
-        "consensus_views": 3
-      },
-      {
-        "bbox": [
-          249.0,
-          344.0,
-          476.0,
-          479.0
-        ],
-        "class": "Stuffed Bear Blue SB-1-B",
-        "score": 0.4753,
-        "similarity": 0.4754,
-        "proposal_score": 0.3249,
-        "consensus_views": 3
-      },
-      {
-        "bbox": [
-          92.0,
-          195.0,
-          479.0,
-          479.0
-        ],
-        "class": "Stuffed Bear Blue SB-1-B",
-        "score": 0.4667,
-        "similarity": 0.5117,
-        "proposal_score": 0.1816,
-        "consensus_views": 3
-      }
-    ]
+    "detections": []
   },
   {
     "image": "data/toy-91/query_images/0098cbf6-e60c-4757-985e-38bbb2090414.jpg",
-    "detections": [
-      {
-        "bbox": [
-          342.0,
-          99.0,
-          416.0,
-          178.0
-        ],
-        "class": "Stuffed Bear Blue SB-1-B",
-        "score": 0.4655,
-        "similarity": 0.4717,
-        "proposal_score": 0.2968,
-        "consensus_views": 3
-      },
-      {
-        "bbox": [
-          300.0,
-          136.0,
-          468.0,
-          321.0
-        ],
-        "class": "Stuffed Bear Blue SB-1-B",
-        "score": 0.3906,
-        "similarity": 0.3561,
-        "proposal_score": 0.494,
-        "consensus_views": 0
-      },
-      {
-        "bbox": [
-          200.0,
-          348.0,
-          402.0,
-          479.0
-        ],
-        "class": "Stuffed Bear Blue SB-1-B",
-        "score": 0.3835,
-        "similarity": 0.3776,
-        "proposal_score": 0.4012,
-        "consensus_views": 0
-      }
-    ]
+    "detections": []
   },
   {
     "image": "data/toy-91/query_images/019e588b-a94a-4d91-a6e2-17d9fdd17c45.jpg",
@@ -93,28 +13,15 @@
       {
         "bbox": [
           352.0,
-          82.0,
-          457.0,
+          81.0,
+          458.0,
           188.0
         ],
         "class": "Halloween Pumpkin Plastic 7-P",
-        "score": 0.6538,
-        "similarity": 0.7543,
-        "proposal_score": 0.2021,
+        "score": 0.6982,
+        "similarity": 0.7503,
+        "proposal_score": 0.3919,
         "consensus_views": 6
-      },
-      {
-        "bbox": [
-          288.0,
-          384.0,
-          459.0,
-          479.0
-        ],
-        "class": "Stuffed Bear Blue SB-1-B",
-        "score": 0.6215,
-        "similarity": 0.6814,
-        "proposal_score": 0.2916,
-        "consensus_views": 3
       },
       {
         "bbox": [
@@ -124,9 +31,9 @@
           479.0
         ],
         "class": "Halloween Pumpkin Plastic 7-P",
-        "score": 0.6148,
+        "score": 0.6301,
         "similarity": 0.671,
-        "proposal_score": 0.296,
+        "proposal_score": 0.3572,
         "consensus_views": 6
       }
     ]
@@ -136,42 +43,29 @@
     "detections": [
       {
         "bbox": [
-          440.0,
-          0.0,
-          579.0,
-          163.0
-        ],
-        "class": "Stuffed Bear Blue SB-1-B",
-        "score": 0.5577,
-        "similarity": 0.5312,
-        "proposal_score": 0.4872,
-        "consensus_views": 3
-      },
-      {
-        "bbox": [
-          149.0,
-          150.0,
-          327.0,
-          282.0
-        ],
-        "class": "Stuffed Bear Blue SB-1-B",
-        "score": 0.5539,
-        "similarity": 0.5293,
-        "proposal_score": 0.4779,
-        "consensus_views": 3
-      },
-      {
-        "bbox": [
-          426.0,
-          192.0,
+          425.0,
+          191.0,
           537.0,
           334.0
         ],
         "class": "Pocket Tomika P060",
-        "score": 0.4724,
-        "similarity": 0.4237,
-        "proposal_score": 0.4687,
+        "score": 0.4691,
+        "similarity": 0.4342,
+        "proposal_score": 0.4239,
         "consensus_views": 2
+      },
+      {
+        "bbox": [
+          426.0,
+          264.0,
+          494.0,
+          331.0
+        ],
+        "class": "Pocket Tomika P060",
+        "score": 0.3462,
+        "similarity": 0.3771,
+        "proposal_score": 0.2535,
+        "consensus_views": 0
       }
     ]
   },
@@ -181,40 +75,27 @@
       {
         "bbox": [
           314.0,
-          87.0,
-          430.0,
-          202.0
+          86.0,
+          431.0,
+          203.0
         ],
         "class": "Halloween Pumpkin Plastic 7-P",
-        "score": 0.5976,
-        "similarity": 0.6473,
-        "proposal_score": 0.2986,
+        "score": 0.6292,
+        "similarity": 0.6634,
+        "proposal_score": 0.3765,
         "consensus_views": 6
       },
       {
         "bbox": [
-          484.0,
-          93.0,
-          614.0,
-          265.0
-        ],
-        "class": "Stuffed Bear Blue SB-1-B",
-        "score": 0.5617,
-        "similarity": 0.586,
-        "proposal_score": 0.3387,
-        "consensus_views": 3
-      },
-      {
-        "bbox": [
-          166.0,
-          237.0,
-          329.0,
+          165.0,
+          238.0,
+          328.0,
           377.0
         ],
         "class": "Stuffed Bear Blue SB-1-B",
-        "score": 0.5166,
-        "similarity": 0.4794,
-        "proposal_score": 0.4783,
+        "score": 0.5243,
+        "similarity": 0.4968,
+        "proposal_score": 0.4569,
         "consensus_views": 3
       }
     ]
@@ -224,54 +105,41 @@
     "detections": [
       {
         "bbox": [
-          260.0,
+          259.0,
           10.0,
-          366.0,
+          367.0,
           118.0
         ],
         "class": "Halloween Pumpkin Plastic 7-P",
-        "score": 0.6765,
-        "similarity": 0.7803,
-        "proposal_score": 0.215,
+        "score": 0.7253,
+        "similarity": 0.7656,
+        "proposal_score": 0.4546,
         "consensus_views": 6
       },
       {
         "bbox": [
           77.0,
-          379.0,
-          251.0,
-          479.0
+          378.0,
+          250.0,
+          478.0
         ],
         "class": "Stuffed Bear Blue SB-1-B",
-        "score": 0.6328,
-        "similarity": 0.6085,
-        "proposal_score": 0.5559,
+        "score": 0.5945,
+        "similarity": 0.6213,
+        "proposal_score": 0.3642,
         "consensus_views": 3
       },
       {
         "bbox": [
-          429.0,
-          6.0,
-          585.0,
-          162.0
-        ],
-        "class": "Stuffed Bear Blue SB-1-B",
-        "score": 0.5505,
-        "similarity": 0.4736,
-        "proposal_score": 0.6312,
-        "consensus_views": 3
-      },
-      {
-        "bbox": [
-          301.0,
-          157.0,
-          429.0,
-          248.0
+          300.0,
+          155.0,
+          430.0,
+          249.0
         ],
         "class": "Pocket Tomika P060",
-        "score": 0.5286,
-        "similarity": 0.4915,
-        "proposal_score": 0.4899,
+        "score": 0.491,
+        "similarity": 0.4745,
+        "proposal_score": 0.3908,
         "consensus_views": 3
       }
     ]
@@ -286,27 +154,27 @@
       {
         "bbox": [
           244.0,
-          0.0,
+          1.0,
           354.0,
           112.0
         ],
         "class": "Halloween Pumpkin Plastic 7-P",
-        "score": 0.6075,
-        "similarity": 0.667,
-        "proposal_score": 0.2792,
+        "score": 0.6672,
+        "similarity": 0.6539,
+        "proposal_score": 0.557,
         "consensus_views": 6
       },
       {
         "bbox": [
-          432.0,
-          182.0,
-          541.0,
+          431.0,
+          181.0,
+          542.0,
           325.0
         ],
         "class": "Pocket Tomika P060",
-        "score": 0.3843,
-        "similarity": 0.3623,
-        "proposal_score": 0.4504,
+        "score": 0.4001,
+        "similarity": 0.3952,
+        "proposal_score": 0.4147,
         "consensus_views": 0
       }
     ]
@@ -316,41 +184,41 @@
     "detections": [
       {
         "bbox": [
-          73.0,
-          391.0,
-          217.0,
-          479.0
-        ],
-        "class": "Stuffed Bear Blue SB-1-B",
-        "score": 0.6547,
-        "similarity": 0.6359,
-        "proposal_score": 0.5609,
-        "consensus_views": 3
-      },
-      {
-        "bbox": [
-          436.0,
+          435.0,
           0.0,
-          544.0,
-          90.0
+          545.0,
+          89.0
         ],
         "class": "Halloween Pumpkin Plastic 7-P",
-        "score": 0.609,
-        "similarity": 0.6839,
-        "proposal_score": 0.2344,
+        "score": 0.6555,
+        "similarity": 0.7006,
+        "proposal_score": 0.3704,
         "consensus_views": 6
       },
       {
         "bbox": [
-          235.0,
+          73.0,
+          391.0,
+          218.0,
+          479.0
+        ],
+        "class": "Stuffed Bear Blue SB-1-B",
+        "score": 0.6091,
+        "similarity": 0.622,
+        "proposal_score": 0.4205,
+        "consensus_views": 3
+      },
+      {
+        "bbox": [
+          233.0,
           230.0,
           315.0,
           351.0
         ],
         "class": "Pocket Tomika P060",
-        "score": 0.371,
-        "similarity": 0.398,
-        "proposal_score": 0.2898,
+        "score": 0.3645,
+        "similarity": 0.3883,
+        "proposal_score": 0.293,
         "consensus_views": 0
       }
     ]
@@ -360,41 +228,28 @@
     "detections": [
       {
         "bbox": [
-          243.0,
-          77.0,
-          364.0,
-          185.0
+          33.0,
+          280.0,
+          155.0,
+          396.0
         ],
-        "class": "Stuffed Bear Blue SB-1-B",
-        "score": 0.6038,
-        "similarity": 0.5591,
-        "proposal_score": 0.5879,
-        "consensus_views": 3
+        "class": "Halloween Pumpkin Plastic 7-P",
+        "score": 0.5603,
+        "similarity": 0.5573,
+        "proposal_score": 0.4195,
+        "consensus_views": 5
       },
       {
         "bbox": [
-          296.0,
-          129.0,
-          458.0,
-          306.0
-        ],
-        "class": "Stuffed Bear Blue SB-1-B",
-        "score": 0.5969,
-        "similarity": 0.5464,
-        "proposal_score": 0.5984,
-        "consensus_views": 3
-      },
-      {
-        "bbox": [
-          451.0,
-          239.0,
-          534.0,
+          450.0,
+          237.0,
+          535.0,
           377.0
         ],
         "class": "Pocket Tomika P060",
-        "score": 0.4709,
-        "similarity": 0.4465,
-        "proposal_score": 0.3942,
+        "score": 0.4737,
+        "similarity": 0.4399,
+        "proposal_score": 0.4251,
         "consensus_views": 2
       }
     ]
@@ -406,52 +261,52 @@
         "bbox": [
           367.0,
           296.0,
-          535.0,
+          521.0,
           428.0
         ],
         "class": "Halloween Pumpkin Plastic 7-P",
-        "score": 0.6787,
-        "similarity": 0.7527,
-        "proposal_score": 0.3066,
-        "consensus_views": 5
+        "score": 0.6813,
+        "similarity": 0.765,
+        "proposal_score": 0.2804,
+        "consensus_views": 6
       },
       {
         "bbox": [
-          52.0,
-          228.0,
+          51.0,
+          227.0,
           168.0,
           337.0
         ],
         "class": "Halloween Pumpkin Plastic 7-P",
-        "score": 0.6621,
-        "similarity": 0.7059,
-        "proposal_score": 0.3808,
+        "score": 0.6439,
+        "similarity": 0.6916,
+        "proposal_score": 0.3508,
         "consensus_views": 6
       },
       {
         "bbox": [
           335.0,
-          63.0,
-          443.0,
+          61.0,
+          444.0,
           180.0
         ],
         "class": "Halloween Pumpkin Plastic 7-P",
-        "score": 0.628,
-        "similarity": 0.6892,
-        "proposal_score": 0.2943,
+        "score": 0.6284,
+        "similarity": 0.6679,
+        "proposal_score": 0.36,
         "consensus_views": 6
       },
       {
         "bbox": [
           154.0,
-          346.0,
-          338.0,
-          479.0
+          345.0,
+          339.0,
+          478.0
         ],
         "class": "Stuffed Bear Blue SB-1-B",
-        "score": 0.5945,
-        "similarity": 0.5569,
-        "proposal_score": 0.5575,
+        "score": 0.5518,
+        "similarity": 0.5497,
+        "proposal_score": 0.4083,
         "consensus_views": 3
       }
     ]
@@ -461,49 +316,48 @@
     "detections": [
       {
         "bbox": [
-          227.0,
-          349.0,
-          356.0,
-          477.0
+          226.0,
+          348.0,
+          357.0,
+          476.0
         ],
         "class": "Halloween Pumpkin Plastic 7-P",
-        "score": 0.7189,
-        "similarity": 0.8141,
-        "proposal_score": 0.2834,
+        "score": 0.7442,
+        "similarity": 0.8149,
+        "proposal_score": 0.3823,
         "consensus_views": 6
       },
       {
         "bbox": [
           378.0,
-          264.0,
+          263.0,
           570.0,
-          425.0
+          422.0
         ],
         "class": "Stuffed Bear Blue SB-1-B",
-        "score": 0.5255,
-        "similarity": 0.4731,
-        "proposal_score": 0.5328,
+        "score": 0.4811,
+        "similarity": 0.4781,
+        "proposal_score": 0.34,
         "consensus_views": 3
+      },
+      {
+        "bbox": [
+          54.0,
+          260.0,
+          574.0,
+          476.0
+        ],
+        "class": "Halloween Pumpkin Plastic 7-P",
+        "score": 0.4207,
+        "similarity": 0.4461,
+        "proposal_score": 0.1944,
+        "consensus_views": 5
       }
     ]
   },
   {
     "image": "data/toy-91/query_images/19810462-3691-48de-8c2b-c29b55cbd406.jpg",
-    "detections": [
-      {
-        "bbox": [
-          347.0,
-          206.0,
-          503.0,
-          324.0
-        ],
-        "class": "Stuffed Bear Blue SB-1-B",
-        "score": 0.6145,
-        "similarity": 0.609,
-        "proposal_score": 0.4811,
-        "consensus_views": 3
-      }
-    ]
+    "detections": []
   },
   {
     "image": "data/toy-91/query_images/1bfc5afd-a520-4a7e-86b9-6b097471f6a4.jpg",
@@ -511,40 +365,27 @@
       {
         "bbox": [
           244.0,
-          0.0,
+          1.0,
           354.0,
           112.0
         ],
         "class": "Halloween Pumpkin Plastic 7-P",
-        "score": 0.6161,
-        "similarity": 0.6744,
-        "proposal_score": 0.2911,
+        "score": 0.6718,
+        "similarity": 0.6711,
+        "proposal_score": 0.5239,
         "consensus_views": 6
       },
       {
         "bbox": [
-          443.0,
-          0.0,
-          577.0,
-          153.0
-        ],
-        "class": "Stuffed Bear Blue SB-1-B",
-        "score": 0.5095,
-        "similarity": 0.4469,
-        "proposal_score": 0.5475,
-        "consensus_views": 3
-      },
-      {
-        "bbox": [
-          432.0,
-          182.0,
+          431.0,
+          181.0,
           542.0,
           325.0
         ],
         "class": "Pocket Tomika P060",
-        "score": 0.3821,
-        "similarity": 0.3623,
-        "proposal_score": 0.4413,
+        "score": 0.3728,
+        "similarity": 0.36,
+        "proposal_score": 0.411,
         "consensus_views": 0
       }
     ]
@@ -554,28 +395,15 @@
     "detections": [
       {
         "bbox": [
-          324.0,
+          323.0,
           91.0,
           489.0,
           196.0
         ],
         "class": "Stuffed Bear Blue SB-1-B",
-        "score": 0.6278,
-        "similarity": 0.6257,
-        "proposal_score": 0.4841,
-        "consensus_views": 3
-      },
-      {
-        "bbox": [
-          307.0,
-          188.0,
-          520.0,
-          317.0
-        ],
-        "class": "Stuffed Bear Blue SB-1-B",
-        "score": 0.5709,
-        "similarity": 0.5281,
-        "proposal_score": 0.5496,
+        "score": 0.6037,
+        "similarity": 0.6236,
+        "proposal_score": 0.3939,
         "consensus_views": 3
       }
     ]
@@ -585,28 +413,15 @@
     "detections": [
       {
         "bbox": [
-          456.0,
-          90.0,
-          582.0,
-          258.0
-        ],
-        "class": "Stuffed Bear Blue SB-1-B",
-        "score": 0.5937,
-        "similarity": 0.5459,
-        "proposal_score": 0.5871,
-        "consensus_views": 3
-      },
-      {
-        "bbox": [
-          266.0,
-          102.0,
+          265.0,
+          101.0,
           374.0,
-          212.0
+          213.0
         ],
         "class": "Halloween Pumpkin Plastic 7-P",
-        "score": 0.5825,
-        "similarity": 0.6471,
-        "proposal_score": 0.2385,
+        "score": 0.6252,
+        "similarity": 0.6517,
+        "proposal_score": 0.3955,
         "consensus_views": 6
       }
     ]
@@ -617,28 +432,28 @@
       {
         "bbox": [
           244.0,
-          0.0,
+          1.0,
           354.0,
-          112.0
+          113.0
         ],
         "class": "Halloween Pumpkin Plastic 7-P",
-        "score": 0.6222,
-        "similarity": 0.6717,
-        "proposal_score": 0.3239,
+        "score": 0.6866,
+        "similarity": 0.6762,
+        "proposal_score": 0.5677,
         "consensus_views": 6
       },
       {
         "bbox": [
           432.0,
-          182.0,
+          181.0,
           542.0,
           325.0
         ],
         "class": "Pocket Tomika P060",
-        "score": 0.4112,
-        "similarity": 0.4021,
-        "proposal_score": 0.4386,
-        "consensus_views": 1
+        "score": 0.4568,
+        "similarity": 0.4194,
+        "proposal_score": 0.4192,
+        "consensus_views": 2
       }
     ]
   },
@@ -647,54 +462,41 @@
     "detections": [
       {
         "bbox": [
-          77.0,
-          379.0,
-          251.0,
-          479.0
-        ],
-        "class": "Stuffed Bear Blue SB-1-B",
-        "score": 0.6642,
-        "similarity": 0.6435,
-        "proposal_score": 0.5765,
-        "consensus_views": 3
-      },
-      {
-        "bbox": [
-          260.0,
+          259.0,
           10.0,
-          366.0,
+          367.0,
           119.0
         ],
         "class": "Halloween Pumpkin Plastic 7-P",
-        "score": 0.6543,
-        "similarity": 0.7474,
-        "proposal_score": 0.2251,
+        "score": 0.7307,
+        "similarity": 0.7433,
+        "proposal_score": 0.5429,
         "consensus_views": 6
       },
       {
         "bbox": [
-          428.0,
-          6.0,
-          587.0,
-          163.0
+          77.0,
+          378.0,
+          250.0,
+          478.0
         ],
         "class": "Stuffed Bear Blue SB-1-B",
-        "score": 0.5441,
-        "similarity": 0.4659,
-        "proposal_score": 0.6287,
+        "score": 0.5986,
+        "similarity": 0.6278,
+        "proposal_score": 0.361,
         "consensus_views": 3
       },
       {
         "bbox": [
-          301.0,
-          157.0,
-          429.0,
+          300.0,
+          156.0,
+          430.0,
           248.0
         ],
         "class": "Pocket Tomika P060",
-        "score": 0.5236,
-        "similarity": 0.481,
-        "proposal_score": 0.5017,
+        "score": 0.4765,
+        "similarity": 0.4592,
+        "proposal_score": 0.3786,
         "consensus_views": 3
       }
     ]
@@ -704,55 +506,42 @@
     "detections": [
       {
         "bbox": [
-          260.0,
+          259.0,
           10.0,
-          366.0,
-          118.0
+          367.0,
+          119.0
         ],
         "class": "Halloween Pumpkin Plastic 7-P",
-        "score": 0.6555,
-        "similarity": 0.7562,
-        "proposal_score": 0.2035,
+        "score": 0.7168,
+        "similarity": 0.7519,
+        "proposal_score": 0.4614,
         "consensus_views": 6
       },
       {
         "bbox": [
           77.0,
-          379.0,
-          252.0,
-          479.0
+          378.0,
+          251.0,
+          478.0
         ],
         "class": "Stuffed Bear Blue SB-1-B",
-        "score": 0.6093,
-        "similarity": 0.5836,
-        "proposal_score": 0.5362,
+        "score": 0.5688,
+        "similarity": 0.6011,
+        "proposal_score": 0.322,
         "consensus_views": 3
       },
       {
         "bbox": [
-          301.0,
-          156.0,
-          429.0,
-          248.0
+          300.0,
+          155.0,
+          430.0,
+          249.0
         ],
         "class": "Pocket Tomika P060",
-        "score": 0.511,
-        "similarity": 0.4625,
-        "proposal_score": 0.5064,
-        "consensus_views": 3
-      },
-      {
-        "bbox": [
-          428.0,
-          5.0,
-          609.0,
-          163.0
-        ],
-        "class": "Stuffed Bear Blue SB-1-B",
-        "score": 0.4937,
-        "similarity": 0.4746,
-        "proposal_score": 0.4008,
-        "consensus_views": 3
+        "score": 0.4672,
+        "similarity": 0.4458,
+        "proposal_score": 0.3815,
+        "consensus_views": 2
       }
     ]
   },
@@ -762,14 +551,14 @@
       {
         "bbox": [
           324.0,
-          93.0,
+          92.0,
           489.0,
           196.0
         ],
         "class": "Stuffed Bear Blue SB-1-B",
-        "score": 0.5465,
-        "similarity": 0.542,
-        "proposal_score": 0.41,
+        "score": 0.5589,
+        "similarity": 0.5718,
+        "proposal_score": 0.37,
         "consensus_views": 3
       }
     ]
@@ -779,130 +568,64 @@
     "detections": [
       {
         "bbox": [
-          260.0,
+          259.0,
           10.0,
-          366.0,
+          367.0,
           119.0
         ],
         "class": "Halloween Pumpkin Plastic 7-P",
-        "score": 0.6537,
-        "similarity": 0.746,
-        "proposal_score": 0.2266,
+        "score": 0.7217,
+        "similarity": 0.7452,
+        "proposal_score": 0.5014,
         "consensus_views": 6
       },
       {
         "bbox": [
           77.0,
-          379.0,
-          251.0,
-          479.0
+          378.0,
+          249.0,
+          478.0
         ],
         "class": "Stuffed Bear Blue SB-1-B",
-        "score": 0.6271,
-        "similarity": 0.6125,
-        "proposal_score": 0.5209,
+        "score": 0.5612,
+        "similarity": 0.5763,
+        "proposal_score": 0.3657,
         "consensus_views": 3
       },
       {
         "bbox": [
+          300.0,
+          155.0,
           429.0,
-          6.0,
-          585.0,
-          162.0
-        ],
-        "class": "Stuffed Bear Blue SB-1-B",
-        "score": 0.5603,
-        "similarity": 0.4858,
-        "proposal_score": 0.6337,
-        "consensus_views": 3
-      },
-      {
-        "bbox": [
-          301.0,
-          156.0,
-          428.0,
-          248.0
+          249.0
         ],
         "class": "Pocket Tomika P060",
-        "score": 0.5313,
-        "similarity": 0.49,
-        "proposal_score": 0.5053,
+        "score": 0.4886,
+        "similarity": 0.4754,
+        "proposal_score": 0.3782,
         "consensus_views": 3
       }
     ]
   },
   {
     "image": "data/toy-91/query_images/2bbdde3c-15d1-47ee-a83c-463c475af0fc.jpg",
-    "detections": [
-      {
-        "bbox": [
-          431.0,
-          76.0,
-          571.0,
-          234.0
-        ],
-        "class": "Stuffed Bear Blue SB-1-B",
-        "score": 0.6196,
-        "similarity": 0.5916,
-        "proposal_score": 0.5536,
-        "consensus_views": 3
-      },
-      {
-        "bbox": [
-          289.0,
-          67.0,
-          392.0,
-          189.0
-        ],
-        "class": "Stuffed Bear Blue SB-1-B",
-        "score": 0.5752,
-        "similarity": 0.5579,
-        "proposal_score": 0.4773,
-        "consensus_views": 3
-      }
-    ]
+    "detections": []
   },
   {
     "image": "data/toy-91/query_images/2cd7e060-eb00-4ddd-9642-593a998263df.jpg",
     "detections": [
       {
         "bbox": [
-          149.0,
-          156.0,
-          313.0,
-          284.0
-        ],
-        "class": "Stuffed Bear Blue SB-1-B",
-        "score": 0.5906,
-        "similarity": 0.5924,
-        "proposal_score": 0.4351,
-        "consensus_views": 3
-      },
-      {
-        "bbox": [
-          245.0,
+          244.0,
           9.0,
           357.0,
-          125.0
+          126.0
         ],
         "class": "Halloween Pumpkin Plastic 7-P",
-        "score": 0.5402,
-        "similarity": 0.593,
-        "proposal_score": 0.2318,
+        "score": 0.5844,
+        "similarity": 0.5992,
+        "proposal_score": 0.3901,
         "consensus_views": 6
-      },
-      {
-        "bbox": [
-          425.0,
-          191.0,
-          537.0,
-          326.0
-        ],
-        "class": "Pocket Tomika P060",
-        "score": 0.409,
-        "similarity": 0.3901,
-        "proposal_score": 0.4659,
-        "consensus_views": 0
       }
     ]
   },
@@ -911,28 +634,28 @@
     "detections": [
       {
         "bbox": [
-          416.0,
-          101.0,
-          598.0,
-          250.0
+          302.0,
+          110.0,
+          415.0,
+          223.0
         ],
-        "class": "Stuffed Bear Blue SB-1-B",
-        "score": 0.547,
-        "similarity": 0.484,
-        "proposal_score": 0.5863,
-        "consensus_views": 3
+        "class": "Halloween Pumpkin Plastic 7-P",
+        "score": 0.6309,
+        "similarity": 0.6666,
+        "proposal_score": 0.3738,
+        "consensus_views": 6
       },
       {
         "bbox": [
-          480.0,
+          479.0,
           259.0,
-          546.0,
-          404.0
+          547.0,
+          405.0
         ],
         "class": "Pocket Tomika P060",
-        "score": 0.3928,
-        "similarity": 0.3929,
-        "proposal_score": 0.3926,
+        "score": 0.3891,
+        "similarity": 0.3778,
+        "proposal_score": 0.4229,
         "consensus_views": 0
       }
     ]
@@ -943,53 +666,40 @@
       {
         "bbox": [
           244.0,
-          0.0,
+          1.0,
           354.0,
-          112.0
+          113.0
         ],
         "class": "Halloween Pumpkin Plastic 7-P",
-        "score": 0.6284,
-        "similarity": 0.6861,
-        "proposal_score": 0.3055,
+        "score": 0.6667,
+        "similarity": 0.6718,
+        "proposal_score": 0.5014,
         "consensus_views": 6
       },
       {
         "bbox": [
-          444.0,
-          0.0,
-          577.0,
-          153.0
+          169.0,
+          143.0,
+          331.0,
+          276.0
         ],
         "class": "Stuffed Bear Blue SB-1-B",
-        "score": 0.4589,
-        "similarity": 0.418,
-        "proposal_score": 0.4315,
+        "score": 0.4624,
+        "similarity": 0.4169,
+        "proposal_score": 0.449,
         "consensus_views": 2
       },
       {
         "bbox": [
-          169.0,
-          144.0,
-          330.0,
-          277.0
-        ],
-        "class": "Stuffed Bear Blue SB-1-B",
-        "score": 0.4357,
-        "similarity": 0.4024,
-        "proposal_score": 0.5354,
-        "consensus_views": 1
-      },
-      {
-        "bbox": [
-          432.0,
-          182.0,
-          541.0,
-          325.0
+          431.0,
+          181.0,
+          542.0,
+          326.0
         ],
         "class": "Pocket Tomika P060",
-        "score": 0.3981,
-        "similarity": 0.3848,
-        "proposal_score": 0.4381,
+        "score": 0.3902,
+        "similarity": 0.3852,
+        "proposal_score": 0.4051,
         "consensus_views": 0
       }
     ]
@@ -999,15 +709,15 @@
     "detections": [
       {
         "bbox": [
-          480.0,
-          255.0,
-          546.0,
-          399.0
+          479.0,
+          254.0,
+          547.0,
+          400.0
         ],
         "class": "Pocket Tomika P060",
-        "score": 0.4649,
-        "similarity": 0.4262,
-        "proposal_score": 0.4311,
+        "score": 0.4839,
+        "similarity": 0.456,
+        "proposal_score": 0.4176,
         "consensus_views": 2
       }
     ]
@@ -1017,55 +727,42 @@
     "detections": [
       {
         "bbox": [
-          306.0,
-          157.0,
-          508.0,
-          297.0
+          33.0,
+          280.0,
+          154.0,
+          398.0
         ],
-        "class": "Stuffed Bear Blue SB-1-B",
-        "score": 0.5902,
-        "similarity": 0.6116,
-        "proposal_score": 0.3757,
-        "consensus_views": 3
-      },
-      {
-        "bbox": [
-          375.0,
-          38.0,
-          491.0,
-          185.0
-        ],
-        "class": "Stuffed Bear Blue SB-1-B",
-        "score": 0.5418,
-        "similarity": 0.5131,
-        "proposal_score": 0.4777,
-        "consensus_views": 3
-      },
-      {
-        "bbox": [
-          242.0,
-          77.0,
-          327.0,
-          185.0
-        ],
-        "class": "Stuffed Bear Blue SB-1-B",
-        "score": 0.5321,
-        "similarity": 0.559,
-        "proposal_score": 0.3015,
-        "consensus_views": 3
+        "class": "Halloween Pumpkin Plastic 7-P",
+        "score": 0.4169,
+        "similarity": 0.4163,
+        "proposal_score": 0.4184,
+        "consensus_views": 1
       },
       {
         "bbox": [
           443.0,
           239.0,
-          537.0,
+          538.0,
           378.0
         ],
         "class": "Pocket Tomika P060",
-        "score": 0.3808,
-        "similarity": 0.383,
-        "proposal_score": 0.374,
+        "score": 0.4057,
+        "similarity": 0.3968,
+        "proposal_score": 0.4326,
         "consensus_views": 0
+      },
+      {
+        "bbox": [
+          33.0,
+          279.0,
+          227.0,
+          478.0
+        ],
+        "class": "Halloween Pumpkin Plastic 7-P",
+        "score": 0.4004,
+        "similarity": 0.4129,
+        "proposal_score": 0.2128,
+        "consensus_views": 2
       }
     ]
   },
@@ -1074,42 +771,29 @@
     "detections": [
       {
         "bbox": [
-          70.0,
+          69.0,
           318.0,
           186.0,
-          432.0
+          430.0
         ],
         "class": "Halloween Pumpkin Plastic 7-P",
-        "score": 0.7205,
-        "similarity": 0.8024,
-        "proposal_score": 0.325,
+        "score": 0.7169,
+        "similarity": 0.7975,
+        "proposal_score": 0.3252,
         "consensus_views": 6
       },
       {
         "bbox": [
-          185.0,
-          289.0,
-          367.0,
-          411.0
+          130.0,
+          415.0,
+          278.0,
+          479.0
         ],
         "class": "Stuffed Bear Blue SB-1-B",
-        "score": 0.5503,
-        "similarity": 0.5304,
-        "proposal_score": 0.46,
-        "consensus_views": 3
-      },
-      {
-        "bbox": [
-          588.0,
-          44.0,
-          639.0,
-          136.0
-        ],
-        "class": "Stuffed Bear Blue SB-1-B",
-        "score": 0.4756,
-        "similarity": 0.4819,
-        "proposal_score": 0.3065,
-        "consensus_views": 3
+        "score": 0.362,
+        "similarity": 0.3586,
+        "proposal_score": 0.3722,
+        "consensus_views": 0
       }
     ]
   },
@@ -1118,54 +802,28 @@
     "detections": [
       {
         "bbox": [
-          243.0,
-          79.0,
-          366.0,
-          186.0
+          33.0,
+          282.0,
+          155.0,
+          401.0
         ],
-        "class": "Stuffed Bear Blue SB-1-B",
-        "score": 0.6652,
-        "similarity": 0.649,
-        "proposal_score": 0.5636,
-        "consensus_views": 3
-      },
-      {
-        "bbox": [
-          253.0,
-          204.0,
-          428.0,
-          335.0
-        ],
-        "class": "Stuffed Bear Blue SB-1-B",
-        "score": 0.5499,
-        "similarity": 0.5163,
-        "proposal_score": 0.5007,
-        "consensus_views": 3
-      },
-      {
-        "bbox": [
-          374.0,
-          38.0,
-          491.0,
-          191.0
-        ],
-        "class": "Stuffed Bear Blue SB-1-B",
-        "score": 0.5442,
-        "similarity": 0.4833,
-        "proposal_score": 0.5771,
-        "consensus_views": 3
+        "class": "Halloween Pumpkin Plastic 7-P",
+        "score": 0.5047,
+        "similarity": 0.4876,
+        "proposal_score": 0.4063,
+        "consensus_views": 5
       },
       {
         "bbox": [
           423.0,
-          234.0,
-          538.0,
-          380.0
+          233.0,
+          539.0,
+          381.0
         ],
         "class": "Pocket Tomika P060",
-        "score": 0.3841,
-        "similarity": 0.3827,
-        "proposal_score": 0.3886,
+        "score": 0.364,
+        "similarity": 0.3668,
+        "proposal_score": 0.3555,
         "consensus_views": 0
       }
     ]
@@ -1175,42 +833,29 @@
     "detections": [
       {
         "bbox": [
-          483.0,
-          94.0,
-          614.0,
-          266.0
-        ],
-        "class": "Stuffed Bear Blue SB-1-B",
-        "score": 0.618,
-        "similarity": 0.5693,
-        "proposal_score": 0.614,
-        "consensus_views": 3
-      },
-      {
-        "bbox": [
           292.0,
-          104.0,
+          103.0,
           397.0,
-          212.0
+          213.0
         ],
         "class": "Halloween Pumpkin Plastic 7-P",
-        "score": 0.5867,
-        "similarity": 0.6476,
-        "proposal_score": 0.2537,
+        "score": 0.6281,
+        "similarity": 0.6484,
+        "proposal_score": 0.4173,
         "consensus_views": 6
       },
       {
         "bbox": [
-          253.0,
-          242.0,
-          364.0,
+          203.0,
+          241.0,
+          366.0,
           372.0
         ],
         "class": "Stuffed Bear Blue SB-1-B",
-        "score": 0.5638,
-        "similarity": 0.6359,
-        "proposal_score": 0.1977,
-        "consensus_views": 3
+        "score": 0.476,
+        "similarity": 0.4306,
+        "proposal_score": 0.4619,
+        "consensus_views": 2
       }
     ]
   },
@@ -1219,78 +864,64 @@
     "detections": [
       {
         "bbox": [
-          324.0,
-          92.0,
-          488.0,
-          196.0
+          323.0,
+          90.0,
+          489.0,
+          197.0
         ],
         "class": "Stuffed Bear Blue SB-1-B",
-        "score": 0.5856,
-        "similarity": 0.5679,
-        "proposal_score": 0.4888,
+        "score": 0.5581,
+        "similarity": 0.5658,
+        "proposal_score": 0.3852,
         "consensus_views": 3
       }
     ]
   },
   {
     "image": "data/toy-91/query_images/3e57f514-d6ff-446d-b34a-cfb8446c4280.jpg",
-    "detections": [
-      {
-        "bbox": [
-          127.0,
-          258.0,
-          294.0,
-          400.0
-        ],
-        "class": "Stuffed Bear Blue SB-1-B",
-        "score": 0.4973,
-        "similarity": 0.4338,
-        "proposal_score": 0.5378,
-        "consensus_views": 3
-      }
-    ]
+    "detections": []
   },
   {
     "image": "data/toy-91/query_images/3fb3dcdb-b087-4876-875a-bf520d509814.jpg",
     "detections": [
       {
         "bbox": [
-          71.0,
-          392.0,
-          215.0,
-          479.0
-        ],
-        "class": "Stuffed Bear Blue SB-1-B",
-        "score": 0.6886,
-        "similarity": 0.677,
-        "proposal_score": 0.5734,
-        "consensus_views": 3
-      },
-      {
-        "bbox": [
-          436.0,
-          0.0,
-          543.0,
+          435.0,
+          1.0,
+          544.0,
           89.0
         ],
         "class": "Halloween Pumpkin Plastic 7-P",
-        "score": 0.5962,
-        "similarity": 0.6764,
-        "proposal_score": 0.2054,
+        "score": 0.6452,
+        "similarity": 0.6747,
+        "proposal_score": 0.4069,
         "consensus_views": 6
       },
       {
         "bbox": [
-          131.0,
-          206.0,
+          71.0,
+          391.0,
+          215.0,
+          478.0
+        ],
+        "class": "Stuffed Bear Blue SB-1-B",
+        "score": 0.6192,
+        "similarity": 0.6303,
+        "proposal_score": 0.4358,
+        "consensus_views": 3
+      },
+      {
+        "bbox": [
+          140.0,
+          205.0,
           233.0,
           326.0
         ],
         "class": "Pocket Tomika P060",
-        "score": 0.4401,
-        "similarity": 0.4025,
-        "proposal_score": 0.4031,
-        "consensus_views": 2
+        "score": 0.4088,
+        "similarity": 0.4325,
+        "proposal_score": 0.1879,
+        "consensus_views": 3
       }
     ]
   },
@@ -1299,42 +930,16 @@
     "detections": [
       {
         "bbox": [
-          290.0,
-          102.0,
+          289.0,
+          101.0,
           398.0,
-          209.0
+          210.0
         ],
         "class": "Halloween Pumpkin Plastic 7-P",
-        "score": 0.6156,
-        "similarity": 0.7051,
-        "proposal_score": 0.1968,
+        "score": 0.7151,
+        "similarity": 0.7456,
+        "proposal_score": 0.4736,
         "consensus_views": 6
-      },
-      {
-        "bbox": [
-          484.0,
-          93.0,
-          614.0,
-          265.0
-        ],
-        "class": "Stuffed Bear Blue SB-1-B",
-        "score": 0.5575,
-        "similarity": 0.5703,
-        "proposal_score": 0.369,
-        "consensus_views": 3
-      },
-      {
-        "bbox": [
-          253.0,
-          241.0,
-          364.0,
-          371.0
-        ],
-        "class": "Stuffed Bear Blue SB-1-B",
-        "score": 0.5225,
-        "similarity": 0.5795,
-        "proposal_score": 0.2014,
-        "consensus_views": 3
       }
     ]
   },
@@ -1343,61 +948,62 @@
     "detections": [
       {
         "bbox": [
-          293.0,
-          104.0,
+          292.0,
+          103.0,
           397.0,
           212.0
         ],
         "class": "Halloween Pumpkin Plastic 7-P",
-        "score": 0.5743,
-        "similarity": 0.6393,
-        "proposal_score": 0.2294,
+        "score": 0.6082,
+        "similarity": 0.632,
+        "proposal_score": 0.3866,
         "consensus_views": 6
       },
       {
         "bbox": [
-          492.0,
-          94.0,
-          612.0,
-          263.0
-        ],
-        "class": "Stuffed Bear Blue SB-1-B",
-        "score": 0.5261,
-        "similarity": 0.5442,
-        "proposal_score": 0.3219,
-        "consensus_views": 3
-      },
-      {
-        "bbox": [
-          253.0,
-          242.0,
-          364.0,
-          372.0
-        ],
-        "class": "Stuffed Bear Blue SB-1-B",
-        "score": 0.5047,
-        "similarity": 0.5529,
-        "proposal_score": 0.21,
-        "consensus_views": 3
-      },
-      {
-        "bbox": [
-          466.0,
+          465.0,
           292.0,
-          578.0,
-          439.0
+          579.0,
+          438.0
         ],
         "class": "Pocket Tomika P060",
-        "score": 0.4842,
-        "similarity": 0.4498,
-        "proposal_score": 0.4375,
+        "score": 0.4904,
+        "similarity": 0.4712,
+        "proposal_score": 0.3981,
+        "consensus_views": 3
+      },
+      {
+        "bbox": [
+          203.0,
+          241.0,
+          365.0,
+          371.0
+        ],
+        "class": "Stuffed Bear Blue SB-1-B",
+        "score": 0.4713,
+        "similarity": 0.4319,
+        "proposal_score": 0.4393,
         "consensus_views": 3
       }
     ]
   },
   {
     "image": "data/toy-91/query_images/4869b0c7-c1c8-4ce5-8d3e-f2db50c0cf5c.jpg",
-    "detections": []
+    "detections": [
+      {
+        "bbox": [
+          385.0,
+          95.0,
+          481.0,
+          187.0
+        ],
+        "class": "Stuffed Bear Blue SB-1-B",
+        "score": 0.4327,
+        "similarity": 0.4657,
+        "proposal_score": 0.1837,
+        "consensus_views": 3
+      }
+    ]
   },
   {
     "image": "data/toy-91/query_images/49ed2665-7901-43c4-91b8-7aa2abcbfdbe.jpg",
@@ -1407,38 +1013,38 @@
           436.0,
           0.0,
           544.0,
-          90.0
+          89.0
         ],
         "class": "Halloween Pumpkin Plastic 7-P",
-        "score": 0.6299,
-        "similarity": 0.711,
-        "proposal_score": 0.2365,
+        "score": 0.6808,
+        "similarity": 0.7277,
+        "proposal_score": 0.39,
         "consensus_views": 6
       },
       {
         "bbox": [
           73.0,
           391.0,
-          217.0,
+          218.0,
           479.0
         ],
         "class": "Stuffed Bear Blue SB-1-B",
-        "score": 0.626,
-        "similarity": 0.6024,
-        "proposal_score": 0.5469,
+        "score": 0.588,
+        "similarity": 0.5949,
+        "proposal_score": 0.4171,
         "consensus_views": 3
       },
       {
         "bbox": [
           139.0,
-          206.0,
-          233.0,
+          205.0,
+          234.0,
           326.0
         ],
         "class": "Pocket Tomika P060",
-        "score": 0.4575,
-        "similarity": 0.4268,
-        "proposal_score": 0.3995,
+        "score": 0.4238,
+        "similarity": 0.4204,
+        "proposal_score": 0.2839,
         "consensus_views": 3
       }
     ]
@@ -1449,27 +1055,27 @@
       {
         "bbox": [
           228.0,
-          343.0,
-          357.0,
+          342.0,
+          358.0,
           473.0
         ],
         "class": "Halloween Pumpkin Plastic 7-P",
-        "score": 0.721,
-        "similarity": 0.819,
-        "proposal_score": 0.2769,
+        "score": 0.7481,
+        "similarity": 0.8224,
+        "proposal_score": 0.3754,
         "consensus_views": 6
       },
       {
         "bbox": [
-          380.0,
-          259.0,
+          379.0,
+          258.0,
           571.0,
-          420.0
+          419.0
         ],
         "class": "Stuffed Bear Blue SB-1-B",
-        "score": 0.5275,
-        "similarity": 0.4795,
-        "proposal_score": 0.5214,
+        "score": 0.4963,
+        "similarity": 0.493,
+        "proposal_score": 0.3563,
         "consensus_views": 3
       }
     ]
@@ -1479,41 +1085,28 @@
     "detections": [
       {
         "bbox": [
-          404.0,
-          62.0,
+          403.0,
+          60.0,
           527.0,
           219.0
         ],
         "class": "Stuffed Bear Blue SB-1-B",
-        "score": 0.7103,
-        "similarity": 0.692,
-        "proposal_score": 0.6151,
+        "score": 0.664,
+        "similarity": 0.7208,
+        "proposal_score": 0.3437,
         "consensus_views": 3
       },
       {
         "bbox": [
-          66.0,
-          358.0,
-          194.0,
-          479.0
-        ],
-        "class": "Stuffed Bear Blue SB-1-B",
-        "score": 0.6957,
-        "similarity": 0.714,
-        "proposal_score": 0.491,
-        "consensus_views": 3
-      },
-      {
-        "bbox": [
-          167.0,
-          165.0,
-          366.0,
+          166.0,
+          163.0,
+          367.0,
           391.0
         ],
         "class": "Halloween Pumpkin Plastic 7-P",
-        "score": 0.6095,
-        "similarity": 0.6104,
-        "proposal_score": 0.4566,
+        "score": 0.5869,
+        "similarity": 0.6224,
+        "proposal_score": 0.3304,
         "consensus_views": 6
       }
     ]
@@ -1523,41 +1116,28 @@
     "detections": [
       {
         "bbox": [
-          166.0,
-          242.0,
-          330.0,
-          377.0
-        ],
-        "class": "Stuffed Bear Blue SB-1-B",
-        "score": 0.6327,
-        "similarity": 0.6239,
-        "proposal_score": 0.509,
-        "consensus_views": 3
-      },
-      {
-        "bbox": [
           314.0,
-          87.0,
-          429.0,
-          202.0
+          86.0,
+          430.0,
+          203.0
         ],
         "class": "Halloween Pumpkin Plastic 7-P",
-        "score": 0.5865,
-        "similarity": 0.6397,
-        "proposal_score": 0.2768,
+        "score": 0.6155,
+        "similarity": 0.6503,
+        "proposal_score": 0.361,
         "consensus_views": 6
       },
       {
         "bbox": [
-          484.0,
-          93.0,
-          614.0,
-          265.0
+          165.0,
+          241.0,
+          328.0,
+          377.0
         ],
         "class": "Stuffed Bear Blue SB-1-B",
-        "score": 0.5707,
-        "similarity": 0.5776,
-        "proposal_score": 0.4001,
+        "score": 0.6104,
+        "similarity": 0.6097,
+        "proposal_score": 0.4625,
         "consensus_views": 3
       }
     ]
@@ -1567,178 +1147,110 @@
     "detections": [
       {
         "bbox": [
-          293.0,
-          106.0,
-          396.0,
-          213.0
+          292.0,
+          105.0,
+          397.0,
+          214.0
         ],
         "class": "Halloween Pumpkin Plastic 7-P",
-        "score": 0.5692,
-        "similarity": 0.6139,
-        "proposal_score": 0.2854,
+        "score": 0.6015,
+        "similarity": 0.6152,
+        "proposal_score": 0.4106,
         "consensus_views": 6
       },
       {
         "bbox": [
-          482.0,
-          94.0,
-          613.0,
-          265.0
+          204.0,
+          242.0,
+          365.0,
+          373.0
         ],
         "class": "Stuffed Bear Blue SB-1-B",
-        "score": 0.5095,
-        "similarity": 0.5006,
-        "proposal_score": 0.3862,
+        "score": 0.4931,
+        "similarity": 0.455,
+        "proposal_score": 0.4573,
         "consensus_views": 3
       },
       {
         "bbox": [
-          204.0,
-          243.0,
-          364.0,
-          374.0
-        ],
-        "class": "Stuffed Bear Blue SB-1-B",
-        "score": 0.47,
-        "similarity": 0.4156,
-        "proposal_score": 0.4832,
-        "consensus_views": 2
-      },
-      {
-        "bbox": [
-          466.0,
-          293.0,
-          578.0,
+          465.0,
+          292.0,
+          579.0,
           439.0
         ],
         "class": "Pocket Tomika P060",
-        "score": 0.3958,
-        "similarity": 0.4043,
-        "proposal_score": 0.3702,
-        "consensus_views": 1
+        "score": 0.46,
+        "similarity": 0.4324,
+        "proposal_score": 0.3929,
+        "consensus_views": 2
       }
     ]
   },
   {
     "image": "data/toy-91/query_images/5eb4f0f6-bce7-405d-a638-47ec550a8dce.jpg",
-    "detections": [
-      {
-        "bbox": [
-          288.0,
-          67.0,
-          392.0,
-          187.0
-        ],
-        "class": "Stuffed Bear Blue SB-1-B",
-        "score": 0.5463,
-        "similarity": 0.5463,
-        "proposal_score": 0.3961,
-        "consensus_views": 3
-      }
-    ]
+    "detections": []
   },
   {
     "image": "data/toy-91/query_images/60e01341-65b1-45a0-ab10-16c929d8dfb5.jpg",
-    "detections": [
-      {
-        "bbox": [
-          172.0,
-          333.0,
-          360.0,
-          476.0
-        ],
-        "class": "Stuffed Bear Blue SB-1-B",
-        "score": 0.4907,
-        "similarity": 0.4504,
-        "proposal_score": 0.4616,
-        "consensus_views": 3
-      }
-    ]
+    "detections": []
   },
   {
     "image": "data/toy-91/query_images/61820009-e9ef-438f-8ebe-5bca3d7fd8d1.jpg",
-    "detections": [
-      {
-        "bbox": [
-          114.0,
-          73.0,
-          395.0,
-          299.0
-        ],
-        "class": "Stuffed Bear Blue SB-1-B",
-        "score": 0.601,
-        "similarity": 0.5391,
-        "proposal_score": 0.6366,
-        "consensus_views": 3
-      }
-    ]
+    "detections": []
   },
   {
     "image": "data/toy-91/query_images/63ce0cda-4a55-4a29-b24a-68c1bad47026.jpg",
     "detections": [
       {
         "bbox": [
-          367.0,
-          297.0,
-          539.0,
-          428.0
+          366.0,
+          283.0,
+          636.0,
+          430.0
         ],
         "class": "Halloween Pumpkin Plastic 7-P",
-        "score": 0.6914,
-        "similarity": 0.7571,
-        "proposal_score": 0.344,
+        "score": 0.6615,
+        "similarity": 0.7643,
+        "proposal_score": 0.203,
+        "consensus_views": 5
+      },
+      {
+        "bbox": [
+          293.0,
+          157.0,
+          417.0,
+          270.0
+        ],
+        "class": "Halloween Pumpkin Plastic 7-P",
+        "score": 0.6472,
+        "similarity": 0.7097,
+        "proposal_score": 0.3095,
         "consensus_views": 6
       },
       {
         "bbox": [
           208.0,
-          260.0,
+          259.0,
           331.0,
-          393.0
+          392.0
         ],
         "class": "Halloween Pumpkin Plastic 7-P",
-        "score": 0.6411,
-        "similarity": 0.6944,
-        "proposal_score": 0.331,
+        "score": 0.6282,
+        "similarity": 0.6906,
+        "proposal_score": 0.291,
         "consensus_views": 6
       },
       {
         "bbox": [
-          294.0,
-          158.0,
-          417.0,
-          272.0
-        ],
-        "class": "Halloween Pumpkin Plastic 7-P",
-        "score": 0.627,
-        "similarity": 0.6963,
-        "proposal_score": 0.2689,
-        "consensus_views": 6
-      },
-      {
-        "bbox": [
-          154.0,
-          375.0,
-          301.0,
-          479.0
+          153.0,
+          374.0,
+          302.0,
+          478.0
         ],
         "class": "Stuffed Bear Blue SB-1-B",
-        "score": 0.5617,
-        "similarity": 0.6091,
-        "proposal_score": 0.2695,
-        "consensus_views": 3
-      },
-      {
-        "bbox": [
-          120.0,
-          398.0,
-          221.0,
-          479.0
-        ],
-        "class": "Stuffed Bear Blue SB-1-B",
-        "score": 0.4238,
-        "similarity": 0.4417,
-        "proposal_score": 0.2201,
+        "score": 0.5887,
+        "similarity": 0.6174,
+        "proposal_score": 0.3525,
         "consensus_views": 3
       }
     ]
@@ -1748,29 +1260,29 @@
     "detections": [
       {
         "bbox": [
-          224.0,
-          120.0,
+          272.0,
+          131.0,
+          349.0,
+          212.0
+        ],
+        "class": "Halloween Pumpkin Plastic 7-P",
+        "score": 0.5767,
+        "similarity": 0.5937,
+        "proposal_score": 0.3756,
+        "consensus_views": 6
+      },
+      {
+        "bbox": [
+          223.0,
+          119.0,
           493.0,
           360.0
         ],
         "class": "Halloween Pumpkin Plastic 7-P",
-        "score": 0.5664,
-        "similarity": 0.549,
-        "proposal_score": 0.4686,
+        "score": 0.5144,
+        "similarity": 0.5486,
+        "proposal_score": 0.2618,
         "consensus_views": 5
-      },
-      {
-        "bbox": [
-          272.0,
-          132.0,
-          348.0,
-          212.0
-        ],
-        "class": "Halloween Pumpkin Plastic 7-P",
-        "score": 0.5643,
-        "similarity": 0.5834,
-        "proposal_score": 0.3568,
-        "consensus_views": 6
       }
     ]
   },
@@ -1779,55 +1291,29 @@
     "detections": [
       {
         "bbox": [
-          309.0,
-          299.0,
-          466.0,
-          479.0
-        ],
-        "class": "Stuffed Bear Blue SB-1-B",
-        "score": 0.7532,
-        "similarity": 0.7499,
-        "proposal_score": 0.6131,
-        "consensus_views": 3
-      },
-      {
-        "bbox": [
-          254.0,
-          94.0,
-          397.0,
-          245.0
-        ],
-        "class": "Stuffed Bear Blue SB-1-B",
-        "score": 0.6632,
-        "similarity": 0.6495,
-        "proposal_score": 0.5543,
-        "consensus_views": 3
-      },
-      {
-        "bbox": [
           37.0,
-          279.0,
+          278.0,
           155.0,
           393.0
         ],
         "class": "Halloween Pumpkin Plastic 7-P",
-        "score": 0.606,
-        "similarity": 0.6935,
-        "proposal_score": 0.1936,
+        "score": 0.6539,
+        "similarity": 0.6892,
+        "proposal_score": 0.3978,
         "consensus_views": 6
       },
       {
         "bbox": [
-          451.0,
-          261.0,
-          554.0,
-          404.0
+          254.0,
+          93.0,
+          396.0,
+          244.0
         ],
-        "class": "Pocket Tomika P060",
-        "score": 0.3881,
-        "similarity": 0.3864,
-        "proposal_score": 0.393,
-        "consensus_views": 0
+        "class": "Stuffed Bear Blue SB-1-B",
+        "score": 0.6261,
+        "similarity": 0.6458,
+        "proposal_score": 0.4171,
+        "consensus_views": 3
       }
     ]
   },
@@ -1842,48 +1328,48 @@
           453.0
         ],
         "class": "Stuffed Bear Blue SB-1-B",
-        "score": 0.7885,
+        "score": 0.7186,
         "similarity": 0.7845,
-        "proposal_score": 0.6503,
+        "proposal_score": 0.3709,
         "consensus_views": 3
       },
       {
         "bbox": [
-          352.0,
-          82.0,
-          456.0,
+          351.0,
+          81.0,
+          457.0,
           187.0
         ],
         "class": "Halloween Pumpkin Plastic 7-P",
-        "score": 0.6769,
-        "similarity": 0.778,
-        "proposal_score": 0.2238,
+        "score": 0.6955,
+        "similarity": 0.7599,
+        "proposal_score": 0.3523,
         "consensus_views": 6
       },
       {
         "bbox": [
           64.0,
-          375.0,
+          374.0,
           201.0,
           479.0
         ],
         "class": "Halloween Pumpkin Plastic 7-P",
-        "score": 0.6577,
-        "similarity": 0.7191,
-        "proposal_score": 0.3236,
+        "score": 0.6716,
+        "similarity": 0.7338,
+        "proposal_score": 0.335,
         "consensus_views": 6
       },
       {
         "bbox": [
-          288.0,
+          289.0,
           380.0,
           461.0,
-          479.0
+          478.0
         ],
         "class": "Stuffed Bear Blue SB-1-B",
-        "score": 0.62,
-        "similarity": 0.6889,
-        "proposal_score": 0.2632,
+        "score": 0.6018,
+        "similarity": 0.6762,
+        "proposal_score": 0.2287,
         "consensus_views": 3
       }
     ]
@@ -1893,42 +1379,42 @@
     "detections": [
       {
         "bbox": [
-          309.0,
-          295.0,
-          465.0,
-          479.0
+          44.0,
+          274.0,
+          163.0,
+          387.0
         ],
-        "class": "Stuffed Bear Blue SB-1-B",
-        "score": 0.7328,
-        "similarity": 0.7099,
-        "proposal_score": 0.6514,
-        "consensus_views": 3
+        "class": "Halloween Pumpkin Plastic 7-P",
+        "score": 0.6016,
+        "similarity": 0.6181,
+        "proposal_score": 0.402,
+        "consensus_views": 6
       },
       {
         "bbox": [
-          361.0,
-          113.0,
-          511.0,
-          281.0
+          40.0,
+          273.0,
+          294.0,
+          478.0
         ],
-        "class": "Stuffed Bear Blue SB-1-B",
-        "score": 0.4982,
-        "similarity": 0.4546,
-        "proposal_score": 0.4787,
-        "consensus_views": 3
+        "class": "Halloween Pumpkin Plastic 7-P",
+        "score": 0.4216,
+        "similarity": 0.4056,
+        "proposal_score": 0.3196,
+        "consensus_views": 2
       },
       {
         "bbox": [
-          39.0,
-          382.0,
-          152.0,
-          479.0
+          451.0,
+          260.0,
+          554.0,
+          405.0
         ],
-        "class": "Stuffed Bear Blue SB-1-B",
-        "score": 0.4609,
-        "similarity": 0.49,
-        "proposal_score": 0.2239,
-        "consensus_views": 3
+        "class": "Pocket Tomika P060",
+        "score": 0.3716,
+        "similarity": 0.3503,
+        "proposal_score": 0.4354,
+        "consensus_views": 0
       }
     ]
   },
@@ -1937,41 +1423,41 @@
     "detections": [
       {
         "bbox": [
-          73.0,
-          391.0,
-          217.0,
-          479.0
-        ],
-        "class": "Stuffed Bear Blue SB-1-B",
-        "score": 0.6246,
-        "similarity": 0.6043,
-        "proposal_score": 0.5355,
-        "consensus_views": 3
-      },
-      {
-        "bbox": [
           436.0,
-          0.0,
-          544.0,
-          89.0
+          1.0,
+          545.0,
+          88.0
         ],
         "class": "Halloween Pumpkin Plastic 7-P",
-        "score": 0.5846,
-        "similarity": 0.6641,
-        "proposal_score": 0.1961,
+        "score": 0.6573,
+        "similarity": 0.6948,
+        "proposal_score": 0.395,
         "consensus_views": 6
       },
       {
         "bbox": [
-          138.0,
-          206.0,
-          233.0,
+          73.0,
+          390.0,
+          218.0,
+          479.0
+        ],
+        "class": "Stuffed Bear Blue SB-1-B",
+        "score": 0.5902,
+        "similarity": 0.5949,
+        "proposal_score": 0.4261,
+        "consensus_views": 3
+      },
+      {
+        "bbox": [
+          139.0,
+          205.0,
+          234.0,
           326.0
         ],
         "class": "Pocket Tomika P060",
-        "score": 0.4541,
-        "similarity": 0.4368,
-        "proposal_score": 0.3561,
+        "score": 0.4242,
+        "similarity": 0.4255,
+        "proposal_score": 0.2701,
         "consensus_views": 3
       }
     ]
@@ -1981,42 +1467,42 @@
     "detections": [
       {
         "bbox": [
-          71.0,
-          392.0,
-          214.0,
-          479.0
-        ],
-        "class": "Stuffed Bear Blue SB-1-B",
-        "score": 0.6499,
-        "similarity": 0.6269,
-        "proposal_score": 0.569,
-        "consensus_views": 3
-      },
-      {
-        "bbox": [
-          436.0,
+          435.0,
           0.0,
-          543.0,
+          544.0,
           89.0
         ],
         "class": "Halloween Pumpkin Plastic 7-P",
-        "score": 0.6404,
-        "similarity": 0.7314,
-        "proposal_score": 0.2174,
+        "score": 0.679,
+        "similarity": 0.7323,
+        "proposal_score": 0.3689,
         "consensus_views": 6
       },
       {
         "bbox": [
-          138.0,
-          206.0,
+          71.0,
+          391.0,
+          214.0,
+          479.0
+        ],
+        "class": "Stuffed Bear Blue SB-1-B",
+        "score": 0.6025,
+        "similarity": 0.6101,
+        "proposal_score": 0.4297,
+        "consensus_views": 3
+      },
+      {
+        "bbox": [
+          139.0,
+          205.0,
           233.0,
-          325.0
+          326.0
         ],
         "class": "Pocket Tomika P060",
-        "score": 0.4317,
-        "similarity": 0.4105,
-        "proposal_score": 0.3451,
-        "consensus_views": 2
+        "score": 0.4176,
+        "similarity": 0.427,
+        "proposal_score": 0.2395,
+        "consensus_views": 3
       }
     ]
   },
@@ -2025,54 +1511,41 @@
     "detections": [
       {
         "bbox": [
-          245.0,
-          0.0,
+          244.0,
+          1.0,
           354.0,
-          112.0
+          113.0
         ],
         "class": "Halloween Pumpkin Plastic 7-P",
-        "score": 0.5895,
-        "similarity": 0.6421,
-        "proposal_score": 0.2817,
+        "score": 0.6253,
+        "similarity": 0.6448,
+        "proposal_score": 0.4167,
         "consensus_views": 6
       },
       {
         "bbox": [
           169.0,
-          144.0,
-          343.0,
+          143.0,
+          334.0,
           276.0
         ],
         "class": "Stuffed Bear Blue SB-1-B",
-        "score": 0.5233,
-        "similarity": 0.465,
-        "proposal_score": 0.5481,
-        "consensus_views": 3
+        "score": 0.4596,
+        "similarity": 0.4173,
+        "proposal_score": 0.4364,
+        "consensus_views": 2
       },
       {
         "bbox": [
-          445.0,
-          1.0,
-          575.0,
-          153.0
-        ],
-        "class": "Stuffed Bear Blue SB-1-B",
-        "score": 0.4497,
-        "similarity": 0.4286,
-        "proposal_score": 0.363,
-        "consensus_views": 3
-      },
-      {
-        "bbox": [
-          432.0,
-          182.0,
+          431.0,
+          181.0,
           542.0,
           324.0
         ],
         "class": "Pocket Tomika P060",
-        "score": 0.4178,
-        "similarity": 0.4062,
-        "proposal_score": 0.4527,
+        "score": 0.4023,
+        "similarity": 0.4056,
+        "proposal_score": 0.3925,
         "consensus_views": 1
       }
     ]
@@ -2083,41 +1556,28 @@
       {
         "bbox": [
           292.0,
-          104.0,
+          103.0,
           397.0,
           212.0
         ],
         "class": "Halloween Pumpkin Plastic 7-P",
-        "score": 0.587,
-        "similarity": 0.6405,
-        "proposal_score": 0.2765,
+        "score": 0.6088,
+        "similarity": 0.6313,
+        "proposal_score": 0.3913,
         "consensus_views": 6
       },
       {
         "bbox": [
-          483.0,
-          94.0,
-          614.0,
-          266.0
-        ],
-        "class": "Stuffed Bear Blue SB-1-B",
-        "score": 0.5546,
-        "similarity": 0.5864,
-        "proposal_score": 0.3093,
-        "consensus_views": 3
-      },
-      {
-        "bbox": [
           204.0,
-          242.0,
-          367.0,
+          241.0,
+          366.0,
           373.0
         ],
         "class": "Stuffed Bear Blue SB-1-B",
-        "score": 0.4052,
-        "similarity": 0.3739,
-        "proposal_score": 0.499,
-        "consensus_views": 0
+        "score": 0.4001,
+        "similarity": 0.4082,
+        "proposal_score": 0.2256,
+        "consensus_views": 2
       }
     ]
   },
@@ -2126,41 +1586,41 @@
     "detections": [
       {
         "bbox": [
-          405.0,
-          56.0,
-          529.0,
-          214.0
-        ],
-        "class": "Stuffed Bear Blue SB-1-B",
-        "score": 0.6617,
-        "similarity": 0.6268,
-        "proposal_score": 0.6163,
-        "consensus_views": 3
-      },
-      {
-        "bbox": [
-          168.0,
+          167.0,
           214.0,
           280.0,
           329.0
         ],
         "class": "Halloween Pumpkin Plastic 7-P",
-        "score": 0.6295,
-        "similarity": 0.7001,
-        "proposal_score": 0.268,
+        "score": 0.6738,
+        "similarity": 0.7029,
+        "proposal_score": 0.4365,
         "consensus_views": 6
       },
       {
         "bbox": [
-          259.0,
-          65.0,
+          405.0,
+          54.0,
+          529.0,
+          214.0
+        ],
+        "class": "Stuffed Bear Blue SB-1-B",
+        "score": 0.6405,
+        "similarity": 0.6908,
+        "proposal_score": 0.3395,
+        "consensus_views": 3
+      },
+      {
+        "bbox": [
+          258.0,
+          64.0,
           374.0,
-          177.0
+          178.0
         ],
         "class": "Halloween Pumpkin Plastic 7-P",
-        "score": 0.6164,
-        "similarity": 0.659,
-        "proposal_score": 0.3387,
+        "score": 0.6323,
+        "similarity": 0.6523,
+        "proposal_score": 0.4221,
         "consensus_views": 6
       },
       {
@@ -2171,72 +1631,58 @@
           441.0
         ],
         "class": "Halloween Pumpkin Plastic 7-P",
-        "score": 0.5467,
+        "score": 0.5798,
         "similarity": 0.6117,
-        "proposal_score": 0.202,
-        "consensus_views": 6
-      },
-      {
-        "bbox": [
-          279.0,
-          204.0,
-          508.0,
-          441.0
-        ],
-        "class": "Halloween Pumpkin Plastic 7-P",
-        "score": 0.471,
-        "similarity": 0.512,
-        "proposal_score": 0.198,
+        "proposal_score": 0.3342,
         "consensus_views": 6
       }
     ]
   },
   {
     "image": "data/toy-91/query_images/758e845f-dc5c-473d-9477-f6130a88e0fc.jpg",
-    "detections": [
-      {
-        "bbox": [
-          307.0,
-          99.0,
-          449.0,
-          247.0
-        ],
-        "class": "Stuffed Bear Blue SB-1-B",
-        "score": 0.4454,
-        "similarity": 0.4579,
-        "proposal_score": 0.2581,
-        "consensus_views": 3
-      }
-    ]
+    "detections": []
   },
   {
     "image": "data/toy-91/query_images/7b2b04dc-3d7b-49cb-b5d0-0ae63503ce46.jpg",
     "detections": [
       {
         "bbox": [
-          227.0,
-          349.0,
-          356.0,
+          226.0,
+          348.0,
+          357.0,
           476.0
         ],
         "class": "Halloween Pumpkin Plastic 7-P",
-        "score": 0.7302,
-        "similarity": 0.8299,
-        "proposal_score": 0.2811,
+        "score": 0.7566,
+        "similarity": 0.8309,
+        "proposal_score": 0.3838,
         "consensus_views": 6
       },
       {
         "bbox": [
-          378.0,
-          264.0,
-          571.0,
-          425.0
+          377.0,
+          263.0,
+          570.0,
+          422.0
         ],
         "class": "Stuffed Bear Blue SB-1-B",
-        "score": 0.4584,
-        "similarity": 0.4816,
-        "proposal_score": 0.2389,
+        "score": 0.4748,
+        "similarity": 0.4715,
+        "proposal_score": 0.3348,
         "consensus_views": 3
+      },
+      {
+        "bbox": [
+          53.0,
+          260.0,
+          574.0,
+          476.0
+        ],
+        "class": "Halloween Pumpkin Plastic 7-P",
+        "score": 0.4339,
+        "similarity": 0.4637,
+        "proposal_score": 0.1942,
+        "consensus_views": 5
       }
     ]
   },
@@ -2245,28 +1691,28 @@
     "detections": [
       {
         "bbox": [
-          286.0,
-          134.0,
-          357.0,
-          213.0
+          285.0,
+          133.0,
+          358.0,
+          214.0
         ],
         "class": "Halloween Pumpkin Plastic 7-P",
-        "score": 0.6722,
-        "similarity": 0.7412,
-        "proposal_score": 0.3151,
+        "score": 0.6907,
+        "similarity": 0.7583,
+        "proposal_score": 0.3377,
         "consensus_views": 6
       },
       {
         "bbox": [
-          224.0,
-          119.0,
-          492.0,
-          360.0
+          223.0,
+          118.0,
+          494.0,
+          361.0
         ],
         "class": "Halloween Pumpkin Plastic 7-P",
-        "score": 0.6523,
-        "similarity": 0.6376,
-        "proposal_score": 0.5466,
+        "score": 0.5822,
+        "similarity": 0.6395,
+        "proposal_score": 0.2606,
         "consensus_views": 5
       }
     ]
@@ -2280,15 +1726,15 @@
     "detections": [
       {
         "bbox": [
-          242.0,
+          243.0,
           217.0,
           433.0,
           413.0
         ],
         "class": "Halloween Pumpkin Plastic 7-P",
-        "score": 0.8184,
-        "similarity": 0.8914,
-        "proposal_score": 0.4496,
+        "score": 0.798,
+        "similarity": 0.9041,
+        "proposal_score": 0.33,
         "consensus_views": 6
       }
     ]
@@ -2298,42 +1744,16 @@
     "detections": [
       {
         "bbox": [
-          296.0,
-          277.0,
-          479.0,
-          479.0
-        ],
-        "class": "Stuffed Bear Blue SB-1-B",
-        "score": 0.6545,
-        "similarity": 0.6229,
-        "proposal_score": 0.5994,
-        "consensus_views": 3
-      },
-      {
-        "bbox": [
           49.0,
-          274.0,
-          167.0,
+          273.0,
+          168.0,
           386.0
         ],
         "class": "Halloween Pumpkin Plastic 7-P",
-        "score": 0.5967,
-        "similarity": 0.6674,
-        "proposal_score": 0.2348,
+        "score": 0.6255,
+        "similarity": 0.6541,
+        "proposal_score": 0.3896,
         "consensus_views": 6
-      },
-      {
-        "bbox": [
-          44.0,
-          222.0,
-          480.0,
-          479.0
-        ],
-        "class": "Stuffed Bear Blue SB-1-B",
-        "score": 0.4619,
-        "similarity": 0.5042,
-        "proposal_score": 0.1849,
-        "consensus_views": 3
       }
     ]
   },
@@ -2346,28 +1766,15 @@
     "detections": [
       {
         "bbox": [
-          309.0,
-          296.0,
-          465.0,
-          479.0
-        ],
-        "class": "Stuffed Bear Blue SB-1-B",
-        "score": 0.7687,
-        "similarity": 0.7658,
-        "proposal_score": 0.6275,
-        "consensus_views": 3
-      },
-      {
-        "bbox": [
-          451.0,
+          450.0,
           261.0,
-          553.0,
+          554.0,
           404.0
         ],
         "class": "Pocket Tomika P060",
-        "score": 0.3655,
-        "similarity": 0.3531,
-        "proposal_score": 0.4026,
+        "score": 0.3903,
+        "similarity": 0.3771,
+        "proposal_score": 0.4301,
         "consensus_views": 0
       }
     ]
@@ -2377,42 +1784,16 @@
     "detections": [
       {
         "bbox": [
-          289.0,
-          275.0,
-          478.0,
-          479.0
+          35.0,
+          279.0,
+          155.0,
+          396.0
         ],
-        "class": "Stuffed Bear Blue SB-1-B",
-        "score": 0.6271,
-        "similarity": 0.5884,
-        "proposal_score": 0.5934,
-        "consensus_views": 3
-      },
-      {
-        "bbox": [
-          357.0,
-          79.0,
-          487.0,
-          267.0
-        ],
-        "class": "Stuffed Bear Blue SB-1-B",
-        "score": 0.6064,
-        "similarity": 0.5642,
-        "proposal_score": 0.5832,
-        "consensus_views": 3
-      },
-      {
-        "bbox": [
-          242.0,
-          77.0,
-          362.0,
-          185.0
-        ],
-        "class": "Stuffed Bear Blue SB-1-B",
-        "score": 0.5726,
-        "similarity": 0.5431,
-        "proposal_score": 0.511,
-        "consensus_views": 3
+        "class": "Halloween Pumpkin Plastic 7-P",
+        "score": 0.5926,
+        "similarity": 0.5974,
+        "proposal_score": 0.4281,
+        "consensus_views": 5
       }
     ]
   },
@@ -2421,41 +1802,28 @@
     "detections": [
       {
         "bbox": [
-          484.0,
-          94.0,
-          615.0,
-          266.0
-        ],
-        "class": "Stuffed Bear Blue SB-1-B",
-        "score": 0.6333,
-        "similarity": 0.6247,
-        "proposal_score": 0.5088,
-        "consensus_views": 3
-      },
-      {
-        "bbox": [
-          293.0,
-          105.0,
+          292.0,
+          104.0,
           397.0,
-          212.0
+          213.0
         ],
         "class": "Halloween Pumpkin Plastic 7-P",
-        "score": 0.6078,
-        "similarity": 0.6697,
-        "proposal_score": 0.2719,
+        "score": 0.6409,
+        "similarity": 0.663,
+        "proposal_score": 0.4247,
         "consensus_views": 6
       },
       {
         "bbox": [
-          204.0,
-          243.0,
+          203.0,
+          242.0,
           364.0,
           372.0
         ],
         "class": "Stuffed Bear Blue SB-1-B",
-        "score": 0.5021,
-        "similarity": 0.4552,
-        "proposal_score": 0.4928,
+        "score": 0.4884,
+        "similarity": 0.4504,
+        "proposal_score": 0.4527,
         "consensus_views": 3
       }
     ]
@@ -2465,41 +1833,41 @@
     "detections": [
       {
         "bbox": [
-          237.0,
+          236.0,
           55.0,
-          417.0,
+          418.0,
           248.0
         ],
         "class": "Halloween Pumpkin Plastic 7-P",
-        "score": 0.7593,
-        "similarity": 0.836,
-        "proposal_score": 0.3793,
+        "score": 0.7602,
+        "similarity": 0.8511,
+        "proposal_score": 0.3377,
         "consensus_views": 5
       },
       {
         "bbox": [
           327.0,
-          219.0,
-          527.0,
+          218.0,
+          529.0,
           433.0
         ],
         "class": "Halloween Pumpkin Plastic 7-P",
-        "score": 0.735,
-        "similarity": 0.8201,
-        "proposal_score": 0.3299,
+        "score": 0.7362,
+        "similarity": 0.8213,
+        "proposal_score": 0.3312,
         "consensus_views": 6
       },
       {
         "bbox": [
-          235.0,
-          54.0,
-          529.0,
-          434.0
+          231.0,
+          52.0,
+          534.0,
+          435.0
         ],
         "class": "Halloween Pumpkin Plastic 7-P",
-        "score": 0.6916,
-        "similarity": 0.8035,
-        "proposal_score": 0.2062,
+        "score": 0.7335,
+        "similarity": 0.8041,
+        "proposal_score": 0.3716,
         "consensus_views": 6
       }
     ]
@@ -2509,29 +1877,29 @@
     "detections": [
       {
         "bbox": [
-          293.0,
+          292.0,
           105.0,
           397.0,
           214.0
         ],
         "class": "Halloween Pumpkin Plastic 7-P",
-        "score": 0.5679,
-        "similarity": 0.6159,
-        "proposal_score": 0.2738,
+        "score": 0.6139,
+        "similarity": 0.6365,
+        "proposal_score": 0.3961,
         "consensus_views": 6
       },
       {
         "bbox": [
-          482.0,
-          95.0,
-          613.0,
-          264.0
+          465.0,
+          292.0,
+          579.0,
+          435.0
         ],
-        "class": "Stuffed Bear Blue SB-1-B",
-        "score": 0.4868,
-        "similarity": 0.5083,
-        "proposal_score": 0.2724,
-        "consensus_views": 3
+        "class": "Pocket Tomika P060",
+        "score": 0.4565,
+        "similarity": 0.4259,
+        "proposal_score": 0.3985,
+        "consensus_views": 2
       }
     ]
   },
@@ -2540,54 +1908,41 @@
     "detections": [
       {
         "bbox": [
-          260.0,
+          259.0,
           10.0,
           366.0,
-          118.0
+          119.0
         ],
         "class": "Halloween Pumpkin Plastic 7-P",
-        "score": 0.6676,
-        "similarity": 0.7706,
-        "proposal_score": 0.2085,
+        "score": 0.7605,
+        "similarity": 0.7875,
+        "proposal_score": 0.5295,
         "consensus_views": 6
       },
       {
         "bbox": [
           77.0,
-          379.0,
-          252.0,
-          479.0
+          378.0,
+          251.0,
+          478.0
         ],
         "class": "Stuffed Bear Blue SB-1-B",
-        "score": 0.5924,
-        "similarity": 0.5509,
-        "proposal_score": 0.5667,
+        "score": 0.5898,
+        "similarity": 0.609,
+        "proposal_score": 0.3823,
         "consensus_views": 3
       },
       {
         "bbox": [
-          301.0,
-          157.0,
-          429.0,
-          248.0
+          300.0,
+          156.0,
+          430.0,
+          249.0
         ],
         "class": "Pocket Tomika P060",
-        "score": 0.5252,
-        "similarity": 0.4793,
-        "proposal_score": 0.5131,
-        "consensus_views": 3
-      },
-      {
-        "bbox": [
-          428.0,
-          4.0,
-          610.0,
-          163.0
-        ],
-        "class": "Stuffed Bear Blue SB-1-B",
-        "score": 0.4794,
-        "similarity": 0.5216,
-        "proposal_score": 0.2031,
+        "score": 0.4872,
+        "similarity": 0.4791,
+        "proposal_score": 0.3615,
         "consensus_views": 3
       }
     ]
@@ -2597,41 +1952,28 @@
     "detections": [
       {
         "bbox": [
-          373.0,
-          37.0,
-          489.0,
-          189.0
+          32.0,
+          279.0,
+          154.0,
+          399.0
         ],
-        "class": "Stuffed Bear Blue SB-1-B",
-        "score": 0.6035,
-        "similarity": 0.5632,
-        "proposal_score": 0.5742,
-        "consensus_views": 3
-      },
-      {
-        "bbox": [
-          242.0,
-          77.0,
-          363.0,
-          189.0
-        ],
-        "class": "Stuffed Bear Blue SB-1-B",
-        "score": 0.5336,
-        "similarity": 0.4565,
-        "proposal_score": 0.6148,
-        "consensus_views": 3
+        "class": "Halloween Pumpkin Plastic 7-P",
+        "score": 0.4156,
+        "similarity": 0.4116,
+        "proposal_score": 0.4277,
+        "consensus_views": 1
       },
       {
         "bbox": [
           423.0,
-          232.0,
-          537.0,
-          377.0
+          231.0,
+          538.0,
+          378.0
         ],
         "class": "Pocket Tomika P060",
-        "score": 0.3868,
-        "similarity": 0.3789,
-        "proposal_score": 0.4104,
+        "score": 0.353,
+        "similarity": 0.3617,
+        "proposal_score": 0.3272,
         "consensus_views": 0
       }
     ]
@@ -2641,29 +1983,42 @@
     "detections": [
       {
         "bbox": [
-          288.0,
-          50.0,
-          391.0,
+          287.0,
+          49.0,
+          392.0,
           160.0
         ],
         "class": "Halloween Pumpkin Plastic 7-P",
-        "score": 0.7386,
-        "similarity": 0.8498,
-        "proposal_score": 0.2549,
+        "score": 0.763,
+        "similarity": 0.841,
+        "proposal_score": 0.3791,
         "consensus_views": 6
       },
       {
         "bbox": [
           404.0,
-          32.0,
+          30.0,
           527.0,
-          192.0
+          193.0
         ],
         "class": "Stuffed Bear Blue SB-1-B",
-        "score": 0.7279,
-        "similarity": 0.6995,
-        "proposal_score": 0.6632,
+        "score": 0.6519,
+        "similarity": 0.7052,
+        "proposal_score": 0.3419,
         "consensus_views": 3
+      },
+      {
+        "bbox": [
+          307.0,
+          249.0,
+          441.0,
+          396.0
+        ],
+        "class": "Halloween Pumpkin Plastic 7-P",
+        "score": 0.6311,
+        "similarity": 0.6969,
+        "proposal_score": 0.2836,
+        "consensus_views": 6
       }
     ]
   },
@@ -2673,62 +2028,35 @@
   },
   {
     "image": "data/toy-91/query_images/aeb386b7-5da4-4b7d-af26-1cac96a12398.jpg",
-    "detections": [
-      {
-        "bbox": [
-          60.0,
-          105.0,
-          216.0,
-          243.0
-        ],
-        "class": "Stuffed Bear Blue SB-1-B",
-        "score": 0.3563,
-        "similarity": 0.351,
-        "proposal_score": 0.3723,
-        "consensus_views": 0
-      }
-    ]
+    "detections": []
   },
   {
     "image": "data/toy-91/query_images/b10b6d42-a0cb-4734-bb26-ef100ff1f9e1.jpg",
     "detections": [
       {
         "bbox": [
-          295.0,
-          277.0,
-          469.0,
-          479.0
-        ],
-        "class": "Stuffed Bear Blue SB-1-B",
-        "score": 0.6521,
-        "similarity": 0.6286,
-        "proposal_score": 0.5725,
-        "consensus_views": 3
-      },
-      {
-        "bbox": [
           49.0,
-          274.0,
+          273.0,
           168.0,
           385.0
         ],
         "class": "Halloween Pumpkin Plastic 7-P",
-        "score": 0.5894,
-        "similarity": 0.655,
-        "proposal_score": 0.2426,
+        "score": 0.5977,
+        "similarity": 0.615,
+        "proposal_score": 0.3958,
         "consensus_views": 6
       },
       {
         "bbox": [
-          45.0,
-          226.0,
-          475.0,
-          479.0
+          46.0,
+          227.0,
+          472.0,
+          478.0
         ],
         "class": "Stuffed Bear Blue SB-1-B",
-        "score": 0.4668,
-        "similarity": 0.5066,
-        "proposal_score": 0.1975,
+        "score": 0.5065,
+        "similarity": 0.5185,
+        "proposal_score": 0.3205,
         "consensus_views": 3
       }
     ]
@@ -2738,41 +2066,41 @@
     "detections": [
       {
         "bbox": [
-          436.0,
+          435.0,
           0.0,
-          543.0,
+          544.0,
           89.0
         ],
         "class": "Halloween Pumpkin Plastic 7-P",
-        "score": 0.6297,
-        "similarity": 0.7108,
-        "proposal_score": 0.2365,
+        "score": 0.6636,
+        "similarity": 0.7096,
+        "proposal_score": 0.3758,
         "consensus_views": 6
       },
       {
         "bbox": [
           71.0,
-          392.0,
+          391.0,
           214.0,
           479.0
         ],
         "class": "Stuffed Bear Blue SB-1-B",
-        "score": 0.6221,
-        "similarity": 0.5984,
-        "proposal_score": 0.5431,
+        "score": 0.5928,
+        "similarity": 0.5968,
+        "proposal_score": 0.4308,
         "consensus_views": 3
       },
       {
         "bbox": [
-          137.0,
-          206.0,
-          233.0,
+          139.0,
+          205.0,
+          234.0,
           326.0
         ],
         "class": "Pocket Tomika P060",
-        "score": 0.4782,
-        "similarity": 0.446,
-        "proposal_score": 0.4246,
+        "score": 0.4427,
+        "similarity": 0.4503,
+        "proposal_score": 0.27,
         "consensus_views": 3
       }
     ]
@@ -2784,26 +2112,13 @@
         "bbox": [
           308.0,
           96.0,
-          426.0,
-          213.0
+          427.0,
+          212.0
         ],
         "class": "Stuffed Bear Blue SB-1-B",
-        "score": 0.5792,
-        "similarity": 0.5859,
-        "proposal_score": 0.409,
-        "consensus_views": 3
-      },
-      {
-        "bbox": [
-          433.0,
-          185.0,
-          513.0,
-          291.0
-        ],
-        "class": "Stuffed Bear Blue SB-1-B",
-        "score": 0.5772,
-        "similarity": 0.6507,
-        "proposal_score": 0.2066,
+        "score": 0.5342,
+        "similarity": 0.5548,
+        "proposal_score": 0.3226,
         "consensus_views": 3
       },
       {
@@ -2811,12 +2126,12 @@
           323.0,
           176.0,
           448.0,
-          286.0
+          307.0
         ],
         "class": "Stuffed Bear Blue SB-1-B",
-        "score": 0.5265,
-        "similarity": 0.5752,
-        "proposal_score": 0.2304,
+        "score": 0.504,
+        "similarity": 0.5616,
+        "proposal_score": 0.181,
         "consensus_views": 3
       }
     ]
@@ -2826,54 +2141,67 @@
     "detections": [
       {
         "bbox": [
-          51.0,
-          228.0,
+          50.0,
+          227.0,
           167.0,
           337.0
         ],
         "class": "Halloween Pumpkin Plastic 7-P",
-        "score": 0.7223,
-        "similarity": 0.7988,
-        "proposal_score": 0.3429,
+        "score": 0.7135,
+        "similarity": 0.7826,
+        "proposal_score": 0.3562,
         "consensus_views": 6
       },
       {
         "bbox": [
           336.0,
-          111.0,
+          110.0,
           452.0,
           228.0
         ],
         "class": "Halloween Pumpkin Plastic 7-P",
-        "score": 0.6869,
-        "similarity": 0.7718,
-        "proposal_score": 0.2824,
+        "score": 0.707,
+        "similarity": 0.761,
+        "proposal_score": 0.395,
         "consensus_views": 6
       },
       {
         "bbox": [
-          367.0,
-          296.0,
-          537.0,
-          433.0
+          366.0,
+          282.0,
+          636.0,
+          435.0
         ],
         "class": "Halloween Pumpkin Plastic 7-P",
-        "score": 0.5976,
-        "similarity": 0.6498,
-        "proposal_score": 0.2909,
-        "consensus_views": 6
+        "score": 0.6721,
+        "similarity": 0.7806,
+        "proposal_score": 0.1966,
+        "consensus_views": 5
       },
       {
         "bbox": [
-          155.0,
-          346.0,
-          338.0,
-          479.0
+          154.0,
+          345.0,
+          339.0,
+          478.0
         ],
         "class": "Stuffed Bear Blue SB-1-B",
-        "score": 0.5837,
-        "similarity": 0.5499,
-        "proposal_score": 0.535,
+        "score": 0.5565,
+        "similarity": 0.5562,
+        "proposal_score": 0.4073,
+        "consensus_views": 3
+      },
+      {
+        "bbox": [
+          184.0,
+          391.0,
+          260.0,
+          467.0
+        ],
+        "class": "Stuffed Bear Blue SB-1-B",
+        "score": 0.4951,
+        "similarity": 0.5397,
+        "proposal_score": 0.2114,
         "consensus_views": 3
       }
     ]
@@ -2883,29 +2211,29 @@
     "detections": [
       {
         "bbox": [
-          405.0,
-          56.0,
-          529.0,
-          213.0
-        ],
-        "class": "Stuffed Bear Blue SB-1-B",
-        "score": 0.7119,
-        "similarity": 0.6927,
-        "proposal_score": 0.6196,
-        "consensus_views": 3
-      },
-      {
-        "bbox": [
-          168.0,
+          167.0,
           214.0,
           280.0,
           329.0
         ],
         "class": "Halloween Pumpkin Plastic 7-P",
-        "score": 0.6256,
-        "similarity": 0.6929,
-        "proposal_score": 0.2739,
+        "score": 0.6705,
+        "similarity": 0.7068,
+        "proposal_score": 0.4114,
         "consensus_views": 6
+      },
+      {
+        "bbox": [
+          405.0,
+          54.0,
+          529.0,
+          214.0
+        ],
+        "class": "Stuffed Bear Blue SB-1-B",
+        "score": 0.6566,
+        "similarity": 0.7122,
+        "proposal_score": 0.3397,
+        "consensus_views": 3
       },
       {
         "bbox": [
@@ -2915,35 +2243,22 @@
           178.0
         ],
         "class": "Halloween Pumpkin Plastic 7-P",
-        "score": 0.6003,
+        "score": 0.619,
         "similarity": 0.6334,
-        "proposal_score": 0.3512,
+        "proposal_score": 0.4259,
         "consensus_views": 6
       },
       {
         "bbox": [
           299.0,
           310.0,
-          426.0,
+          427.0,
           441.0
         ],
         "class": "Halloween Pumpkin Plastic 7-P",
-        "score": 0.5432,
-        "similarity": 0.6067,
-        "proposal_score": 0.2029,
-        "consensus_views": 6
-      },
-      {
-        "bbox": [
-          279.0,
-          205.0,
-          508.0,
-          441.0
-        ],
-        "class": "Halloween Pumpkin Plastic 7-P",
-        "score": 0.4751,
-        "similarity": 0.5183,
-        "proposal_score": 0.1957,
+        "score": 0.5644,
+        "similarity": 0.6071,
+        "proposal_score": 0.2862,
         "consensus_views": 6
       }
     ]
@@ -2953,41 +2268,41 @@
     "detections": [
       {
         "bbox": [
+          435.0,
+          1.0,
+          544.0,
+          89.0
+        ],
+        "class": "Halloween Pumpkin Plastic 7-P",
+        "score": 0.6231,
+        "similarity": 0.6511,
+        "proposal_score": 0.3889,
+        "consensus_views": 6
+      },
+      {
+        "bbox": [
           71.0,
           391.0,
           215.0,
           479.0
         ],
         "class": "Stuffed Bear Blue SB-1-B",
-        "score": 0.6228,
+        "score": 0.5965,
         "similarity": 0.6019,
-        "proposal_score": 0.5356,
+        "proposal_score": 0.4302,
         "consensus_views": 3
       },
       {
         "bbox": [
-          436.0,
-          0.0,
-          543.0,
-          89.0
-        ],
-        "class": "Halloween Pumpkin Plastic 7-P",
-        "score": 0.5985,
-        "similarity": 0.668,
-        "proposal_score": 0.2401,
-        "consensus_views": 6
-      },
-      {
-        "bbox": [
-          139.0,
-          206.0,
-          233.0,
+          138.0,
+          205.0,
+          234.0,
           326.0
         ],
         "class": "Pocket Tomika P060",
-        "score": 0.4821,
-        "similarity": 0.4548,
-        "proposal_score": 0.4138,
+        "score": 0.4051,
+        "similarity": 0.4167,
+        "proposal_score": 0.2203,
         "consensus_views": 3
       }
     ]
@@ -2998,53 +2313,66 @@
       {
         "bbox": [
           367.0,
-          67.0,
+          66.0,
           479.0,
           179.0
         ],
         "class": "Halloween Pumpkin Plastic 7-P",
-        "score": 0.6981,
-        "similarity": 0.7966,
-        "proposal_score": 0.2526,
-        "consensus_views": 6
-      },
-      {
-        "bbox": [
-          51.0,
-          225.0,
-          168.0,
-          334.0
-        ],
-        "class": "Halloween Pumpkin Plastic 7-P",
-        "score": 0.6978,
-        "similarity": 0.7766,
-        "proposal_score": 0.3116,
+        "score": 0.7545,
+        "similarity": 0.7945,
+        "proposal_score": 0.4847,
         "consensus_views": 6
       },
       {
         "bbox": [
           367.0,
-          295.0,
-          534.0,
+          294.0,
+          519.0,
           428.0
         ],
         "class": "Halloween Pumpkin Plastic 7-P",
-        "score": 0.6295,
-        "similarity": 0.6981,
-        "proposal_score": 0.2735,
+        "score": 0.6825,
+        "similarity": 0.7682,
+        "proposal_score": 0.2755,
         "consensus_views": 6
       },
       {
         "bbox": [
-          155.0,
-          344.0,
-          338.0,
-          479.0
+          51.0,
+          224.0,
+          168.0,
+          335.0
+        ],
+        "class": "Halloween Pumpkin Plastic 7-P",
+        "score": 0.6653,
+        "similarity": 0.7276,
+        "proposal_score": 0.3282,
+        "consensus_views": 6
+      },
+      {
+        "bbox": [
+          183.0,
+          389.0,
+          261.0,
+          466.0
         ],
         "class": "Stuffed Bear Blue SB-1-B",
-        "score": 0.5942,
-        "similarity": 0.554,
-        "proposal_score": 0.5647,
+        "score": 0.5743,
+        "similarity": 0.6446,
+        "proposal_score": 0.2136,
+        "consensus_views": 3
+      },
+      {
+        "bbox": [
+          154.0,
+          343.0,
+          338.0,
+          478.0
+        ],
+        "class": "Stuffed Bear Blue SB-1-B",
+        "score": 0.5483,
+        "similarity": 0.5469,
+        "proposal_score": 0.4024,
         "consensus_views": 3
       }
     ]
@@ -3054,55 +2382,29 @@
     "detections": [
       {
         "bbox": [
-          346.0,
-          114.0,
-          466.0,
+          353.0,
+          113.0,
+          467.0,
           215.0
         ],
         "class": "Halloween Pumpkin Plastic 7-P",
-        "score": 0.6867,
-        "similarity": 0.76,
-        "proposal_score": 0.3166,
+        "score": 0.7226,
+        "similarity": 0.7883,
+        "proposal_score": 0.3756,
         "consensus_views": 6
       },
       {
         "bbox": [
           395.0,
-          382.0,
+          381.0,
           537.0,
-          479.0
+          478.0
         ],
         "class": "Halloween Pumpkin Plastic 7-P",
-        "score": 0.5153,
-        "similarity": 0.5766,
-        "proposal_score": 0.1814,
+        "score": 0.5512,
+        "similarity": 0.6097,
+        "proposal_score": 0.2255,
         "consensus_views": 5
-      },
-      {
-        "bbox": [
-          169.0,
-          285.0,
-          342.0,
-          411.0
-        ],
-        "class": "Stuffed Bear Blue SB-1-B",
-        "score": 0.486,
-        "similarity": 0.4223,
-        "proposal_score": 0.527,
-        "consensus_views": 2
-      },
-      {
-        "bbox": [
-          587.0,
-          42.0,
-          639.0,
-          156.0
-        ],
-        "class": "Stuffed Bear Blue SB-1-B",
-        "score": 0.4738,
-        "similarity": 0.4839,
-        "proposal_score": 0.2933,
-        "consensus_views": 3
       }
     ]
   },
@@ -3111,28 +2413,15 @@
     "detections": [
       {
         "bbox": [
-          324.0,
-          93.0,
-          488.0,
+          323.0,
+          91.0,
+          489.0,
           196.0
         ],
         "class": "Stuffed Bear Blue SB-1-B",
-        "score": 0.5598,
-        "similarity": 0.5551,
-        "proposal_score": 0.4237,
-        "consensus_views": 3
-      },
-      {
-        "bbox": [
-          314.0,
-          198.0,
-          435.0,
-          331.0
-        ],
-        "class": "Stuffed Bear Blue SB-1-B",
-        "score": 0.5283,
-        "similarity": 0.4858,
-        "proposal_score": 0.5056,
+        "score": 0.5211,
+        "similarity": 0.5154,
+        "proposal_score": 0.3881,
         "consensus_views": 3
       }
     ]
@@ -3142,41 +2431,41 @@
     "detections": [
       {
         "bbox": [
-          71.0,
-          392.0,
-          214.0,
-          479.0
-        ],
-        "class": "Stuffed Bear Blue SB-1-B",
-        "score": 0.653,
-        "similarity": 0.6371,
-        "proposal_score": 0.5508,
-        "consensus_views": 3
-      },
-      {
-        "bbox": [
-          436.0,
-          0.0,
-          544.0,
+          435.0,
+          1.0,
+          545.0,
           90.0
         ],
         "class": "Halloween Pumpkin Plastic 7-P",
-        "score": 0.6001,
-        "similarity": 0.6752,
-        "proposal_score": 0.2248,
+        "score": 0.623,
+        "similarity": 0.6671,
+        "proposal_score": 0.3409,
         "consensus_views": 6
       },
       {
         "bbox": [
-          139.0,
-          206.0,
-          233.0,
+          71.0,
+          391.0,
+          214.0,
+          478.0
+        ],
+        "class": "Stuffed Bear Blue SB-1-B",
+        "score": 0.6054,
+        "similarity": 0.6141,
+        "proposal_score": 0.4294,
+        "consensus_views": 3
+      },
+      {
+        "bbox": [
+          138.0,
+          205.0,
+          234.0,
           326.0
         ],
         "class": "Pocket Tomika P060",
-        "score": 0.4694,
-        "similarity": 0.4533,
-        "proposal_score": 0.3677,
+        "score": 0.433,
+        "similarity": 0.4179,
+        "proposal_score": 0.3281,
         "consensus_views": 3
       }
     ]
@@ -3186,41 +2475,15 @@
     "detections": [
       {
         "bbox": [
-          418.0,
-          149.0,
-          585.0,
-          322.0
-        ],
-        "class": "Stuffed Bear Blue SB-1-B",
-        "score": 0.6288,
-        "similarity": 0.5968,
-        "proposal_score": 0.575,
-        "consensus_views": 3
-      },
-      {
-        "bbox": [
-          244.0,
+          243.0,
           225.0,
           418.0,
-          352.0
+          351.0
         ],
         "class": "Stuffed Bear Blue SB-1-B",
-        "score": 0.6132,
-        "similarity": 0.6066,
-        "proposal_score": 0.483,
-        "consensus_views": 3
-      },
-      {
-        "bbox": [
-          91.0,
-          253.0,
-          210.0,
-          440.0
-        ],
-        "class": "Stuffed Bear Blue SB-1-B",
-        "score": 0.5845,
-        "similarity": 0.5518,
-        "proposal_score": 0.5326,
+        "score": 0.5775,
+        "similarity": 0.5861,
+        "proposal_score": 0.4019,
         "consensus_views": 3
       }
     ]
@@ -3230,129 +2493,63 @@
     "detections": [
       {
         "bbox": [
-          296.0,
-          277.0,
-          475.0,
-          479.0
-        ],
-        "class": "Stuffed Bear Blue SB-1-B",
-        "score": 0.6169,
-        "similarity": 0.5912,
-        "proposal_score": 0.544,
-        "consensus_views": 3
-      },
-      {
-        "bbox": [
-          49.0,
-          274.0,
+          48.0,
+          272.0,
           168.0,
           386.0
         ],
         "class": "Halloween Pumpkin Plastic 7-P",
-        "score": 0.5817,
-        "similarity": 0.6472,
-        "proposal_score": 0.2353,
+        "score": 0.6326,
+        "similarity": 0.6612,
+        "proposal_score": 0.3968,
         "consensus_views": 6
       }
     ]
   },
   {
     "image": "data/toy-91/query_images/cf9b690a-32de-4138-a63e-d114a97ad5d5.jpg",
-    "detections": [
-      {
-        "bbox": [
-          315.0,
-          197.0,
-          437.0,
-          331.0
-        ],
-        "class": "Stuffed Bear Blue SB-1-B",
-        "score": 0.5677,
-        "similarity": 0.5141,
-        "proposal_score": 0.5787,
-        "consensus_views": 3
-      },
-      {
-        "bbox": [
-          260.0,
-          346.0,
-          468.0,
-          479.0
-        ],
-        "class": "Stuffed Bear Blue SB-1-B",
-        "score": 0.5428,
-        "similarity": 0.5506,
-        "proposal_score": 0.3693,
-        "consensus_views": 3
-      },
-      {
-        "bbox": [
-          362.0,
-          351.0,
-          465.0,
-          464.0
-        ],
-        "class": "Stuffed Bear Blue SB-1-B",
-        "score": 0.3521,
-        "similarity": 0.4042,
-        "proposal_score": 0.1958,
-        "consensus_views": 1
-      }
-    ]
+    "detections": []
   },
   {
     "image": "data/toy-91/query_images/d3c55613-1a89-4ee9-a893-c8c3dc5c1b92.jpg",
     "detections": [
       {
         "bbox": [
-          61.0,
-          325.0,
-          192.0,
-          479.0
-        ],
-        "class": "Stuffed Bear Blue SB-1-B",
-        "score": 0.7475,
-        "similarity": 0.7627,
-        "proposal_score": 0.5517,
-        "consensus_views": 3
-      },
-      {
-        "bbox": [
           367.0,
-          298.0,
-          539.0,
-          431.0
+          296.0,
+          538.0,
+          432.0
         ],
         "class": "Halloween Pumpkin Plastic 7-P",
-        "score": 0.7093,
-        "similarity": 0.7878,
-        "proposal_score": 0.3239,
+        "score": 0.7059,
+        "similarity": 0.7988,
+        "proposal_score": 0.2771,
         "consensus_views": 6
       },
       {
         "bbox": [
-          295.0,
-          156.0,
-          419.0,
-          267.0
+          294.0,
+          155.0,
+          420.0,
+          266.0
         ],
         "class": "Halloween Pumpkin Plastic 7-P",
-        "score": 0.6632,
-        "similarity": 0.7339,
-        "proposal_score": 0.3013,
+        "score": 0.6815,
+        "similarity": 0.7398,
+        "proposal_score": 0.3566,
         "consensus_views": 6
       },
       {
         "bbox": [
-          207.0,
-          260.0,
-          330.0,
+          206.0,
+          259.0,
+          331.0,
           393.0
         ],
         "class": "Halloween Pumpkin Plastic 7-P",
-        "score": 0.6562,
-        "similarity": 0.7122,
-        "proposal_score": 0.3382,
+        "score": 0.6473,
+        "similarity": 0.7021,
+        "proposal_score": 0.3329,
         "consensus_views": 6
       }
     ]
@@ -3362,41 +2559,28 @@
     "detections": [
       {
         "bbox": [
-          484.0,
-          94.0,
-          617.0,
-          266.0
-        ],
-        "class": "Stuffed Bear Blue SB-1-B",
-        "score": 0.638,
-        "similarity": 0.634,
-        "proposal_score": 0.5,
-        "consensus_views": 3
-      },
-      {
-        "bbox": [
-          293.0,
-          104.0,
+          292.0,
+          103.0,
           397.0,
-          212.0
+          213.0
         ],
         "class": "Halloween Pumpkin Plastic 7-P",
-        "score": 0.5943,
-        "similarity": 0.6532,
-        "proposal_score": 0.2676,
+        "score": 0.6084,
+        "similarity": 0.6396,
+        "proposal_score": 0.3648,
         "consensus_views": 6
       },
       {
         "bbox": [
-          204.0,
-          243.0,
-          363.0,
-          372.0
+          203.0,
+          242.0,
+          364.0,
+          371.0
         ],
         "class": "Stuffed Bear Blue SB-1-B",
-        "score": 0.5275,
-        "similarity": 0.4809,
-        "proposal_score": 0.5171,
+        "score": 0.5056,
+        "similarity": 0.4728,
+        "proposal_score": 0.4541,
         "consensus_views": 3
       }
     ]
@@ -3406,28 +2590,15 @@
     "detections": [
       {
         "bbox": [
-          484.0,
-          94.0,
-          615.0,
-          266.0
-        ],
-        "class": "Stuffed Bear Blue SB-1-B",
-        "score": 0.5782,
-        "similarity": 0.5952,
-        "proposal_score": 0.3772,
-        "consensus_views": 3
-      },
-      {
-        "bbox": [
           292.0,
-          104.0,
+          103.0,
           397.0,
           212.0
         ],
         "class": "Halloween Pumpkin Plastic 7-P",
-        "score": 0.5748,
-        "similarity": 0.6267,
-        "proposal_score": 0.2689,
+        "score": 0.6103,
+        "similarity": 0.6204,
+        "proposal_score": 0.4299,
         "consensus_views": 6
       }
     ]
@@ -3437,41 +2608,41 @@
     "detections": [
       {
         "bbox": [
-          260.0,
+          259.0,
           10.0,
-          366.0,
+          367.0,
           119.0
         ],
         "class": "Halloween Pumpkin Plastic 7-P",
-        "score": 0.6531,
-        "similarity": 0.7579,
-        "proposal_score": 0.1889,
+        "score": 0.7368,
+        "similarity": 0.7555,
+        "proposal_score": 0.5306,
         "consensus_views": 6
       },
       {
         "bbox": [
-          78.0,
-          379.0,
-          252.0,
-          479.0
+          77.0,
+          378.0,
+          251.0,
+          478.0
         ],
         "class": "Stuffed Bear Blue SB-1-B",
-        "score": 0.598,
-        "similarity": 0.5547,
-        "proposal_score": 0.578,
+        "score": 0.5655,
+        "similarity": 0.5805,
+        "proposal_score": 0.3703,
         "consensus_views": 3
       },
       {
         "bbox": [
-          301.0,
-          157.0,
-          429.0,
-          248.0
+          300.0,
+          156.0,
+          430.0,
+          249.0
         ],
         "class": "Pocket Tomika P060",
-        "score": 0.5375,
-        "similarity": 0.4965,
-        "proposal_score": 0.5106,
+        "score": 0.4841,
+        "similarity": 0.4746,
+        "proposal_score": 0.3626,
         "consensus_views": 3
       }
     ]
@@ -3481,29 +2652,29 @@
     "detections": [
       {
         "bbox": [
-          73.0,
-          391.0,
-          217.0,
-          479.0
+          435.0,
+          1.0,
+          544.0,
+          83.0
         ],
-        "class": "Stuffed Bear Blue SB-1-B",
-        "score": 0.5842,
-        "similarity": 0.5477,
-        "proposal_score": 0.5436,
-        "consensus_views": 3
+        "class": "Halloween Pumpkin Plastic 7-P",
+        "score": 0.6133,
+        "similarity": 0.645,
+        "proposal_score": 0.3683,
+        "consensus_views": 6
       },
       {
         "bbox": [
-          436.0,
-          0.0,
-          543.0,
-          89.0
+          72.0,
+          390.0,
+          217.0,
+          478.0
         ],
-        "class": "Halloween Pumpkin Plastic 7-P",
-        "score": 0.5806,
-        "similarity": 0.6475,
-        "proposal_score": 0.2298,
-        "consensus_views": 6
+        "class": "Stuffed Bear Blue SB-1-B",
+        "score": 0.5344,
+        "similarity": 0.5202,
+        "proposal_score": 0.4269,
+        "consensus_views": 3
       }
     ]
   },
@@ -3512,28 +2683,28 @@
     "detections": [
       {
         "bbox": [
+          302.0,
+          109.0,
           415.0,
-          99.0,
-          599.0,
-          250.0
+          220.0
         ],
-        "class": "Stuffed Bear Blue SB-1-B",
-        "score": 0.5699,
-        "similarity": 0.5077,
-        "proposal_score": 0.6066,
-        "consensus_views": 3
+        "class": "Halloween Pumpkin Plastic 7-P",
+        "score": 0.5991,
+        "similarity": 0.6201,
+        "proposal_score": 0.3861,
+        "consensus_views": 6
       },
       {
         "bbox": [
-          480.0,
+          479.0,
           258.0,
-          546.0,
-          403.0
+          547.0,
+          404.0
         ],
         "class": "Pocket Tomika P060",
-        "score": 0.4057,
-        "similarity": 0.4118,
-        "proposal_score": 0.3874,
+        "score": 0.4147,
+        "similarity": 0.4054,
+        "proposal_score": 0.4424,
         "consensus_views": 1
       }
     ]
@@ -3543,29 +2714,16 @@
     "detections": [
       {
         "bbox": [
-          481.0,
-          258.0,
+          479.0,
+          257.0,
           547.0,
-          402.0
+          403.0
         ],
         "class": "Pocket Tomika P060",
-        "score": 0.4828,
-        "similarity": 0.4508,
-        "proposal_score": 0.4288,
+        "score": 0.4836,
+        "similarity": 0.4521,
+        "proposal_score": 0.4281,
         "consensus_views": 3
-      },
-      {
-        "bbox": [
-          298.0,
-          120.0,
-          522.0,
-          250.0
-        ],
-        "class": "Stuffed Bear Blue SB-1-B",
-        "score": 0.389,
-        "similarity": 0.3892,
-        "proposal_score": 0.3885,
-        "consensus_views": 0
       }
     ]
   }

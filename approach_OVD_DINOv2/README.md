@@ -19,10 +19,11 @@
 │              ─▶ 最大面積マスクでクロップ (失敗時は彩度bbox)          │
 │              ─▶ TTA (原画像 + 水平反転 + 0.85中心ズーム)             │
 │              ─▶ DINOv2-L 埋め込み (L2正規化済み)                    │
-│              ─▶ class_db[class_name].view_embeds                  │
+│              ─▶ HSV色ヒストグラム                                  │
+│              ─▶ class_db[class_name].view_embeds / color_hists     │
 │                                                                  │
 │  Stage 1 (オンライン)                                             │
-│  query_image + category_prompt                                   │
+│  query_image + recall prompt                                      │
 │              ─▶ Grounding DINO Tiny                              │
 │              ─▶ box候補 (proposal_score つき)                     │
 │                                                                  │
@@ -31,6 +32,7 @@
 │                    ─▶ torch.matmul で全クラスview_embedsと類似度計算  │
 │                    ─▶ max-over-views + consensus bonus           │
 │                    ─▶ margin / null-prototype / 面積フィルタ        │
+│                    ─▶ 色指定クラスのみHSV色フィルタ                  │
 │                    ─▶ per-class IoU NMS                          │
 └──────────────────────────────────────────────────────────────────┘
 ```
@@ -42,9 +44,10 @@
 | Stage 1 OVD | `IDEA-Research/grounding-dino-tiny` (FP32) | `transformers.AutoModelForZeroShotObjectDetection` |
 | 参照前景抽出 | SAM3 (text prompt) | `/home/lee/workspace/keihin-prototype-sam/sam3` リポを `sys.path` へ |
 | 画像埋め込み | `facebook/dinov2-large` (FP16) | `transformers.AutoModel` |
+| 色違い抑制 | HSV histogram intersection | 色語を含むクラスのみ hard filter |
 | 類似度検索 | `torch.matmul` | FAISS ではなく小規模マトリクス積 |
 
-Grounding DINO のテキストプロンプトは `exemplar.json` の `category` を優先利用し (`"toy ."`)、無い場合のみ汎用カテゴリ語+class_name連結にフォールバックする (`_build_category_prompt`, `detector.py:177`)。
+Grounding DINO のテキストプロンプトは recall 優先で、汎用カテゴリ語 + `class_name` + `category` を重複除去して連結する。以前の category-only prompt では Pumpkin の候補 recall が落ちたため、class_name と category の両方を Stage 1 に渡す仕様にした (`_build_category_prompt`)。
 
 ## スコア関数
 
@@ -53,7 +56,7 @@ best  = argmax_c [ max_v cos(q, p_{c,v}) + β·1[ #{v : cos ≥ τ_cons} ≥ 2 ]
 score = 0.75 · best.effective + 0.25 · proposal_score
 ```
 
-採用判定は `(best.effective ≥ match_threshold) ∧ (best − 2nd ≥ margin) ∧ (best_view − null_view ≥ null_margin) ∧ (score ≥ min_final_score)` の合議。
+採用判定は `(best.effective ≥ match_threshold) ∧ (best − 2nd ≥ margin) ∧ (proposal_score ≥ min_proposal_score) ∧ (best_view − null_view ≥ null_margin) ∧ (score ≥ min_final_score)` の合議。さらに `Blue` / `Red` / `Pink` など色語を class_name に含むクラスでは、候補 crop と参照 crop の HSV histogram intersection が `color_match_threshold` 未満なら棄却する。これは同形状の色違い、例: 青いクマに対するピンク色のクマの誤検出を抑えるため。
 
 ## CLIパラメータ (batch_benchmark.py 経由)
 
@@ -63,15 +66,18 @@ score = 0.75 · best.effective + 0.25 · proposal_score
 - `--device cuda|cpu|mps`
 
 `OVDDINOv2Detector.detect_from_files` は追加で `box_threshold`, `text_threshold`, `match_threshold`, `margin_threshold`, `consensus_threshold`, `consensus_bonus`, `null_margin`, `nms_threshold`, `max_box_area_ratio`, `min_box_area_ratio` 等を直接渡せる (`detector.py:89` 以降)。
+`color_match_threshold` は色語を含むクラスだけに適用される。デフォルトは `0.35`。
 
 ## 推奨パイプラインとの差異
 
 | 項目 | 推奨パイプライン | 本実装 | 差分の理由 |
 |---|---|---|---|
 | Stage 1 OVD | MM-Grounding-DINO Tiny | **Grounding DINO Tiny (IDEA-Research)** | toy-91 で MM-G-DINO の `o365v1_goldg` 系がシーン全体に広い箱しか出さず、Grounding DINO Tiny の方が GT 箱とタイトに一致したため。`detector_id` で差し替え可能。 |
+| Stage 1 prompt | category-level tokens | **汎用語 + class_name + category** | category-only では Pumpkin の proposal recall が `84/92` に落ちた。現在は `90/92` まで回復し、全体 @IoU0.5 proposal recall は `209/211`。 |
 | 参照前景抽出 | SAM2-B + center-point prompt (不安定時は BiRefNet / U²-Net / rembg) | **SAM3 (text prompt)** + 彩度bbox フォールバック | 設計当初は彩度法のみ。ユーザ要請により SAM3 に置換 (2秒要件は一旦無視)。最高スコアではなく**最大面積**マスクを採用 — Tomika の参考画像で車本体のみを高スコア・全体(包装+車)を低スコアで返し、部分マスクだと DINOv2 埋め込みが崩れて F1 が 0 まで落ちたため。 |
+| 色違い抑制 | 明示なし | **HSV色フィルタ** | `class_name` に色語が含まれる場合のみ適用。`Stuffed Bear Blue` が同形状のピンク色のクマを誤検出する問題に対処。 |
 | 検索インデックス | FAISS `IndexFlatIP` | **`torch.matmul`** 直接 | toy-91 は 3 クラス規模で行列積の方が軽い。数千クラス規模では FAISS 化が必要。 |
-| Adaptive per-class threshold | `τ_c = max(τ_global, s_2nd + δ)` | **グローバル `match_threshold` + `margin_threshold`** | クラスごとの履歴がまだ無いため。Bear のように単一参照で広くマッチするクラスと Pumpkin のような明瞭形状クラスを同一しきい値で捌いており、Bear の P=0.41 の主因。 |
+| Adaptive per-class threshold | `τ_c = max(τ_global, s_2nd + δ)` | **グローバル `match_threshold` + `margin_threshold` + 色語クラス用HSVフィルタ** | クラスごとの履歴はまだ無いが、色指定クラスの同形状・色違い誤検出は HSV で抑制する。 |
 | Back penalty α | `−α·back_penalty(v)` (0.05〜0.10) | **未実装** | toy-91 では背面の曖昧さが顕在化しない。実運用で類似背面を持つ商品が増えた段階で追加する前提。 |
 | View-specific サブプロトタイプ | `classA-front` / `classA-back` を内部で分け、UIではマージ | **未実装** | 上と同じ理由。 |
 | Hard negative 事前抽出 | 全プロト相互類似度の `back↔back > 0.9` を事前抽出し推論時に正面優先 | **未実装** | 上と同じ理由。 |
@@ -86,12 +92,15 @@ score = 0.75 · best.effective + 0.25 · proposal_score
 |---|---|---|---|---|---|
 | 彩度クロップ (ベースライン) | 0.630 | 0.758 | 0.688 | 0.63 | 2.3 GB |
 | SAM3 最高スコア選択 | 0.624 | 0.654 | 0.639 | 0.81 | 5.6 GB |
-| **SAM3 最大面積選択** | **0.663** | **0.773** | **0.713** | 0.82 | 5.6 GB |
+| SAM3 最大面積選択 | 0.663 | 0.773 | 0.713 | 0.82 | 5.6 GB |
+| **現行: recall prompt + 色語クラスHSVフィルタ** | **0.920** | **0.768** | **0.837** | **1.04** | **5.67 GB** |
 
-クラス別 F1 (SAM3最大面積構成):
-- Stuffed Bear Blue: P=0.410 / R=0.764 / F1=**0.534**
-- Halloween Pumpkin: P=0.954 / R=0.902 / F1=**0.927**
-- Pocket Tomika: P=1.000 / R=0.532 / F1=**0.694**
+クラス別 F1 (現行構成):
+- Stuffed Bear Blue: P=0.902 / R=0.639 / F1=**0.748**
+- Halloween Pumpkin: P=0.923 / R=0.913 / F1=**0.918**
+- Pocket Tomika: P=0.941 / R=0.681 / F1=**0.790**
+
+色フィルタにより Stuffed Bear Blue の precision は 0.410 から 0.902 へ改善した。一方で同クラスの recall は 0.764 から 0.639 に低下しているため、precision 優先の設定である。recall を戻したい場合は `color_match_threshold` を `0.30` 付近へ下げて再評価する。
 
 ## 現在の実装 vs "No time to train!" (arXiv:2507.02798) の主な違い
 
@@ -101,8 +110,8 @@ score = 0.75 · best.effective + 0.25 · proposal_score
 **構造の比較**
 | | No time to train! | 本実装 (推奨パイプライン)  |
 |---|---|---|
-| Stage 1 (領域提案) | SAM2 everything (class-agnostic,言語なし) | Grounding DINO Tiny (text-conditioned, category prompt) |
-| 言語プロンプトの使用  | 一切なし (参考画像のみで完結)     | カテゴリ語を使用 ("toy .")   |
+| Stage 1 (領域提案) | SAM2 everything (class-agnostic,言語なし) | Grounding DINO Tiny (text-conditioned, recall prompt) |
+| 言語プロンプトの使用  | 一切なし (参考画像のみで完結)     | 汎用語 + class_name + category |
 | 候補の表現    | セグメンテーションマスク   | 検出バウンディングボックス  |
 | 参照前景抽出  | Stage 1 と同一の SAM2 マスク  | SAM3 (text-conditioned) で独立に抽出  |
 | 埋め込み      | DINOv2-B のパッチ平均プーリング (マスク内のみ)  | DINOv2-L の CLS/pooler token (crop全体)  |
@@ -115,13 +124,13 @@ score = 0.75 · best.effective + 0.25 · proposal_score
 1. **「言語を使うか否か」の思想の違い**
 
 - No time to train!: 言語を完全に排除。商品コード (SB-1-B) や無意味な型番でも動作することが最大の売り。クラスは「参考画像そのもの」だけで定義される。
-- 本実装: カテゴリ語 ("toy") を使って Stage 1 の recall を稼ぐ。class_name は Grounding DINO に投げるプロンプトに含まれる場合があるが、商品コードが含まれていても Grounding DINO はトークンとして無視するだけで害はない。カテゴリメタデータという「ゆるい言語手がかり」に依存する。
+- 本実装: 汎用カテゴリ語、class_name、category を併用して Stage 1 の recall を稼ぐ。商品コードのような不透明な class_name はノイズになり得るが、Grounding DINO では多くの場合無視され、`Bear` や `Pumpkin` のような可読語は proposal recall に効く。
 
 2. **Stage 1 の proposal メカニズム**
 
 - No time to train!: SAM2 の everything
 モードが画像内の全オブジェクトをマスク化し、その中から memory bank と一致するものを選ぶ。密集していない大きな物体は取りこぼしにくいが、T4 では 2.5〜3.5 秒かかり (設計ドキュメント §問題2)、運用には FastSAM 等への置換か候補数制限が必須。
-- 本実装: Grounding DINO Tiny はカテゴリ該当領域のみに候補を絞る (約 250〜350ms)。カテゴリから外れた物体は最初から候補にならないため、カテゴリが適切に定義されている前提ではより効率的に動く。toy-91 では 0.6〜0.8s/image を維持。
+- 本実装: Grounding DINO Tiny は recall prompt に該当する領域を候補化する。category-only より候補数は増えるが、toy-91 では proposal recall が @IoU0.5 で `209/211` まで上がる。
 
 3. **マスク vs ボックス**
 
@@ -180,20 +189,21 @@ score = 0.75 · best.effective + 0.25 · proposal_score
 
 ## 今後の改善候補 (効果が期待できそうな順)
 
-1. **Adaptive per-class threshold の導入** — `margin_threshold` をクラスごとにキャリブレート。Bear のような「単一参照で幅広くマッチするクラス」だけ mismatch に厳しくすることで現状 P=0.41 を押し上げられる見込み。実装コスト小。
+1. **Adaptive per-class threshold の導入** — `margin_threshold` と `color_match_threshold` をクラスごとにキャリブレート。現状の色フィルタは Bear の precision を大きく改善する一方で recall を下げるため、クラス別最適化の余地がある。実装コスト小。
 2. **View-specific sub-prototype + back penalty** — 参考画像が2枚以上のクラスで view ラベル (`front`/`back`) をオプションで受け取り、back視点に `α=0.05〜0.10` のペナルティを入れる。toy-91 では Pumpkin の 2 参照で早速効く可能性あり。実装コスト中。
 3. **大域 Null prototype** — 事前にクエリ画像コーパスからランダム BG パッチを数百枚サンプルしておき、起動時に DINOv2 埋め込みを計算して `null_embeds` として固定保持する。現在のクエリ依存 null を置き換えることで、稀にターゲットの一部を null に含めてしまうリスクを排除。実装コスト小。
 4. **DINOv2 入力解像度の統一・パッチ平均化** — 現在は HF 既定のリサイズ任せ。設計ドキュメントは 224×224 への明示リサイズ + パッチ平均 (CLS tokenより細粒度) を推奨。実装コスト小、Bear の個体識別精度改善が見込める。
 5. **TTA 強化** — 軽い回転 (±10°) と multi-scale crop (0.75, 0.85, 1.0) を追加。色ジッタは商品色を壊すのでスキップ。consensus の機能する閾値を下げられる可能性。実装コスト小。
 6. **SAM3 プロンプトフォールバック順の最適化** — 現状は `[category, class_name, "object"]` で試行し最初に当たったものを採用。サブ部位を返す問題は「最大面積」で回避したが、面積とスコアの加重 (`area * score^0.5`) にする方が堅牢になる可能性。
 7. **FAISS 置換 (数千クラス拡張時)** — 現状の `torch.matmul` は3クラス規模向け。`IndexFlatIP` + カテゴリメタデータ事前フィルタに置き換えることで数千クラスでもms級を維持。実装コスト中。
-8. **Stage 1 の軽量化** — TensorRT FP16 化、または YOLOE/FastSAM の補完を追加して proposal recall を上げる。現状 Bear の recall 0.76 は Stage 1 で取りこぼしている可能性もあり、proposal 側のリコール計測で切り分けが要る。
+8. **Stage 1 の軽量化** — TensorRT FP16 化、または YOLOE/FastSAM の補完を追加する。現行 recall prompt では proposal recall は高いが候補数が増えるため、速度面の最適化余地がある。
 9. **Hard negative マイニング** — 全クラス相互類似度行列を起動時に計算し、類似度 0.85 超のペアを記録。推論時に両方発火したら正面プロトタイプ優先、等の決定規則を加える。クラス数が増えるほど効果的。
 10. **入力サイズとクロップの最小値見直し** — 現在は 12px 未満を切っているが、Tomika のような小物体で recall が 0.53 に留まっているのは min_box_area_ratio (5e-4) で落としている可能性がある。per-class に閾値を分ける余地あり。
 
 ## 既知の制約
 
-- SAM3 により GPU メモリが 5.6GB、レイテンシが 0.82s/img に増加。T4 (16GB) の 2 秒要件を重視する場合は `enable_sam3=False` で彩度法に戻せる。
+- SAM3 と DINOv2-L により GPU メモリは約 5.7GB、現行構成のレイテンシは約 1.04s/img。T4 (16GB) の 2 秒要件を重視する場合は `enable_sam3=False` で彩度法に戻せる。
+- 色語クラス用 HSV フィルタは precision 優先の抑制であり、照明差や強い影では recall を落とす可能性がある。
 - SAM3 はローカルリポ (`/home/lee/workspace/keihin-prototype-sam`) + 依存 (`iopath`, `ftfy`, `einops`, `regex`, `timm`, `pycocotools`, `psutil`) が必要。`SAM3_REPO_PATH` 環境変数または `sam3_repo_path` 引数で差し替え可能。
 - `IDEA-Research/grounding-dino-tiny` の HF 実装は FP16 で text enhancer の dtype 不一致を起こすため、Stage 1 は FP32 固定。DINOv2 のみ FP16 で高速化している。
 

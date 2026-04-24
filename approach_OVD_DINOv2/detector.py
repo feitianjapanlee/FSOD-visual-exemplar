@@ -42,6 +42,23 @@ GENERIC_CATEGORY_PROMPT = (
     "pumpkin . decoration . product . object . item ."
 )
 
+COLOR_WORDS = {
+    "black",
+    "blue",
+    "brown",
+    "cyan",
+    "gray",
+    "green",
+    "grey",
+    "orange",
+    "pink",
+    "purple",
+    "red",
+    "silver",
+    "white",
+    "yellow",
+}
+
 
 @dataclass
 class Detection:
@@ -125,6 +142,7 @@ class OVDDINOv2Detector:
         max_proposals: int = 80,
         max_box_area_ratio: float = 0.40,
         min_box_area_ratio: float = 5e-4,
+        color_match_threshold: float = 0.35,
         category_prompt: Optional[str] = None,
         target_classes: Optional[List[str]] = None,
         dino_batch_size: int = 32,
@@ -165,6 +183,7 @@ class OVDDINOv2Detector:
             nms_threshold=nms_threshold,
             max_box_area_ratio=max_box_area_ratio,
             min_box_area_ratio=min_box_area_ratio,
+            color_match_threshold=color_match_threshold,
             batch_size=dino_batch_size,
         )
 
@@ -198,26 +217,17 @@ class OVDDINOv2Detector:
     def _build_category_prompt(self, exemplar_items: List[Dict]) -> str:
         """Prompt strategy.
 
-        The design doc recommends driving MM-Grounding-DINO with category-level
-        tokens and avoiding opaque product codes. When the exemplar carries a
-        ``category`` field we use it verbatim; otherwise we fall back to a
-        generic bag of product-category terms and *augment* it with the
-        exemplar class names so human-readable words like "Bear" or "Pumpkin"
-        still contribute grounding signal (opaque codes are harmless noise).
+        Use a recall-oriented prompt for Stage 1 proposals:
+        generic product terms + class names + category labels. Opaque product
+        codes are harmless noise, while human-readable class/category words
+        can recover objects that a category-only prompt misses.
         """
-        cats: List[str] = []
-        for item in exemplar_items:
-            cat = item.get("category")
-            if cat and str(cat) not in cats:
-                cats.append(str(cat))
-        if cats:
-            return " . ".join(cats) + " ."
-
         terms: List[str] = [GENERIC_CATEGORY_PROMPT.rstrip(" .")]
         for item in exemplar_items:
-            name = str(item.get("class_name", item["class"])).strip()
-            if name and name not in terms:
-                terms.append(name)
+            for value in (item.get("class_name", item["class"]), item.get("category")):
+                term = str(value).strip() if value is not None else ""
+                if term and term not in terms:
+                    terms.append(term)
         return " . ".join(terms) + " ."
 
     def _build_class_database(self, exemplar_items: List[Dict], base_dir: Path) -> Dict:
@@ -243,9 +253,12 @@ class OVDDINOv2Detector:
             for img in foreground_images:
                 tta_images.extend(self._reference_tta(img))
             view_embeds = self._encode_images(tta_images)
+            color_hists = [self._color_hist(img) for img in foreground_images]
             db[class_name] = {
                 "refer_paths": [str(p) for p in ref_paths],
                 "view_embeds": view_embeds,
+                "color_hists": color_hists,
+                "color_sensitive": self._is_color_sensitive_class(class_name),
                 "category": item.get("category"),
                 "num_base_views": len(foreground_images),
                 "num_total_views": view_embeds.shape[0],
@@ -321,6 +334,22 @@ class OVDDINOv2Detector:
         if (x2 - x1) < 16 or (y2 - y1) < 16:
             return image
         return image.crop((x1, y1, x2, y2))
+
+    def _is_color_sensitive_class(self, class_name: str) -> bool:
+        tokens = {
+            token.strip(" -_/().,").lower()
+            for token in class_name.replace("-", " ").replace("_", " ").split()
+        }
+        return bool(tokens & COLOR_WORDS)
+
+    def _color_hist(self, image: Image.Image, bins: tuple[int, int, int] = (8, 8, 8)) -> np.ndarray:
+        arr = np.array(image.convert("RGB"))
+        hsv = cv2.cvtColor(arr, cv2.COLOR_RGB2HSV)
+        hist = cv2.calcHist([hsv], [0, 1, 2], None, bins, [0, 180, 0, 256, 0, 256])
+        return cv2.normalize(hist, hist).flatten().astype(np.float32)
+
+    def _hist_intersection(self, a: np.ndarray, b: np.ndarray) -> float:
+        return float(np.minimum(a, b).sum())
 
     def _ensure_sam3(self):
         if self._sam3_model is not None:
@@ -445,6 +474,7 @@ class OVDDINOv2Detector:
         nms_threshold: float,
         max_box_area_ratio: float,
         min_box_area_ratio: float,
+        color_match_threshold: float,
         batch_size: int,
     ) -> List[Detection]:
         if not proposals:
@@ -473,6 +503,7 @@ class OVDDINOv2Detector:
             return []
 
         crop_embeds = self._encode_images(crops, batch_size=batch_size)
+        crop_hists = [self._color_hist(crop) for crop in crops]
 
         # Null prototypes: four "scene" anchors -- whole image + three large
         # non-central patches. If a class matches the null prototypes almost as
@@ -485,6 +516,7 @@ class OVDDINOv2Detector:
         detections: List[Detection] = []
         for i, prop in enumerate(valid_props):
             q = crop_embeds[i]  # (D,)
+            crop_hist = crop_hists[i]
             scored: List[Dict] = []
             for cname in class_names:
                 views = class_db[cname]["view_embeds"]  # (V, D)
@@ -492,8 +524,20 @@ class OVDDINOv2Detector:
                 max_sim = float(sims.max().item())
                 consensus = int((sims >= consensus_threshold).sum().item())
                 effective = max_sim + (consensus_bonus if consensus >= 2 else 0.0)
+                color_hists = class_db[cname].get("color_hists") or []
+                color_sim = (
+                    max(self._hist_intersection(crop_hist, ref_hist) for ref_hist in color_hists)
+                    if color_hists
+                    else 1.0
+                )
                 scored.append(
-                    {"cname": cname, "max_sim": max_sim, "effective": effective, "consensus": consensus}
+                    {
+                        "cname": cname,
+                        "max_sim": max_sim,
+                        "effective": effective,
+                        "consensus": consensus,
+                        "color_sim": color_sim,
+                    }
                 )
             scored.sort(key=lambda s: -s["effective"])
             best = scored[0]
@@ -505,6 +549,11 @@ class OVDDINOv2Detector:
                 continue
             proposal_score = float(prop["proposal_score"])
             if proposal_score < min_proposal_score:
+                continue
+            if (
+                class_db[best["cname"]].get("color_sensitive")
+                and best["color_sim"] < color_match_threshold
+            ):
                 continue
             # Null-prototype check: the winning class must beat the best scene
             # anchor by ``null_margin``. This suppresses "universal positive"
