@@ -3,7 +3,7 @@
     {
       "class": 1,
       "class_name": "Stuffed Bear Blue SB-1-B",
-      "category": "toy",
+      "category": "stuffed toy",
       "refer_image": [
         "refer_images/1-01.jpg"
       ]
@@ -11,7 +11,7 @@
     {
       "class": 2,
       "class_name": "Pocket Tomika P060",
-      "category": "toy",
+      "category": "toy-in-package",
       "refer_image": [
         "refer_images/2-01.jpg"
       ]

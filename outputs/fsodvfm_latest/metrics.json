@@ -37,5 +37,5 @@
     "graph_steps": 30
   },
   "gpu_memory_peak_gb": 3.4141950607299805,
-  "avg_inference_time_seconds": 2.2119965972481195
+  "avg_inference_time_seconds": 2.2546919728373434
 }
