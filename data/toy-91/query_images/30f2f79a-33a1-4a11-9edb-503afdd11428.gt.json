@@ -3,10 +3,10 @@
   "detections": [
     {
       "bbox": [
-        48.0,
-        273.0,
-        168.0,
-        386.0
+        32.0,
+        286.0,
+        154.0,
+        397.0
       ],
       "class": "Halloween Pumpkin Plastic 7-P"
     },
@@ -18,6 +18,15 @@
         300.0
       ],
       "class": "Stuffed Bear Blue SB-1-B"
-    }        
+    },
+    {
+      "bbox": [
+        444.0,
+        238.0,
+        539.0,
+        380.0
+      ],
+      "class": "Pocket Tomika P060"
+    }
   ]
 }

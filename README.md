@@ -46,6 +46,23 @@ The implementation uses:
 - Difficult examples may not be as effective as expected;
 
 ---
+## Ground Truth Visualization
+
+`data/toy-91/query_images` の `*.gt.json` を画像上に描画して確認するには、以下を実行します。
+
+```bash
+python tools/visualize_gt.py \
+  --input-dir data/toy-91/query_images \
+  --output-dir outputs/toy91_gt_vis
+```
+
+出力先には、ラベル付き画像 `<image_stem>_gt.jpg` と一覧確認用の `index.html` が作成されます。
+
+```bash
+python tools/visualize_gt.py --max-images 10
+```
+
+---
 ## Approach 2: FSOD-VFM
 
 Main idea come from paper `FSOD-VFM: Few-Shot Object Detection with Vision Foundation Models and Graph Diffusion` (arXiv:2602.03137) (ICLR 2026)

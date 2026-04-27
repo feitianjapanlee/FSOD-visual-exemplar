@@ -3,9 +3,9 @@
   "detections": [
     {
       "bbox": [
-        327.0,
+        341.0,
         20.0,
-        471.0,
+        461.0,
         172.0
       ],
       "class": "Stuffed Bear Blue SB-1-B"
@@ -21,18 +21,18 @@
     },
     {
       "bbox": [
-        294.0,
+        297.0,
         155.0,
-        420.0,
+        416.0,
         266.0
       ],
       "class": "Halloween Pumpkin Plastic 7-P"
     },
     {
       "bbox": [
-        367.0,
+        381.0,
         297.0,
-        538.0,
+        522.0,
         430.0
       ],
       "class": "Halloween Pumpkin Plastic 7-P"
