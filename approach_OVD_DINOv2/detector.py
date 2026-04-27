@@ -258,6 +258,7 @@ class OVDDINOv2Detector:
                 "refer_paths": [str(p) for p in ref_paths],
                 "view_embeds": view_embeds,
                 "color_hists": color_hists,
+                "shape_prior": self._shape_prior(foreground_images),
                 "color_sensitive": self._is_color_sensitive_class(class_name),
                 "category": item.get("category"),
                 "num_base_views": len(foreground_images),
@@ -400,6 +401,7 @@ class OVDDINOv2Detector:
             return None
 
         boxes = state.get("boxes")
+        masks = state.get("masks")
         scores = state.get("scores")
         if boxes is None or scores is None or len(scores) == 0:
             return None
@@ -410,9 +412,20 @@ class OVDDINOv2Detector:
         # car body inside a toy-with-packaging shot), which drifts the DINOv2
         # embedding away from query crops that include the whole product.
         boxes_cpu = boxes.detach().float().cpu()
-        areas = (boxes_cpu[:, 2] - boxes_cpu[:, 0]).clamp(min=0) * (
-            boxes_cpu[:, 3] - boxes_cpu[:, 1]
-        ).clamp(min=0)
+        masks_cpu = None
+        if masks is not None:
+            masks_cpu = masks.detach().bool().cpu()
+            if masks_cpu.ndim == 4 and masks_cpu.shape[1] == 1:
+                masks_cpu = masks_cpu[:, 0]
+            if masks_cpu.ndim != 3 or masks_cpu.shape[0] != boxes_cpu.shape[0]:
+                masks_cpu = None
+
+        if masks_cpu is not None:
+            areas = masks_cpu.flatten(1).sum(dim=1).float()
+        else:
+            areas = (boxes_cpu[:, 2] - boxes_cpu[:, 0]).clamp(min=0) * (
+                boxes_cpu[:, 3] - boxes_cpu[:, 1]
+            ).clamp(min=0)
         best_idx = int(torch.argmax(areas).item())
         x1, y1, x2, y2 = boxes_cpu[best_idx].tolist()
         w, h = image.size
@@ -424,7 +437,19 @@ class OVDDINOv2Detector:
         y2 = min(h, int(round(y2 + pad_y)))
         if (x2 - x1) < 16 or (y2 - y1) < 16:
             return None
-        return image.crop((x1, y1, x2, y2))
+        if masks_cpu is None:
+            return image.crop((x1, y1, x2, y2))
+
+        mask_np = masks_cpu[best_idx].numpy()
+        if mask_np.shape != (h, w):
+            return image.crop((x1, y1, x2, y2))
+        crop_arr = np.array(image.convert("RGB"))[y1:y2, x1:x2].copy()
+        crop_mask = mask_np[y1:y2, x1:x2]
+        if crop_mask.sum() < 16:
+            return None
+        segmented = np.full_like(crop_arr, 255)
+        segmented[crop_mask] = crop_arr[crop_mask]
+        return Image.fromarray(segmented)
 
     # ------------------------------------------------------------- stage 1
     @torch.no_grad()
@@ -555,6 +580,12 @@ class OVDDINOv2Detector:
                 and best["color_sim"] < color_match_threshold
             ):
                 continue
+            shape_penalty = self._shape_prior_penalty(
+                crop=crops[i],
+                bbox=prop["bbox"],
+                image_area=image_area,
+                prior=class_db[best["cname"]].get("shape_prior"),
+            )
             # Null-prototype check: the winning class must beat the best scene
             # anchor by ``null_margin``. This suppresses "universal positive"
             # single-reference classes that look vaguely like anything.
@@ -563,7 +594,7 @@ class OVDDINOv2Detector:
                 null_class_sim = float(torch.matmul(null_embeds, best_views.T).max().item())
                 if (best["max_sim"] - null_class_sim) < null_margin:
                     continue
-            final_score = 0.75 * best["effective"] + 0.25 * proposal_score
+            final_score = 0.75 * best["effective"] + 0.25 * proposal_score - shape_penalty
             if final_score < min_final_score:
                 continue
             detections.append(
@@ -579,7 +610,8 @@ class OVDDINOv2Detector:
 
         if not detections:
             return []
-        return self._per_class_nms(detections, nms_threshold)
+        detections = self._per_class_nms(detections, nms_threshold)
+        return self._suppress_contained_detections(detections)
 
     def _build_null_crops(self, image: Image.Image) -> List[Image.Image]:
         w, h = image.size
@@ -602,6 +634,73 @@ class OVDDINOv2Detector:
         return crops
 
     # ------------------------------------------------------------- utilities
+    def _shape_prior(self, images: List[Image.Image]) -> Optional[Dict[str, float]]:
+        if not images:
+            return None
+        aspects = []
+        fill_ratios = []
+        for image in images:
+            w, h = image.size
+            if w <= 0 or h <= 0:
+                continue
+            aspects.append(w / h)
+            fg_mask = self._foreground_like_mask(image)
+            fill_ratios.append(float(fg_mask.mean()) if fg_mask.size else 1.0)
+        if not aspects:
+            return None
+        return {
+            "aspect_median": float(np.median(aspects)),
+            "aspect_min": float(np.min(aspects)),
+            "aspect_max": float(np.max(aspects)),
+            "fill_median": float(np.median(fill_ratios)) if fill_ratios else 1.0,
+        }
+
+    def _foreground_like_mask(self, image: Image.Image) -> np.ndarray:
+        arr = np.array(image.convert("RGB"))
+        if arr.ndim != 3 or arr.shape[2] < 3:
+            return np.ones(arr.shape[:2], dtype=bool)
+        hsv = cv2.cvtColor(arr, cv2.COLOR_RGB2HSV)
+        sat = hsv[..., 1]
+        val = hsv[..., 2]
+        near_white = (arr[..., 0] > 245) & (arr[..., 1] > 245) & (arr[..., 2] > 245)
+        return ((sat > 25) | (val < 235)) & ~near_white
+
+    def _shape_prior_penalty(
+        self,
+        crop: Image.Image,
+        bbox: List[float],
+        image_area: float,
+        prior: Optional[Dict[str, float]],
+    ) -> float:
+        if not prior:
+            return 0.0
+        x1, y1, x2, y2 = bbox
+        w = max(float(x2 - x1), 1.0)
+        h = max(float(y2 - y1), 1.0)
+        aspect = w / h
+        aspect_min = max(float(prior.get("aspect_min", aspect)), 1e-3)
+        aspect_max = max(float(prior.get("aspect_max", aspect)), aspect_min)
+        aspect_low = aspect_min / 1.65
+        aspect_high = aspect_max * 1.65
+
+        penalty = 0.0
+        if aspect < aspect_low:
+            penalty += min(0.12, 0.04 * np.log2(aspect_low / max(aspect, 1e-3)))
+        elif aspect > aspect_high:
+            penalty += min(0.12, 0.04 * np.log2(aspect / max(aspect_high, 1e-3)))
+
+        fg_mask = self._foreground_like_mask(crop)
+        fill_ratio = float(fg_mask.mean()) if fg_mask.size else 1.0
+        prior_fill = float(prior.get("fill_median", 1.0))
+        overfill = fill_ratio / max(prior_fill, 1e-3) - 1.8
+        if prior_fill > 0 and overfill > 0:
+            penalty += min(0.08, 0.04 * overfill)
+
+        area_ratio = (w * h) / max(image_area, 1.0)
+        if area_ratio > 0.30:
+            penalty += min(0.08, 0.20 * (area_ratio - 0.30))
+        return float(max(0.0, penalty))
+
     def _per_class_nms(self, detections: List[Detection], iou_threshold: float) -> List[Detection]:
         kept: List[Detection] = []
         classes = sorted({d.class_name for d in detections})
@@ -611,6 +710,44 @@ class OVDDINOv2Detector:
             scores = torch.tensor([d.score for d in cdets], dtype=torch.float32)
             keep = nms(boxes, scores, iou_threshold).tolist()
             kept.extend(cdets[i] for i in keep)
+        kept.sort(key=lambda d: d.score, reverse=True)
+        return kept
+
+    def _suppress_contained_detections(
+        self,
+        detections: List[Detection],
+        contain_threshold: float = 0.85,
+        max_area_ratio: float = 0.35,
+        min_large_score_ratio: float = 0.75,
+    ) -> List[Detection]:
+        if len(detections) <= 1:
+            return detections
+        drop = set()
+        for i, small in enumerate(detections):
+            sx1, sy1, sx2, sy2 = small.bbox
+            small_area = max(0.0, sx2 - sx1) * max(0.0, sy2 - sy1)
+            if small_area <= 0:
+                drop.add(i)
+                continue
+            for j, large in enumerate(detections):
+                if i == j or i in drop or small.class_name != large.class_name:
+                    continue
+                lx1, ly1, lx2, ly2 = large.bbox
+                large_area = max(0.0, lx2 - lx1) * max(0.0, ly2 - ly1)
+                if large_area <= small_area:
+                    continue
+                if small_area / large_area > max_area_ratio:
+                    continue
+                if large.score < small.score * min_large_score_ratio:
+                    continue
+                ix1, iy1 = max(sx1, lx1), max(sy1, ly1)
+                ix2, iy2 = min(sx2, lx2), min(sy2, ly2)
+                inter = max(0.0, ix2 - ix1) * max(0.0, iy2 - iy1)
+                if inter / small_area >= contain_threshold:
+                    drop.add(i)
+        if not drop:
+            return detections
+        kept = [det for idx, det in enumerate(detections) if idx not in drop]
         kept.sort(key=lambda d: d.score, reverse=True)
         return kept
 

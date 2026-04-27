@@ -1,0 +1,283 @@
+[
+  {
+    "image": "data/toy-91/query_images/007af052-d3e6-4a6f-81dd-11f14d5966cd.jpg",
+    "detections": []
+  },
+  {
+    "image": "data/toy-91/query_images/0098cbf6-e60c-4757-985e-38bbb2090414.jpg",
+    "detections": []
+  },
+  {
+    "image": "data/toy-91/query_images/019e588b-a94a-4d91-a6e2-17d9fdd17c45.jpg",
+    "detections": [
+      {
+        "bbox": [
+          352.0,
+          81.0,
+          458.0,
+          188.0
+        ],
+        "class": "Halloween Pumpkin Plastic 7-P",
+        "score": 0.7044,
+        "similarity": 0.7586,
+        "proposal_score": 0.3919,
+        "consensus_views": 9
+      },
+      {
+        "bbox": [
+          65.0,
+          376.0,
+          204.0,
+          479.0
+        ],
+        "class": "Halloween Pumpkin Plastic 7-P",
+        "score": 0.6412,
+        "similarity": 0.6859,
+        "proposal_score": 0.3572,
+        "consensus_views": 9
+      }
+    ]
+  },
+  {
+    "image": "data/toy-91/query_images/02f2259b-662a-49fe-87a7-e195613a0a94.jpg",
+    "detections": [
+      {
+        "bbox": [
+          425.0,
+          191.0,
+          537.0,
+          334.0
+        ],
+        "class": "Pocket Tomika P060",
+        "score": 0.5779,
+        "similarity": 0.6025,
+        "proposal_score": 0.4239,
+        "consensus_views": 8
+      },
+      {
+        "bbox": [
+          149.0,
+          149.0,
+          328.0,
+          282.0
+        ],
+        "class": "Stuffed Bear Blue SB-1-B",
+        "score": 0.5678,
+        "similarity": 0.5565,
+        "proposal_score": 0.4689,
+        "consensus_views": 6
+      },
+      {
+        "bbox": [
+          250.0,
+          3.0,
+          354.0,
+          117.0
+        ],
+        "class": "Halloween Pumpkin Plastic 7-P",
+        "score": 0.5058,
+        "similarity": 0.4821,
+        "proposal_score": 0.427,
+        "consensus_views": 3
+      }
+    ]
+  },
+  {
+    "image": "data/toy-91/query_images/0caea226-a484-4c6b-bd12-c8ea2b7b86d7.jpg",
+    "detections": [
+      {
+        "bbox": [
+          455.0,
+          268.0,
+          579.0,
+          410.0
+        ],
+        "class": "Pocket Tomika P060",
+        "score": 0.669,
+        "similarity": 0.7348,
+        "proposal_score": 0.3914,
+        "consensus_views": 7
+      },
+      {
+        "bbox": [
+          314.0,
+          86.0,
+          431.0,
+          203.0
+        ],
+        "class": "Halloween Pumpkin Plastic 7-P",
+        "score": 0.6313,
+        "similarity": 0.6663,
+        "proposal_score": 0.3765,
+        "consensus_views": 9
+      },
+      {
+        "bbox": [
+          165.0,
+          238.0,
+          328.0,
+          377.0
+        ],
+        "class": "Stuffed Bear Blue SB-1-B",
+        "score": 0.597,
+        "similarity": 0.5994,
+        "proposal_score": 0.4569,
+        "consensus_views": 8
+      }
+    ]
+  },
+  {
+    "image": "data/toy-91/query_images/0dee128b-130e-4ff4-8a1f-9d0280838c96.jpg",
+    "detections": [
+      {
+        "bbox": [
+          259.0,
+          10.0,
+          367.0,
+          118.0
+        ],
+        "class": "Halloween Pumpkin Plastic 7-P",
+        "score": 0.7186,
+        "similarity": 0.7566,
+        "proposal_score": 0.4546,
+        "consensus_views": 9
+      },
+      {
+        "bbox": [
+          77.0,
+          378.0,
+          250.0,
+          478.0
+        ],
+        "class": "Stuffed Bear Blue SB-1-B",
+        "score": 0.6041,
+        "similarity": 0.6397,
+        "proposal_score": 0.3642,
+        "consensus_views": 9
+      },
+      {
+        "bbox": [
+          300.0,
+          155.0,
+          430.0,
+          249.0
+        ],
+        "class": "Pocket Tomika P060",
+        "score": 0.5749,
+        "similarity": 0.6091,
+        "proposal_score": 0.3908,
+        "consensus_views": 9
+      }
+    ]
+  },
+  {
+    "image": "data/toy-91/query_images/1102d9d4-08a5-455f-8e62-19b69c4b49dd.jpg",
+    "detections": []
+  },
+  {
+    "image": "data/toy-91/query_images/140f8126-ec00-4f13-b802-9a76766c0c5b.jpg",
+    "detections": [
+      {
+        "bbox": [
+          244.0,
+          1.0,
+          354.0,
+          112.0
+        ],
+        "class": "Halloween Pumpkin Plastic 7-P",
+        "score": 0.6801,
+        "similarity": 0.6711,
+        "proposal_score": 0.557,
+        "consensus_views": 9
+      },
+      {
+        "bbox": [
+          431.0,
+          181.0,
+          542.0,
+          325.0
+        ],
+        "class": "Pocket Tomika P060",
+        "score": 0.5536,
+        "similarity": 0.5729,
+        "proposal_score": 0.4147,
+        "consensus_views": 6
+      }
+    ]
+  },
+  {
+    "image": "data/toy-91/query_images/15364231-0ca0-4e9f-b5f2-9c3b25465156.jpg",
+    "detections": [
+      {
+        "bbox": [
+          435.0,
+          0.0,
+          545.0,
+          89.0
+        ],
+        "class": "Halloween Pumpkin Plastic 7-P",
+        "score": 0.6567,
+        "similarity": 0.7021,
+        "proposal_score": 0.3704,
+        "consensus_views": 9
+      },
+      {
+        "bbox": [
+          73.0,
+          391.0,
+          218.0,
+          479.0
+        ],
+        "class": "Stuffed Bear Blue SB-1-B",
+        "score": 0.595,
+        "similarity": 0.6088,
+        "proposal_score": 0.4205,
+        "consensus_views": 8
+      },
+      {
+        "bbox": [
+          233.0,
+          230.0,
+          315.0,
+          351.0
+        ],
+        "class": "Pocket Tomika P060",
+        "score": 0.4728,
+        "similarity": 0.506,
+        "proposal_score": 0.293,
+        "consensus_views": 6
+      }
+    ]
+  },
+  {
+    "image": "data/toy-91/query_images/15917ba4-a60a-4123-ad7a-88eb273ab72a.jpg",
+    "detections": [
+      {
+        "bbox": [
+          33.0,
+          280.0,
+          155.0,
+          396.0
+        ],
+        "class": "Halloween Pumpkin Plastic 7-P",
+        "score": 0.7322,
+        "similarity": 0.7864,
+        "proposal_score": 0.4195,
+        "consensus_views": 8
+      },
+      {
+        "bbox": [
+          450.0,
+          237.0,
+          535.0,
+          377.0
+        ],
+        "class": "Pocket Tomika P060",
+        "score": 0.6674,
+        "similarity": 0.7215,
+        "proposal_score": 0.4251,
+        "consensus_views": 8
+      }
+    ]
+  }
+]

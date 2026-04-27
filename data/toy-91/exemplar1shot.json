@@ -1,0 +1,29 @@
+{
+  "exemplar": [
+    {
+      "class": 1,
+      "class_name": "Stuffed Bear Blue SB-1-B",
+      "category": "stuffed toy",
+      "refer_image": [
+        "refer_images/1-01.jpg"
+      ]
+    },
+    {
+      "class": 2,
+      "class_name": "Pocket Tomika P060",
+      "category": "boxed toy",
+      "refer_image": [
+        "refer_images/2-01.jpg"
+      ]
+    },
+    {
+      "class": 3,
+      "class_name": "Halloween Pumpkin Plastic 7-P",
+      "category": "toy",
+      "refer_image": [
+        "refer_images/3-01.jpg",
+        "refer_images/3-02.jpg"
+      ]
+    }
+  ]
+}
