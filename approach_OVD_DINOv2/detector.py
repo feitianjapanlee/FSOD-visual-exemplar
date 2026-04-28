@@ -131,14 +131,14 @@ class OVDDINOv2Detector:
         vis_path: Optional[str] = None,
         box_threshold: float = 0.15,
         text_threshold: float = 0.12,
-        match_threshold: float = 0.35,
-        margin_threshold: float = 0.15,
-        min_proposal_score: float = 0.18,
-        min_final_score: float = 0.33,
-        null_margin: float = 0.04,
-        consensus_threshold: float = 0.40,
-        consensus_bonus: float = 0.05,
-        nms_threshold: float = 0.45,
+        match_threshold: float = 0.19,
+        margin_threshold: float = 0.12,
+        min_proposal_score: float = 0.16,
+        min_final_score: float = 0.31,
+        null_margin: float = 0.035,
+        consensus_threshold: float = 0.37,
+        consensus_bonus: float = 0.06,
+        nms_threshold: float = 0.48,
         max_proposals: int = 80,
         max_box_area_ratio: float = 0.40,
         min_box_area_ratio: float = 5e-4,
@@ -530,11 +530,11 @@ class OVDDINOv2Detector:
         crop_embeds = self._encode_images(crops, batch_size=batch_size)
         crop_hists = [self._color_hist(crop) for crop in crops]
 
-        # Null prototypes: four "scene" anchors -- whole image + three large
-        # non-central patches. If a class matches the null prototypes almost as
-        # well as the crop, the signal is "looks like something in this scene"
-        # rather than "this particular product", and we reject it.
-        null_crops = self._build_null_crops(query_image)
+        # Null prototypes are built from patches that avoid Stage-1 proposals.
+        # Using the whole image as a null anchor is brittle in target-dominant
+        # scenes: the "background" embedding can become more target-like than a
+        # tight object crop and reject valid detections.
+        null_crops = self._build_null_crops(query_image, valid_props)
         null_embeds = self._encode_images(null_crops, batch_size=batch_size) if null_crops else None
 
         class_names = list(class_db.keys())
@@ -555,11 +555,13 @@ class OVDDINOv2Detector:
                     if color_hists
                     else 1.0
                 )
+                similarity = 0.75 * effective + 0.25 * color_sim
                 scored.append(
                     {
                         "cname": cname,
                         "max_sim": max_sim,
                         "effective": effective,
+                        "similarity": similarity,
                         "consensus": consensus,
                         "color_sim": color_sim,
                     }
@@ -567,6 +569,7 @@ class OVDDINOv2Detector:
             scored.sort(key=lambda s: -s["effective"])
             best = scored[0]
             second = scored[1]["effective"] if len(scored) > 1 else -1.0
+            second_effective = max((s["effective"] for s in scored[1:]), default=-1.0)
 
             if best["effective"] < match_threshold:
                 continue
@@ -575,10 +578,7 @@ class OVDDINOv2Detector:
             proposal_score = float(prop["proposal_score"])
             if proposal_score < min_proposal_score:
                 continue
-            if (
-                class_db[best["cname"]].get("color_sensitive")
-                and best["color_sim"] < color_match_threshold
-            ):
+            if best["color_sim"] < color_match_threshold:
                 continue
             shape_penalty = self._shape_prior_penalty(
                 crop=crops[i],
@@ -586,15 +586,21 @@ class OVDDINOv2Detector:
                 image_area=image_area,
                 prior=class_db[best["cname"]].get("shape_prior"),
             )
-            # Null-prototype check: the winning class must beat the best scene
-            # anchor by ``null_margin``. This suppresses "universal positive"
-            # single-reference classes that look vaguely like anything.
+            # Null-prototype check: the winning class must beat proposal-free
+            # background anchors by ``null_margin``. Use a top-2 average rather
+            # than max so one contaminated patch does not veto a good crop.
             if null_embeds is not None:
                 best_views = class_db[best["cname"]]["view_embeds"]
-                null_class_sim = float(torch.matmul(null_embeds, best_views.T).max().item())
-                if (best["max_sim"] - null_class_sim) < null_margin:
-                    continue
-            final_score = 0.75 * best["effective"] + 0.25 * proposal_score - shape_penalty
+                strong_visual_match = (
+                    best["max_sim"] >= 0.65
+                    and best["consensus"] >= 8
+                    and (best["effective"] - second_effective) >= 0.45
+                )
+                if not strong_visual_match:
+                    null_class_sim = self._robust_null_similarity(null_embeds, best_views)
+                    if (best["max_sim"] - null_class_sim) < null_margin:
+                        continue
+            final_score = 0.70 * best["similarity"] + 0.30 * proposal_score - shape_penalty
             if final_score < min_final_score:
                 continue
             detections.append(
@@ -602,7 +608,7 @@ class OVDDINOv2Detector:
                     bbox=prop["bbox"],
                     class_name=best["cname"],
                     score=final_score,
-                    similarity=best["max_sim"],
+                    similarity=best["similarity"],
                     proposal_score=proposal_score,
                     consensus_views=best["consensus"],
                 )
@@ -610,28 +616,107 @@ class OVDDINOv2Detector:
 
         if not detections:
             return []
+        detections = self._suppress_multi_object_same_class_boxes(detections)
+        detections = self._suppress_same_class_parts(detections)
         detections = self._per_class_nms(detections, nms_threshold)
-        return self._suppress_contained_detections(detections)
+        detections = self._suppress_multi_object_same_class_boxes(detections)
+        return self._suppress_same_class_parts(detections)
 
-    def _build_null_crops(self, image: Image.Image) -> List[Image.Image]:
+    def _build_null_crops(
+        self,
+        image: Image.Image,
+        proposals: Optional[List[Dict]] = None,
+        max_candidate_overlap: float = 0.05,
+    ) -> List[Image.Image]:
         w, h = image.size
-        crops = [image]
-        # Corner/edge patches unlikely to contain the whole target object.
-        patch_w, patch_h = max(w // 3, 32), max(h // 3, 32)
-        anchors = [
-            (0, 0),
-            (w - patch_w, 0),
-            (0, h - patch_h),
-            (w - patch_w, h - patch_h),
+        crops: List[Image.Image] = []
+        proposal_boxes = [p["bbox"] for p in proposals or []]
+        patch_sizes = [
+            (max(w // 3, 48), max(h // 3, 48)),
+            (max(w // 4, 48), max(h // 4, 48)),
         ]
-        for left, top in anchors:
-            left = max(0, left)
-            top = max(0, top)
-            right = min(w, left + patch_w)
-            bottom = min(h, top + patch_h)
-            if right - left >= 32 and bottom - top >= 32:
-                crops.append(image.crop((left, top, right, bottom)))
+        candidates = []
+        seen = set()
+        for patch_w, patch_h in patch_sizes:
+            xs = sorted({0, max(0, (w - patch_w) // 2), max(0, w - patch_w)})
+            ys = sorted({0, max(0, (h - patch_h) // 2), max(0, h - patch_h)})
+            for top in ys:
+                for left in xs:
+                    right = min(w, left + patch_w)
+                    bottom = min(h, top + patch_h)
+                    box = (left, top, right, bottom)
+                    if box in seen or right - left < 32 or bottom - top < 32:
+                        continue
+                    seen.add(box)
+                    candidates.append(box)
+
+        used_boxes = set()
+        for box in candidates:
+            if self._max_candidate_overlap(box, proposal_boxes, max_candidate_overlap) > max_candidate_overlap:
+                continue
+            crops.append(image.crop(box))
+            used_boxes.add(box)
+            if len(crops) >= 4:
+                break
+
+        # Add bounded context patches, but never the whole image. These recover
+        # some of the old null prototype's ability to reject object-like
+        # background while the robust statistic below avoids a single
+        # target-containing patch dominating target-heavy images.
+        for box in candidates:
+            if len(crops) >= 6:
+                return crops
+            if box in used_boxes:
+                continue
+            if self._max_candidate_overlap(box, proposal_boxes, 0.60) > 0.60:
+                continue
+            crops.append(image.crop(box))
+            used_boxes.add(box)
+        if len(crops) >= 2:
+            return crops
+
+        # Some scenes are proposal-dense. Add lightly overlapping patches only
+        # when strict proposal-free patches are unavailable, so null rejection is
+        # not silently disabled for most images.
+        for box in candidates:
+            if box in used_boxes:
+                continue
+            if self._max_candidate_overlap(box, proposal_boxes, 0.20) > 0.20:
+                continue
+            crops.append(image.crop(box))
+            if len(crops) >= 2:
+                return crops
+
+        # If proposals cover nearly the full frame, no reliable query-local null
+        # patch exists. In that case skip null rejection instead of fabricating a
+        # contaminated null prototype.
         return crops
+
+    def _robust_null_similarity(self, null_embeds: torch.Tensor, view_embeds: torch.Tensor) -> float:
+        sims = torch.matmul(null_embeds, view_embeds.T).max(dim=1).values
+        if sims.numel() == 0:
+            return -1.0
+        top_k = min(2, sims.numel())
+        top_values = torch.topk(sims, k=top_k).values
+        top2_avg = top_values.mean()
+        peak = top_values[0]
+        return float((0.65 * peak + 0.35 * top2_avg).item())
+
+    def _max_candidate_overlap(
+        self,
+        box: tuple[int, int, int, int],
+        proposal_boxes: List[List[float]],
+        stop_threshold: float,
+    ) -> float:
+        box_area = self._box_area(box)
+        if box_area <= 0:
+            return 1.0
+        max_overlap = 0.0
+        for prop in proposal_boxes:
+            max_overlap = max(max_overlap, self._intersection_area(box, prop) / box_area)
+            if max_overlap > stop_threshold:
+                break
+        return max_overlap
 
     # ------------------------------------------------------------- utilities
     def _shape_prior(self, images: List[Image.Image]) -> Optional[Dict[str, float]]:
@@ -644,14 +729,20 @@ class OVDDINOv2Detector:
             if w <= 0 or h <= 0:
                 continue
             aspects.append(w / h)
-            fg_mask = self._foreground_like_mask(image)
-            fill_ratios.append(float(fg_mask.mean()) if fg_mask.size else 1.0)
+            fill = float(w * h)
+            if fill > 0:
+                fill_ratios.append(float(self._foreground_like_mask(image).mean()))
+        areas = [float(image.width * image.height) for image in images if image.width > 0 and image.height > 0]
         if not aspects:
             return None
+        area_median = float(np.median(areas)) if areas else 1.0
+        area_ratios = [area / max(area_median, 1.0) for area in areas]
         return {
             "aspect_median": float(np.median(aspects)),
             "aspect_min": float(np.min(aspects)),
             "aspect_max": float(np.max(aspects)),
+            "area_ratio_min": float(np.min(area_ratios)) if area_ratios else 1.0,
+            "area_ratio_max": float(np.max(area_ratios)) if area_ratios else 1.0,
             "fill_median": float(np.median(fill_ratios)) if fill_ratios else 1.0,
         }
 
@@ -680,26 +771,154 @@ class OVDDINOv2Detector:
         aspect = w / h
         aspect_min = max(float(prior.get("aspect_min", aspect)), 1e-3)
         aspect_max = max(float(prior.get("aspect_max", aspect)), aspect_min)
-        aspect_low = aspect_min / 1.65
-        aspect_high = aspect_max * 1.65
+        aspect_low = aspect_min / 1.35
+        aspect_high = aspect_max * 1.35
 
         penalty = 0.0
         if aspect < aspect_low:
-            penalty += min(0.12, 0.04 * np.log2(aspect_low / max(aspect, 1e-3)))
+            penalty += min(0.16, 0.07 * np.log2(aspect_low / max(aspect, 1e-3)))
         elif aspect > aspect_high:
-            penalty += min(0.12, 0.04 * np.log2(aspect / max(aspect_high, 1e-3)))
+            penalty += min(0.16, 0.07 * np.log2(aspect / max(aspect_high, 1e-3)))
 
         fg_mask = self._foreground_like_mask(crop)
         fill_ratio = float(fg_mask.mean()) if fg_mask.size else 1.0
         prior_fill = float(prior.get("fill_median", 1.0))
-        overfill = fill_ratio / max(prior_fill, 1e-3) - 1.8
-        if prior_fill > 0 and overfill > 0:
-            penalty += min(0.08, 0.04 * overfill)
+        if prior_fill > 0:
+            fill_delta = abs(np.log2(max(fill_ratio, 1e-3) / max(prior_fill, 1e-3)))
+            if fill_delta > 0.65:
+                penalty += min(0.10, 0.045 * (fill_delta - 0.65))
 
         area_ratio = (w * h) / max(image_area, 1.0)
-        if area_ratio > 0.30:
-            penalty += min(0.08, 0.20 * (area_ratio - 0.30))
+        ref_area_min = float(prior.get("area_ratio_min", 1.0))
+        ref_area_max = max(float(prior.get("area_ratio_max", 1.0)), ref_area_min)
+        # Reference crops do not know the query image scale, so keep this as a
+        # weak, class-specific prior and combine it with an absolute large-box
+        # penalty for scene-level proposals.
+        if ref_area_max > 0 and area_ratio > 0.12:
+            excess = area_ratio / max(0.12 * ref_area_max, 1e-3) - 1.0
+            if excess > 0:
+                penalty += min(0.12, 0.035 * excess)
+        if area_ratio > 0.24:
+            penalty += min(0.16, 0.55 * (area_ratio - 0.24))
         return float(max(0.0, penalty))
+
+    def _suppress_same_class_parts(
+        self,
+        detections: List[Detection],
+        contain_threshold: float = 0.78,
+        max_part_area_ratio: float = 0.72,
+        max_whole_to_part_ratio: float = 4.5,
+        max_center_distance_ratio: float = 0.26,
+        part_score_margin: float = 0.30,
+    ) -> List[Detection]:
+        if len(detections) <= 1:
+            return detections
+        drop = set()
+        for i, part in enumerate(detections):
+            if i in drop:
+                continue
+            part_area = self._box_area(part.bbox)
+            if part_area <= 0:
+                drop.add(i)
+                continue
+            for j, whole in enumerate(detections):
+                if i == j or j in drop or part.class_name != whole.class_name:
+                    continue
+                whole_area = self._box_area(whole.bbox)
+                if whole_area <= part_area:
+                    continue
+                area_ratio = part_area / max(whole_area, 1.0)
+                if area_ratio > max_part_area_ratio:
+                    continue
+                if whole_area / max(part_area, 1.0) > max_whole_to_part_ratio:
+                    continue
+                if self._center_distance_ratio(part.bbox, whole.bbox) > max_center_distance_ratio:
+                    continue
+                inter = self._intersection_area(part.bbox, whole.bbox)
+                if inter / max(part_area, 1.0) < contain_threshold:
+                    continue
+                # Prefer the larger same-class box unless the smaller contained
+                # box wins by a clear margin. This targets head/body/label crops
+                # that look highly similar but are not complete objects.
+                if part.score <= whole.score + part_score_margin:
+                    drop.add(i)
+                    break
+        if not drop:
+            return detections
+        kept = [det for idx, det in enumerate(detections) if idx not in drop]
+        kept.sort(key=lambda d: d.score, reverse=True)
+        return kept
+
+    def _suppress_multi_object_same_class_boxes(
+        self,
+        detections: List[Detection],
+        contain_threshold: float = 0.65,
+        max_child_area_ratio: float = 0.75,
+        min_center_separation_ratio: float = 0.20,
+    ) -> List[Detection]:
+        if len(detections) <= 2:
+            return detections
+        drop = set()
+        for i, large in enumerate(detections):
+            large_area = self._box_area(large.bbox)
+            if large_area <= 0:
+                drop.add(i)
+                continue
+            children = []
+            for j, child in enumerate(detections):
+                if i == j or j in drop or large.class_name != child.class_name:
+                    continue
+                child_area = self._box_area(child.bbox)
+                if child_area <= 0 or child_area >= large_area * max_child_area_ratio:
+                    continue
+                inter = self._intersection_area(child.bbox, large.bbox)
+                if inter / max(child_area, 1.0) >= contain_threshold:
+                    children.append((j, child))
+            if len(children) < 2:
+                continue
+            for left_idx, left in children:
+                for right_idx, right in children:
+                    if left_idx >= right_idx:
+                        continue
+                    if self._center_separation_ratio(left.bbox, right.bbox, large.bbox) < min_center_separation_ratio:
+                        continue
+                    drop.add(i)
+                    break
+                if i in drop:
+                    break
+        if not drop:
+            return detections
+        kept = [det for idx, det in enumerate(detections) if idx not in drop]
+        kept.sort(key=lambda d: d.score, reverse=True)
+        return kept
+
+    def _box_area(self, box) -> float:
+        return max(0.0, float(box[2]) - float(box[0])) * max(0.0, float(box[3]) - float(box[1]))
+
+    def _center_distance_ratio(self, inner, outer) -> float:
+        ix = (float(inner[0]) + float(inner[2])) * 0.5
+        iy = (float(inner[1]) + float(inner[3])) * 0.5
+        ox = (float(outer[0]) + float(outer[2])) * 0.5
+        oy = (float(outer[1]) + float(outer[3])) * 0.5
+        ow = max(float(outer[2]) - float(outer[0]), 1.0)
+        oh = max(float(outer[3]) - float(outer[1]), 1.0)
+        return float(np.hypot(ix - ox, iy - oy) / np.hypot(ow, oh))
+
+    def _center_separation_ratio(self, a, b, reference) -> float:
+        ax = (float(a[0]) + float(a[2])) * 0.5
+        ay = (float(a[1]) + float(a[3])) * 0.5
+        bx = (float(b[0]) + float(b[2])) * 0.5
+        by = (float(b[1]) + float(b[3])) * 0.5
+        rw = max(float(reference[2]) - float(reference[0]), 1.0)
+        rh = max(float(reference[3]) - float(reference[1]), 1.0)
+        return float(np.hypot(ax - bx, ay - by) / np.hypot(rw, rh))
+
+    def _intersection_area(self, a, b) -> float:
+        x1 = max(float(a[0]), float(b[0]))
+        y1 = max(float(a[1]), float(b[1]))
+        x2 = min(float(a[2]), float(b[2]))
+        y2 = min(float(a[3]), float(b[3]))
+        return max(0.0, x2 - x1) * max(0.0, y2 - y1)
 
     def _per_class_nms(self, detections: List[Detection], iou_threshold: float) -> List[Detection]:
         kept: List[Detection] = []

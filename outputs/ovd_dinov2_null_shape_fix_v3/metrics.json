@@ -1,25 +1,25 @@
 {
-  "precision": 1.0,
-  "recall": 0.8181818181818182,
-  "f1": 0.9,
-  "total_tp": 18,
-  "total_fp": 0,
-  "total_fn": 4,
+  "precision": 0.8403755868544601,
+  "recall": 0.8443396226415094,
+  "f1": 0.8423529411764705,
+  "total_tp": 179,
+  "total_fp": 34,
+  "total_fn": 33,
   "per_class": {
-    "Halloween Pumpkin Plastic 7-P": {
-      "precision": 1.0,
-      "recall": 0.8,
-      "f1": 0.888888888888889
-    },
     "Stuffed Bear Blue SB-1-B": {
-      "precision": 1.0,
-      "recall": 0.6666666666666666,
-      "f1": 0.8
+      "precision": 0.76,
+      "recall": 0.7916666666666666,
+      "f1": 0.7755102040816326
+    },
+    "Halloween Pumpkin Plastic 7-P": {
+      "precision": 0.9555555555555556,
+      "recall": 0.9347826086956522,
+      "f1": 0.945054945054945
     },
     "Pocket Tomika P060": {
-      "precision": 1.0,
-      "recall": 1.0,
-      "f1": 1.0
+      "precision": 0.75,
+      "recall": 0.75,
+      "f1": 0.75
     }
   },
   "approach": "ovd_dinov2",
@@ -37,5 +37,5 @@
     "graph_steps": 30
   },
   "gpu_memory_peak_gb": 5.667264461517334,
-  "avg_inference_time_seconds": 4.03630678653717
+  "avg_inference_time_seconds": 1.2398242845640077
 }
